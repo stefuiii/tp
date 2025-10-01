@@ -93,7 +93,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_remark() throws Exception {
-        final String remarkText= "Some remark.";
+        final String remarkText = "Some remark.";
         final Remark remark = new Remark(remarkText);
 
         RemarkCommand command = (RemarkCommand) parser.parseCommand(
