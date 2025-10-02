@@ -304,31 +304,77 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `FastCard` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: UC01 - Delete a contact**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to delete a contact by phone number 
+2.  FastCard looks for the contact with that phone number
+3.  FastCard deletes the contact 
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 2a. The given index is invalid.
 
-  Use case ends.
+    * 2a1. FastCard shows an error message.
 
-* 3a. The given index is invalid.
+      Use case resumes at step 1.
 
-    * 3a1. AddressBook shows an error message.
 
-      Use case resumes at step 2.
 
+**Use case: UC02 - Add a contact**
+
+**MSS**
+
+1.  User requests to add a contact with name and phone number
+2.  FastCard creates an entry of the above contact
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given number is invalid.
+
+    * 1a1. FastCard shows an error message.
+
+      Use case resumes at step 1.
+
+
+* 1b. The given number already exists.
+
+   *  1b1. FastCard shows an error message.
+  
+      Use case resumes at step 1.
+
+
+**Use case: UC03 - Edit a contact's particulars**
+
+**MSS**
+
+1.  User requests to edit a contact's information 
+2.  FastCard looks for person with their phone number
+3.  FastCard updates the person's particulars
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The given number is invalid.
+
+    * 2a1. FastCard shows an error message.
+
+      Use case resumes at step 1.
+
+
+* 3a. The new information is invalid.
+
+    * 3a1. FastCard shows an error message.
+
+      Use case resumes at step 1.
 *{More to be added}*
 
 ### Non-Functional Requirements
