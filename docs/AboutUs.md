@@ -11,44 +11,36 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Ooi Zheng Hao
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/zh22.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/zh22)]
+[[portfolio](team/zh22.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Undecided
 
-### Jean Doe
+### Joel Chong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/joelchongg.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/joelchongg)]
+[[portfolio](team/joelchongg.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Undecided
+
+### Jiang Linghui
+
+<img src="images/stefuiii.png" width="200px">
+
+[[github](http://github.com/stefuiii)]
+[[portfolio](team/stefuiii.md)]
+
+* Role: Developer
+* Responsibilities: Undecided
+
 
 ### Huang Yuyang
 
@@ -59,3 +51,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: TBD
 * Responsibilities: TBD
+
+### Wang Ziwen
+
+<img src="images/ziwen510.png" width="200px">
+
+[[github](https://github.com/Ziwen510)]
+[[portfolio](team/ziwen.md)]
+
+* Role: Developer
+Responsibilities: Undecided
+
