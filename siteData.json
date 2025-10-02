@@ -129,9 +129,12 @@
     },
     {
       "src": "index.md",
-      "title": "",
       "headings": {
-        "fastcard-for-efficient-professionals": "FastCard - For Efficient Professionals"
+        "fastcard-for-efficient-professionals": "FastCard - For Efficient Professionals",
+        "acknowledgement": "Acknowledgement",
+        "target-user-profile": "👥 Target User Profile",
+        "value-proposition": "🎯 Value Proposition",
+        "additional-information": "Additional Information"
       },
       "headingKeywords": {}
     },
