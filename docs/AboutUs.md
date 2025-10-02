@@ -20,7 +20,6 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Undecided
 
-
 ### Jiang Linghui
 <img src="images/stefuiii.png" width="200px">
 
@@ -29,4 +28,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Undecided
+
+### Wang Ziwen
+
+<img src="images/ziwen510.png" width="200px">
+
+[[github](https://github.com/Ziwen510)]
+[[portfolio](team/ziwen.md)]
+
+* Role: Developer
+Responsibilities: Undecided
 
