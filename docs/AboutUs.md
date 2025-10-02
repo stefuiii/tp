@@ -11,6 +11,24 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Joel Chong
+<img src="images/joelchongg.png" width="200px">
+
+[[github](https://github.com/joelchongg)]
+[[portfolio](team/joelchongg.md)]
+
+* Role: Developer
+* Responsibilities: Undecided
+
+### Jiang Linghui
+<img src="images/stefuiii.png" width="200px">
+
+[[github](http://github.com/stefuiii)]
+[[portfolio](team/stefuiii.md)]
+
+* Role: Developer
+* Responsibilities: Undecided
+
 ### Wang Ziwen
 
 <img src="images/ziwen510.png" width="200px">
@@ -20,3 +38,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 Responsibilities: Undecided
+
