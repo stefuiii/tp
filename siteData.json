@@ -7,7 +7,11 @@
       "headings": {
         "about-us": "About Us",
         "project-team": "Project team",
-        "joel-chong": "Joel Chong"
+        "ooi-zheng-hao": "Ooi Zheng Hao",
+        "joel-chong": "Joel Chong",
+        "jiang-linghui": "Jiang Linghui",
+        "huang-yuyang": "Huang Yuyang",
+        "wang-ziwen": "Wang Ziwen"
       },
       "headingKeywords": {}
     },
@@ -127,7 +131,7 @@
       "src": "index.md",
       "title": "",
       "headings": {
-        "addressbook-level-3": "AddressBook Level-3"
+        "fastcard-for-efficient-professionals": "FastCard - For Efficient Professionals"
       },
       "headingKeywords": {}
     },
@@ -142,6 +146,30 @@
     {
       "src": "team/johndoe.md",
       "title": "John Doe's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/stefuiii.md",
+      "title": "Jiang Linghui's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/zh22.md",
+      "title": "Zheng Hao's Project Portfolio Page",
+      "headings": {
+        "zh22-zheng-hao-portfolio": "ZH22 (Zheng Hao) Portfolio"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/ziwen.md",
+      "title": "Wang Ziwen's Project Portfolio Page",
       "headings": {
         "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
