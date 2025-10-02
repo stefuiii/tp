@@ -19,3 +19,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Undecided
+
+
+### Jiang Linghui
+<img src="images/stefuiii.png" width="200px">
+
+[[github](http://github.com/stefuiii)]
+[[portfolio](team/stefuiii.md)]
+
+* Role: Developer
+* Responsibilities: Undecided
+
