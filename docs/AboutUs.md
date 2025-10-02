@@ -22,6 +22,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Responsibilities: Undecided
 
 ### Joel Chong
+
 <img src="images/joelchongg.png" width="200px">
 
 [[github](https://github.com/joelchongg)]
@@ -31,6 +32,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Responsibilities: Undecided
 
 ### Jiang Linghui
+
 <img src="images/stefuiii.png" width="200px">
 
 [[github](http://github.com/stefuiii)]
@@ -38,6 +40,17 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Undecided
+
+
+### Huang Yuyang
+
+<img src="images/fishee82oo.png" width="200px">
+
+[[github](http://github.com/fishee82oo)]
+[[portfolio](team/johndoe.md)]
+
+* Role: TBD
+* Responsibilities: TBD
 
 ### Wang Ziwen
 
