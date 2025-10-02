@@ -1,8 +1,3 @@
----
-  layout: default.md
-  title: ""
----
-
 # FastCard - For Efficient Professionals
 
 [![CI Status](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml)
