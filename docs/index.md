@@ -3,7 +3,7 @@
   title: ""
 ---
 
-# AddressBook Level-3
+# FastCard - For Efficient Professionals
 
 [![CI Status](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/github/AY2526S1-CS2103T-F11-4/tp/graph/badge.svg?token=C7VKPW98S1)](https://codecov.io/github/AY2526S1-CS2103T-F11-4/tp)
@@ -17,5 +17,5 @@
 
 
 **Acknowledgements**
-
+* This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
