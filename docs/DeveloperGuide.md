@@ -274,27 +274,31 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* regularly interact with clients or suppliers
+* has a need to manage a significant number of contacts efficiently
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: Enable sales and procurement professionals engaged in regular business communication to efficiently capture, organize, and recall contact details in real time, minimizing information loss and improving follow-up accuracy.
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person             |                                                                        |
-| `* * *`  | user                                       | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
+| Priority | As a …​                           | I want to …​                                                              | So that I can…​                                                                          |
+|----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | not lose time during meetings and can fill in the details later when convenient         |
+| `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
+| `* * *`  | sales / procurement professional | assign category tags when I add new customers                            | better manage different types of clients by knowing their industry                      |
+| `* * *`  | sales / procurement professional | delete a contact in my address book                                      | remove contacts that are no longer a prospect                                           |
+| `* * *`  | sales / procurement professional | list all contacts in my address book                                     | access all contact records to manage sales and procurement activities                   |
+| `* * *`  | sales / procurement professional | filter my contacts based on each client's tags                           | quickly find relevant clients and manage my outreach more efficiently                   |
+| `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
+| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my address book                                        |
+| `* * *`  | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
 
 *{More to be added}*
 
