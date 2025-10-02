@@ -325,6 +325,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 1.
 
 
+
 **Use case: UC02 - Add a contact**
 
 **MSS**
@@ -348,6 +349,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    *  1b1. FastCard shows an error message.
   
       Use case resumes at step 1.
+
 
 **Use case: UC03 - Edit a contact's particulars**
 
