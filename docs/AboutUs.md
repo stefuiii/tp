@@ -11,6 +11,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Ooi Zheng Hao
+
+<img src="images/zh22.png" width="200px">
+
+[[github](https://github.com/zh22)]
+[[portfolio](team/zh22.md)]
+
+* Role: Developer
+* Responsibilities: Undecided
+
 ### Joel Chong
 <img src="images/joelchongg.png" width="200px">
 
