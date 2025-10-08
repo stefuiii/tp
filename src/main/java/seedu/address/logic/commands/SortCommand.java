@@ -38,7 +38,7 @@ public class SortCommand extends Command {
     // TODO
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        return new CommandResult("NOT IMPLEMENTED YET");
+        throw new CommandException("NOT IMPLEMENTED YET");
     }
 
     @Override
