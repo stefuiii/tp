@@ -10,10 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Phone {
 
 
-    public static final String VALIDATION_REGEX = "\\(\\d{3}\\)\\d+";
     public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should be in the format (3-digit region code) followed by number, e.g., (123)4567890";
-
+            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
+    public static final String VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
     /**
