@@ -18,6 +18,7 @@ public class CommandHistoryTest {
         assertEquals("test1", commandHistory.getLastCommand(1));
         assertEquals("test0", commandHistory.getLastCommand(0));
         assertEquals("test2", commandHistory.getLastCommand(2));
+        assertEquals("test0", commandHistory.getLastCommand());
     }
 
 
@@ -25,14 +26,17 @@ public class CommandHistoryTest {
     public void getLastCommand_emptyOrOutOfBounds_returnsEmptyString() {
         CommandHistory commandHistory = new CommandHistory();
 
-        String emptyHistoryGetResult = commandHistory.getLastCommand();
-        assertEquals("", emptyHistoryGetResult);
+        String emptyHistoryGetResult1 = commandHistory.getLastCommand();
+        String emptyHistoryGetResult2 = commandHistory.getLastCommand(0);
+        assertEquals("", emptyHistoryGetResult1);
+        assertEquals("", emptyHistoryGetResult2);
+
 
         // Add temporary commands for out of bounds test
         commandHistory.saveNewCommand("test1");
         commandHistory.saveNewCommand("test0");
 
         String outOfBoundsHistoryGetResult = commandHistory.getLastCommand(2);
-        assertEquals("", emptyHistoryGetResult);
+        assertEquals("", outOfBoundsHistoryGetResult);
     }
 }
