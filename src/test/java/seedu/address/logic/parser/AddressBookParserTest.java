@@ -51,7 +51,8 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + JADON.getPhone().value);
-        assertEquals(new DeleteCommand(JADON.getPhone()), command);    }
+        assertEquals(new DeleteCommand(JADON.getPhone()), command);
+    }
 
     @Test
     public void parseCommand_edit() throws Exception {

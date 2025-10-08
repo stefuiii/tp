@@ -23,7 +23,8 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
         Phone phone = new Phone("83556666");
-        assertParseSuccess(parser, phone.value, new DeleteCommand(phone));}
+        assertParseSuccess(parser, phone.value, new DeleteCommand(phone));
+    }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
