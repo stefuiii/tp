@@ -60,7 +60,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 99999999";
+        String deleteCommand = "delete 99999";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_PHONE);
     }
 
