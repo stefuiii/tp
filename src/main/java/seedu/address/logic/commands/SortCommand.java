@@ -40,4 +40,19 @@ public class SortCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         return new CommandResult("NOT IMPLEMENTED YET");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof SortCommand)) {
+            return false;
+        }
+
+        SortCommand other = (SortCommand) o;
+
+        return this.field.equals(other.field) && this.order.equals(other.order);
+    }
 }
