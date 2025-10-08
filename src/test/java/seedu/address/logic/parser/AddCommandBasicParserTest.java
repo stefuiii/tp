@@ -47,4 +47,16 @@ public class AddCommandBasicParserTest {
             assert e.getMessage().contains("Invalid command format");
         }
     }
+
+    @Test
+    public void parse_missingName_failure() {
+        String userInput = " p/88880000"; // Missing n/
+        try {
+            parser.parse(userInput);
+            assert false : "Expected ParseException to be thrown.";
+        } catch (Exception e) {
+            assert e.getMessage().contains("Invalid command format");
+        }
+    }
+
 }
