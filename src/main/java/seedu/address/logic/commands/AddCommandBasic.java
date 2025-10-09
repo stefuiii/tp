@@ -41,7 +41,6 @@ public class AddCommandBasic extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        System.out.println(">>> Adding a new person with basic information: " + toAdd);
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
@@ -49,6 +48,7 @@ public class AddCommandBasic extends Command {
         }
 
         model.addPerson(toAdd);
+        System.out.println(">>> Adding a new person with basic information: " + toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
