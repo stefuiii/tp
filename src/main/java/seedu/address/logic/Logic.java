@@ -62,6 +62,6 @@ public interface Logic {
     /**
      * Returns the String of the next command (relative to previous command index user is on)
      */
-    String getNextCommand() throws EndOfCommandHistoryException;
+    String getNextCommand();
 
 }
