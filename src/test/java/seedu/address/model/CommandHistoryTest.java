@@ -2,8 +2,8 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 
 public class CommandHistoryTest {
@@ -52,7 +52,7 @@ public class CommandHistoryTest {
         commandHistory.saveNewCommand("test0"); // Latest Command
 
         // Check if previous accurately returns in order
-        for (int i = 0; i <= 4; i ++) {
+        for (int i = 0; i <= 4; i++) {
             try {
                 // For first 3 commands expect respective strings
                 String result = commandHistory.getPreviousCommand();
