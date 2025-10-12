@@ -66,7 +66,7 @@ public class SortCommand extends Command {
     private Comparator<Person> getComparator() throws CommandException {
         Comparator<Person> comparator;
 
-        switch (field) {
+        switch (field.toLowerCase()) {
         case "name":
             comparator = Comparator.comparing(person -> person.getName().toString(), String.CASE_INSENSITIVE_ORDER);
             break;
@@ -82,7 +82,7 @@ public class SortCommand extends Command {
             throw new CommandException(INVALID_FIELD_MESSAGE);
         }
 
-        switch (order) {
+        switch (order.toLowerCase()) {
         case "asc":
         case "ascending":
             return comparator;
