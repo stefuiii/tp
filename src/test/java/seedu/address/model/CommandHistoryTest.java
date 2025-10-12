@@ -2,7 +2,9 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 
 public class CommandHistoryTest {
     @Test
@@ -38,5 +40,41 @@ public class CommandHistoryTest {
 
         String outOfBoundsHistoryGetResult = commandHistory.getLastCommand(2);
         assertEquals("", outOfBoundsHistoryGetResult);
+    }
+
+    @Test
+    public void getPreviousAndNextCommands_validHistory_returnsRespectiveCommands() {
+        CommandHistory commandHistory = new CommandHistory();
+
+        // saves command testN in reverse order as getLastCommand indexes backwards
+        commandHistory.saveNewCommand("test2");
+        commandHistory.saveNewCommand("test1");
+        commandHistory.saveNewCommand("test0"); // Latest Command
+
+        // Check if previous accurately returns in order
+        for (int i = 0; i <= 4; i ++) {
+            try {
+                // For first 3 commands expect respective strings
+                String result = commandHistory.getPreviousCommand();
+                assertEquals("test" + i, result);
+
+            } catch (EndOfCommandHistoryException e) {
+                // For 4th and 5th commands (Out of Bounds) expects EndOfCommandHistoryException
+                assertEquals("End of Command History reached", e.getMessage());
+            }
+        }
+
+        // After reaching end of history, check getNextCommands method
+        for (int i = 2; i >= 0; i--) {
+            // Returns in backwards order
+            String result = commandHistory.getNextCommand();
+            assertEquals("test" + i, result);
+        }
+        // Finally check if calling next after reaching end (expects empty strings)
+        for (int i = 0; i < 2; i++) {
+            String result = commandHistory.getNextCommand();
+            assertEquals("", result);
+        }
+
     }
 }
