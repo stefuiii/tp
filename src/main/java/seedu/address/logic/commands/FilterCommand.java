@@ -17,6 +17,7 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters all persons whose contact information contains any of "
             + "the specified tags (case-insensitive) and displays them as a list.\n"
+            + "Tags should be alphanumeric.\n"
             + "Parameters: t/[TAG]...\n"
             + "Example: " + COMMAND_WORD + " t/ friends t/ colleague";
 
