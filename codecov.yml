@@ -2,4 +2,4 @@
 # Reason: (JavaFX Components testing is tightly coupled, causing disproportionate amounts of missed lines in report)
 
 ignore:
-  - "main/java/seedu.address/ui"
+  - "main/java/seedu/address/ui"
