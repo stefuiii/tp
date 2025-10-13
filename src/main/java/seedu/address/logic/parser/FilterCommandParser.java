@@ -28,6 +28,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         TagsContainTagPredicate predicate =
                 new TagsContainTagPredicate(argMultimap.getAllValues(PREFIX_TAG).stream()
                                                        .map(token -> token.toLowerCase())
+                                                       .distinct()
                                                        .map(token -> new Tag(token))
                                                        .toList());
 
@@ -51,24 +52,26 @@ public class FilterCommandParser implements Parser<FilterCommand> {
      * @throws ParseException If {@code argMultimap} is invalid
      */
     private void checkValidTokens(ArgumentMultimap argMultimap) throws ParseException {
+        String errorMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE);
+
         if (!argMultimap.getValue(PREFIX_TAG).isPresent()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            throw new ParseException(errorMessage);
         }
 
         if (!argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            throw new ParseException(errorMessage);
         }
 
         boolean containsEmptyTag = argMultimap.getAllValues(PREFIX_TAG).stream()
                                               .anyMatch(tagName -> tagName.isEmpty());
 
         if (containsEmptyTag) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
+            throw new ParseException(errorMessage);
         }
 
         if (argMultimap.getAllValues(PREFIX_TAG).stream()
                        .anyMatch(tagName -> !Tag.isValidTagName(tagName))) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+            throw new ParseException(errorMessage);
         }
     }
 }
