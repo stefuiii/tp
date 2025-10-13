@@ -19,7 +19,9 @@ public class SortCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": sorts all persons in address book "
             + "based on the sorting comparator passed in.\n"
             + "Parameters: f/[FIELD] o/[ORDER]\n"
-            + "Example: " + COMMAND_WORD + " f/name o/asc";
+            + "Example: " + COMMAND_WORD + " f/name o/asc\n"
+            + "Valid fields: name, tag\n"
+            + "Valid orderings: asc, desc";
 
     public static final String MESSAGE_SUCCESS = "Sorted all persons by %s in %s order";
 
