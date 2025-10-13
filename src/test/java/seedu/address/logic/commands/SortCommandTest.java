@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -99,21 +100,22 @@ public class SortCommandTest {
     @Test
     public void execute_sortInvalidField_throwsCommandException() {
         SortCommand command = new SortCommand(INVALID_FIELD, ASCENDING_ORDER);
-        assertCommandFailure(command, model, SortCommand.INVALID_FIELD_MESSAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
     public void execute_sortInvalidOrder_throwsCommandException() {
         SortCommand command = new SortCommand(NAME_FIELD, INVALID_ORDER);
-        assertCommandFailure(command, model, SortCommand.INVALID_ORDER_MESSAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test
     public void execute_sortInvalidArgs_throwsCommandException() {
         SortCommand command = new SortCommand(INVALID_FIELD, INVALID_ORDER);
-
-        // Checks if field is valid before checking if order is valid
-        assertCommandFailure(command, model, SortCommand.INVALID_FIELD_MESSAGE);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        assertCommandFailure(command, model, expectedMessage);
     }
 
     @Test

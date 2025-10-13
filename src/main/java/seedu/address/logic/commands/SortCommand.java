@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Comparator;
 
@@ -21,9 +22,6 @@ public class SortCommand extends Command {
             + "Example: " + COMMAND_WORD + " f/name o/asc";
 
     public static final String MESSAGE_SUCCESS = "Sorted all persons by %s in %s order";
-
-    public static final String INVALID_FIELD_MESSAGE = "Invalid field! Valid fields: name, tag";
-    public static final String INVALID_ORDER_MESSAGE = "Invalid order! Use 'asc' or 'desc'";
 
     private String field;
     private String order;
@@ -79,7 +77,7 @@ public class SortCommand extends Command {
                           .orElse(""));
             break;
         default:
-            throw new CommandException(INVALID_FIELD_MESSAGE);
+            throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 
         switch (order.toLowerCase()) {
@@ -90,7 +88,7 @@ public class SortCommand extends Command {
         case "descending":
             return comparator.reversed();
         default:
-            throw new CommandException(INVALID_ORDER_MESSAGE);
+            throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
     }
 
