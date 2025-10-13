@@ -1,0 +1,5 @@
+# Ignore UI Components Test Path Checking for codecov
+# Reason: (JavaFX Components testing is tightly coupled, causing disproportionate amounts of missed lines in report)
+
+ignore:
+  - "main/java/seedu.address/ui"
