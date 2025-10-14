@@ -2,7 +2,7 @@
   "baseUrl": "",
   "titlePrefix": "FastCard",
   "titleSuffix": "For Efficient Professionals",
-  "faviconPath": "images/fastcard_logo_plain.png",
+  "faviconPath": "images/fastcard_logo_plain_small.png",
   "style": {
     "codeTheme": "light"
   },
