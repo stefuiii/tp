@@ -124,7 +124,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void toStringMethod () {
+    public void toStringMethod() {
         Name targetName = new Name("Alice Pauline");
         DeleteCommand deleteCommand = new DeleteCommand(targetName);
         String expected = DeleteCommand.class.getCanonicalName() + "{targetName=" + targetName + "}";
@@ -136,7 +136,7 @@ public class DeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson (Model model){
+    private void showNoPerson(Model model) {
         model.updateFilteredPersonList(p -> false);
 
         assertTrue(model.getFilteredPersonList().isEmpty());
