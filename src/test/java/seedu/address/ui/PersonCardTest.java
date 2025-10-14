@@ -42,7 +42,7 @@ public class PersonCardTest {
                 new Phone("80396190"),
                 new Email("unknown@example.com"),
                 new Address("N/A"),
-                Collections.<Tag>emptySet()
+                new java.util.HashSet<Tag>()
         );
 
         PersonCard card = new PersonCard(person, 1);
@@ -61,7 +61,7 @@ public class PersonCardTest {
                 new Phone("80396190"),
                 new Email("linghui@nus.edu.sg"),
                 new Address("NUS Computing"),
-                Collections.<Tag>emptySet()
+                new java.util.HashSet<Tag>()
         );
 
         PersonCard card = new PersonCard(person, 1);
