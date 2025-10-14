@@ -24,8 +24,16 @@ public class PersonCardTest {
 
     @BeforeAll
     static void setupJavaFx() {
-        // Initialize JavaFX environment
-        new JFXPanel();
+        try {
+            // Skip UI initialization in CI headless mode
+            if (System.getenv("CI") != null) {
+                System.out.println("Running in CI environment, skipping JFXPanel initialization.");
+                return;
+            }
+            new JFXPanel(); // only runs locally
+        } catch (UnsupportedOperationException e) {
+            System.out.println("JavaFX not supported in this environment, skipping initialization.");
+        }
     }
 
     private Label getPrivateLabel(PersonCard card, String fieldName) throws Exception {
