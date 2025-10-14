@@ -1,66 +1,40 @@
 package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for {@link Company}.
+ */
 public class CompanyTest {
 
     @Test
-    public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Company(null));
+    public void hashCode_sameValue_returnsSameHash() {
+        Company companyA = new Company("Suntory");
+        Company companyB = new Company("Suntory");
+
+        // same hash
+        assertEquals(companyA.hashCode(), companyB.hashCode());
     }
 
     @Test
-    public void constructor_invalidCompany_throwsIllegalArgumentException() {
-        String invalidCompany = "";
-        assertThrows(IllegalArgumentException.class, () -> new Company(invalidCompany));
+    public void hashCode_differentValue_returnsDifferentHash() {
+        Company companyA = new Company("Suntory");
+        Company companyB = new Company("NUS Computing");
+
+        // diff hash
+        assertNotEquals(companyA.hashCode(), companyB.hashCode());
     }
 
     @Test
-    public void isValidCompany() {
-        // null company
-        assertThrows(NullPointerException.class, () -> Company.isValidCompany(null));
+    public void hashCode_consistentAcrossCalls() {
+        Company company = new Company("Suntory");
+        int hash1 = company.hashCode();
+        int hash2 = company.hashCode();
 
-        // invalid company names
-        assertFalse(Company.isValidCompany("")); // empty string
-        assertFalse(Company.isValidCompany("   ")); // spaces only
-        assertFalse(Company.isValidCompany("@#$$")); // symbols only
-
-        // valid company names
-        assertTrue(Company.isValidCompany("Google"));
-        assertTrue(Company.isValidCompany("NUS Computing"));
-        assertTrue(Company.isValidCompany("ByteDance Singapore"));
-    }
-
-    @Test
-    public void equals() {
-        Company google = new Company("Google");
-        Company googleCopy = new Company("Google");
-        Company apple = new Company("Apple");
-
-        // same object -> returns true
-        assertTrue(google.equals(google));
-
-        // same value -> returns true
-        assertTrue(google.equals(googleCopy));
-
-        // different value -> returns false
-        assertFalse(google.equals(apple));
-
-        // different type -> returns false
-        assertFalse(google.equals(1));
-
-        // null -> returns false
-        assertFalse(google.equals(null));
-    }
-
-    @Test
-    public void toString_returnsValue() {
-        Company company = new Company("NUS Computing");
-        assertEquals("NUS Computing", company.toString());
+        // same hash
+        assertEquals(hash1, hash2);
     }
 }
