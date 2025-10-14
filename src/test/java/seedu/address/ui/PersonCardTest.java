@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-
 import javafx.embed.swing.JFXPanel; // initializes JavaFX
 import javafx.scene.control.Label;
 import seedu.address.model.person.Address;
