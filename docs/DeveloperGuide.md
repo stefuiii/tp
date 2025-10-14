@@ -50,7 +50,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 83559999`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete Alice Pauline`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
@@ -90,9 +90,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <puml src="diagrams/LogicClassDiagram.puml" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 83556666")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete Alice Pauline")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 83556666` Command" />
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete Alice Pauline` Command" />
 
 <box type="info" seamless>
 
@@ -177,7 +177,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 83556666` command to delete the person whose phone number is `83556666` from the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 83556666` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete Alice Pauline` command to delete the person named `Alice Pauline` from the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete Alice Pauline` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
 Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
@@ -313,17 +313,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to delete a contact by phone number 
-2.  FastCard looks for the contact with that phone number
-3.  FastCard deletes the contact 
+1.  User requests to delete a contact by name.
+2.  FastCard finds the contact with that name.
+3.  FastCard deletes the contact.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The given index is invalid.
+* 2a. More than one contact is found with that specific name.
 
-    * 2a1. FastCard shows an error message.
+    * 2a1. FastCard lists the matching contacts.
+    * 2a2. User requests to delete one of the listed contacts by index.
+    * 2a3. FastCard deletes the contact.
+
+      Use case ends.
+
+* 2b. No contact has the provided name.
+
+    * 2b1. FastCard shows an error message.
+
+      Use case resumes at step 1.
+
+* 2c. The provided index does not exist in the displayed list.
+
+    * 2c1. FastCard shows an error message.
 
       Use case resumes at step 1.
 
@@ -467,14 +481,19 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
+   1. Test case: `delete Alice Pauline`<br>
+     Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   
+   1. Test case: 'delete 1'<br>
+     Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+     Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   1. Test case: `delete Jadon Ye` when multiple Jadons exist<br>
+   Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
+
+   1. Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 

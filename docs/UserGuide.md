@@ -131,20 +131,22 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
-
+[Configuration.md](Configuration.md)
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
 
-Format: `delete PHONE`
+Format: `delete NAME` OR 'delete INDEX'
 
-* Deletes the person with the specified `PHONE` number.
-* The phone number must belong to a person in the address book.
-* The phone number must be a valid number.
+* When a name is provided, FastCard deletes the contact whose name matches the input (case-insensitive).
+* If multiple contacts share the same name, FastCard automatically lists the matching contacts. Delete the intended person by running `delete INDEX` using the index shown in that list.
+* When an index is provided, the command deletes the contact at that index in the currently displayed list.
+* The index must be a valid positive integer within the displayed list.
+
 
 Examples:
-* `list` followed by `delete 83556666` deletes the person whose phone number is `83556666`.
-* `find Betsy` followed by `delete 83556666` deletes the person with the phone number `83556666` in the results of the `find` command.
+* `delete Alice Pauline` deletes the contact named `Alice Pauline` when she is the only contact with that name.
+* `find Jadon` followed by `delete 2` deletes the second person named `Jadon` shown in the results of the `find` command after multiple Jadons were listed.
 
 ### Clearing all entries : `clear`
 
