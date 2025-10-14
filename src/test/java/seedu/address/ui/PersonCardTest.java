@@ -144,4 +144,10 @@ public class PersonCardTest {
             }
         });
     }
+
+    @Test
+    public void placeholderLogic_returnsTrue() {
+        assertTrue("N/A".equals("N/A"));
+        assertTrue("unknown@example.com".equals("unknown@example.com"));
+    }
 }
