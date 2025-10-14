@@ -1,8 +1,8 @@
 {
   "baseUrl": "",
   "titlePrefix": "FastCard",
-  "titleSuffix": "AddressBook Level-3",
-  "faviconPath": "images/SeEduLogo.png",
+  "titleSuffix": "For Efficient Professionals",
+  "faviconPath": "images/fastcard_logo_plain.png",
   "style": {
     "codeTheme": "light"
   },
