@@ -123,22 +123,22 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstByIndexCommand.equals(new DeleteCommand(secondIndex)));
     }
 
-        @Test
-        public void toStringMethod () {
-            Name targetName = new Name("Alice Pauline");
-            DeleteCommand deleteCommand = new DeleteCommand(targetName);
-            String expected = DeleteCommand.class.getCanonicalName() + "{targetName=" + targetName + "}";
+    @Test
+    public void toStringMethod () {
+        Name targetName = new Name("Alice Pauline");
+        DeleteCommand deleteCommand = new DeleteCommand(targetName);
+        String expected = DeleteCommand.class.getCanonicalName() + "{targetName=" + targetName + "}";
 
-            assertEquals(expected, deleteCommand.toString());
-        }
-
-
-        /**
-         * Updates {@code model}'s filtered list to show no one.
-         */
-        private void showNoPerson (Model model){
-            model.updateFilteredPersonList(p -> false);
-
-            assertTrue(model.getFilteredPersonList().isEmpty());
-        }
+        assertEquals(expected, deleteCommand.toString());
     }
+
+
+    /**
+     * Updates {@code model}'s filtered list to show no one.
+     */
+    private void showNoPerson (Model model){
+        model.updateFilteredPersonList(p -> false);
+
+        assertTrue(model.getFilteredPersonList().isEmpty());
+    }
+}
