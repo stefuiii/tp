@@ -41,11 +41,11 @@ public class Messages {
         builder.append("Name: ").append(person.getName())
                 .append("\nPhone: ").append(person.getPhone());
 
-        if (person.getEmail() != null && !person.getEmail().value.equals("unknown@example.com")) {
+        if (!person.getEmail().value.equals("unknown@example.com")) {
             builder.append("\nEmail: ").append(person.getEmail());
         }
 
-        if (person.getAddress() != null && !person.getAddress().value.equals("N/A")) {
+        if (!person.getAddress().value.equals("N/A")) {
             builder.append("\nAddress: ").append(person.getAddress());
         }
 
