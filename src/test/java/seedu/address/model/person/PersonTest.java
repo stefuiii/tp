@@ -12,6 +12,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
@@ -32,23 +34,23 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same name, all other attributes different -> returns true
+        // same name, all other attributes different -> returns false
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
+        assertFalse(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
+        // name differs in case, all other attributes same -> returns true
         Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertFalse(BOB.isSamePerson(editedBob));
+        assertTrue(BOB.isSamePerson(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, all other attributes same -> returns True
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
-        assertFalse(BOB.isSamePerson(editedBob));
+        assertTrue(BOB.isSamePerson(editedBob));
     }
 
     @Test
@@ -96,4 +98,27 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
+
+    @Test
+    public void isSamePerson_caseInsensitiveAndWhitespaceIgnored_returnsTrue() {
+        Person p1 = new Person(new Name("John   Doe"), new Phone("91234567"), new Email("john@example.com"),
+                new Address("Kent Ridge"), new HashSet<>());
+
+        Person p2 = new Person(new Name("  john doe "), new Phone("91234567"), new Email("john.d@example.com"),
+                new Address("Kent Ridge"), new HashSet<>());
+
+        assertTrue(p1.isSamePerson(p2));
+    }
+
+    @Test
+    public void isSamePerson_differentPhone_returnsFalse() {
+        Person p1 = new Person(new Name("John Doe"), new Phone("91234567"), new Email("john@example.com"),
+                new Address("Kent Ridge"), new HashSet<>());
+
+        Person p2 = new Person(new Name("John Doe"), new Phone("98765432"), new Email("john@example.com"),
+                new Address("Kent Ridge"), new HashSet<>());
+
+        assertFalse(p1.isSamePerson(p2));
+    }
+
 }

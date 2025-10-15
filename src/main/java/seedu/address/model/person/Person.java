@@ -62,16 +62,29 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
-     * This defines a weaker notion of equality between two persons.
+     * Returns true if both persons are considered the same based on name (case-insensitive, normalized spacing)
+     * and phone number. Used for duplicate detection.
      */
     public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
             return true;
         }
+        if (otherPerson == null) {
+            return false;
+        }
 
-        return otherPerson != null
-                && otherPerson.getName().equals(getName());
+        String thisName = normalizeName(this.name.fullName);
+        String otherName = normalizeName(otherPerson.name.fullName);
+
+        return thisName.equalsIgnoreCase(otherName)
+                && this.phone.equals(otherPerson.phone);
+    }
+
+    /**
+     * Normalize a name string by trimming and collapsing multiple spaces into one.
+     */
+    private static String normalizeName(String name) {
+        return name == null ? "" : name.trim().replaceAll("\\s+", " ");
     }
 
     /**
