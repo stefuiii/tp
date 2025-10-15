@@ -95,7 +95,7 @@ public class SortCommand extends Command {
     }
 
     /**
-     * Returns the full format of a speicifed order
+     * Returns the full format of a specified order
      * Precondition: Order is valid and is either an abbreviation or the full format
      * @return String containing the full format of the order
      */

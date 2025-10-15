@@ -133,7 +133,7 @@ Orders contacts in a chosen sequence.
 
 Format: `sort f/[FIELD] o/[ORDER]`
 
-* Sorting is case-insensitive. e.g `sort f/NAME o/ASC` will be treated as `sort f/NAME o/ASC`
+* Sorting is case-insensitive. e.g `sort f/NAME o/ASC` will be treated as `sort f/name o/asc`
 * The order of keywords does not matter. e.g `sort f/name o/asc` and `sort o/asc f/name` will be treated the name.
 * Only one field and one order can be used in a sort command.
 * Abbreviated order formats will be treated as their full formats. e.g `o/asc` and `o/desc` will be treated as `o/ascending` and `o/descending`
