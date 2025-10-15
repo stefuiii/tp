@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -87,6 +88,11 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
+     * Sorts the contacts list based on the comparator provided.
+     */
+    void sortPersons(Comparator<Person> comparator);
+
+    /**
      * Adds new command to Command History
      */
     void saveNewCommand(String newCommand);
@@ -100,6 +106,4 @@ public interface Model {
      * Gets the next command (relative to position in history)
      */
     String getNextCommand();
-
-
 }
