@@ -84,7 +84,7 @@ public class Person {
      * Normalize a name string by trimming and collapsing multiple spaces into one.
      */
     private static String normalizeName(String name) {
-        return name == null ? "" : name.trim().replaceAll("\\s+", " ");
+        return name.trim().replaceAll("\\s+", " ");
     }
 
     /**
