@@ -36,9 +36,9 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+            + "by the index number or contact name used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer) or NAME "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -46,13 +46,22 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com" + "\n"
+            + "Example: " + COMMAND_WORD + " John Doe "
+            + PREFIX_EMAIL + "john.doe@company.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_MULTIPLE_MATCHING_PERSONS =
+            "There are multiple contacts’ names matched with the reference.\n"
+            + "Please use the edit /index {index} to specify the contact you want to edit "
+            + "in the following list of matched contacts.";
+    public static final String MESSAGE_PERSON_NAME_NOT_FOUND =
+            "The person name provided does not match any displayed contact.";
 
     private final Index index;
+    private final String nameReference;
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
@@ -64,6 +73,19 @@ public class EditCommand extends Command {
         requireNonNull(editPersonDescriptor);
 
         this.index = index;
+        this.nameReference = null;
+        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+    }
+
+    /**
+     * Constructs an EditCommand that targets a person by name reference rather than index.
+     */
+    public EditCommand(String nameReference, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(nameReference);
+        requireNonNull(editPersonDescriptor);
+
+        this.index = null;
+        this.nameReference = nameReference;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
@@ -72,11 +94,32 @@ public class EditCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        Person personToEdit;
+        if (index != null) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            personToEdit = lastShownList.get(index.getZeroBased());
+        } else {
+            String normalizedQuery = normalizeName(nameReference);
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+            // Find exact name matches (case-insensitive, multiple spaces collapsed)
+            java.util.List<Person> matchedPersons = lastShownList.stream()
+                    .filter(p -> normalizeName(p.getName().toString()).equalsIgnoreCase(normalizedQuery))
+                    .collect(java.util.stream.Collectors.toList());
+
+            if (matchedPersons.isEmpty()) {
+                throw new CommandException(MESSAGE_PERSON_NAME_NOT_FOUND);
+            }
+
+            if (matchedPersons.size() > 1) {
+                model.updateFilteredPersonList(p -> normalizeName(p.getName().toString())
+                        .equalsIgnoreCase(normalizedQuery));
+                throw new CommandException(MESSAGE_MULTIPLE_MATCHING_PERSONS);
+            }
+
+            personToEdit = matchedPersons.get(0);
+        }
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -116,7 +159,8 @@ public class EditCommand extends Command {
         }
 
         EditCommand otherEditCommand = (EditCommand) other;
-        return index.equals(otherEditCommand.index)
+        return java.util.Objects.equals(index, otherEditCommand.index)
+                && java.util.Objects.equals(nameReference, otherEditCommand.nameReference)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
 
@@ -124,8 +168,14 @@ public class EditCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
+                .add("nameReference", nameReference)
                 .add("editPersonDescriptor", editPersonDescriptor)
                 .toString();
+    }
+
+    private static String normalizeName(String raw) {
+        String trimmed = raw.trim();
+        return trimmed.replaceAll("\\s+", " ");
     }
 
     /**
