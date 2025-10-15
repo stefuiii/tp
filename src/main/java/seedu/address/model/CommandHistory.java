@@ -81,7 +81,7 @@ public class CommandHistory implements ReadOnlyCommandHistory {
 
     /**
      * Get the Next Command relative to user's position in history
-     * @return NExt Command String
+     * @return Next Command String
      */
     public String getNextCommand() {
         // Limit to minimum of -1 currentIndex to represent history not in focus
