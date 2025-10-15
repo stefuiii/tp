@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.model.person.Person;
 
 /**
@@ -23,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final CommandHistory commandHistory;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -34,6 +36,7 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.commandHistory = new CommandHistory();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -150,6 +153,22 @@ public class ModelManager implements Model {
         return addressBook.equals(otherModelManager.addressBook)
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
+    }
+
+    //=========== Command History Accessors =============================================================
+    @Override
+    public void saveNewCommand(String newCommand) {
+        commandHistory.saveNewCommand(newCommand);
+    }
+
+    @Override
+    public String getPreviousCommand() throws EndOfCommandHistoryException {
+        return commandHistory.getPreviousCommand();
+    }
+
+    @Override
+    public String getNextCommand() {
+        return commandHistory.getNextCommand();
     }
 
 }

@@ -163,6 +163,20 @@ public class AddCommandTest {
         public void sortPersons(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }
+
+        public void saveNewCommand(String newCommand) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public String getPreviousCommand() {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public String getNextCommand() {
+            throw new AssertionError("This method should not be called");
+        }
     }
 
     /**
