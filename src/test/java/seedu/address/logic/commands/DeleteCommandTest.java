@@ -70,6 +70,16 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_invalidIndexFilteredList_throwsCommandException() {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
     public void execute_duplicateNames_showsListWithoutDeleting() {
         Person basePerson = model.getFilteredPersonList().get(0);
         Person duplicatePerson = new PersonBuilder(basePerson)
@@ -132,6 +142,14 @@ public class DeleteCommandTest {
         assertEquals(expected, deleteCommand.toString());
     }
 
+    @Test
+    public void toStringMethod_indexTarget() {
+        Index targetIndex = Index.fromOneBased(1);
+        DeleteCommand deleteCommand = new DeleteCommand(targetIndex);
+        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+
+        assertEquals(expected, deleteCommand.toString());
+    }
 
     /**
      * Updates {@code model}'s filtered list to show no one.
