@@ -158,19 +158,27 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
+
 ### Filtering contacts: `filter`
 
-Filters contacts whose information contains any of the given tags.
+Filters contacts whose information contains any of the given tags listed.
 
 Format `filter t/[TAG]...`
 
+* You must specify at least one tag.
+* You can specify more than one tag.
+    * If you specify more than one tag, contacts that contain **any** of the tags listed will be shown in the filtered list.
+* You may list the tags in any order. e.g `filter t/friends t/colleague` and `filter t/colleague t/friends` will be treated the same
 * Filter is case-insensitive. e.g `t/FRIENDS will be treated as t/friends`
-* The order of tags does not matter.
-* Only full tags will be matched
-* Contacts containing at least one tag will be shown (i.e. `OR` search).
+* Only full tags will be matched. e.g `t/friend` and `t/friends` are considered different tags
+
 ### Sorting contacts: `sort`
 
-Orders contacts in a chosen sequence.
+Orders the current view of contacts by the specified field in alphabetically ascending or descending order.
 
 Format: `sort f/[FIELD] o/[ORDER]`
 
@@ -179,10 +187,10 @@ Format: `sort f/[FIELD] o/[ORDER]`
 * Only one field and one order can be used in a sort command.
 * Abbreviated order formats will be treated as their full formats. e.g `o/asc` and `o/desc` will be treated as `o/ascending` and `o/descending`
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+Example: 
+* `sort f/name o/asc` sorts contacts by name in alphabetical order
+* `sort f/tag o/desc` sorts contacts by the first alphabetically ordered tag in descending order.
+    * Note that if a contact has no tags, it is treated as though it has a tag that precedes all others alphabetically.
 
 ### Deleting a person : `delete`
 
