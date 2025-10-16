@@ -26,7 +26,7 @@ public class AddCommandBasic extends Command {
             + PREFIX_NAME + "Jadon "
             + PREFIX_PHONE + "88880000";
 
-    public static final String MESSAGE_SUCCESS = "New basic person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "You have successfully added this contact: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;

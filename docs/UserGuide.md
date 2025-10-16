@@ -76,27 +76,57 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
-### Adding a person: `add`
-
-Adds a person to FastCard.
-
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-
-<box type="tip" seamless>
-
-**Tip:** A person can have any number of tags (including 0)
-</box>
-
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
 ### Listing all persons : `list`
 
-Shows a list of all persons stored in FastCard.
+Shows a list of all persons in the address book.
 
 Format: `list`
+
+### **Adding a person (basic information only)** : `addbasic`
+
+Adds a person with only basic information (name and phone number) to the address book.
+
+**Format:**
+
+```
+addbasic n/NAME p/PHONE
+```
+
+* Adds a person with the specified name and phone number.
+* The `NAME` must only contain alphanumeric characters and spaces.
+* The `PHONE` must be a valid 3–digit or longer number.
+* Duplicate persons (same phone number) will not be added.
+
+    * Duplicate detection is **case-insensitive** and **whitespace-insensitive** (e.g. `John Doe` and `  john   doe  ` are treated as the same).
+
+**Examples:**
+
+* `addbasic n/Alice Tan p/91234567`
+  Adds a person named *Alice Tan* with phone number *91234567*.
+
+
+### **Adding a person (with detailed information)** : `add`
+
+Adds a person with detailed information such as name, phone, email, address, and tags.
+
+**Format:**
+
+```
+add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
+```
+
+* Adds a person with all specified details to the address book.
+* The `NAME`, `PHONE`, `ADDRESS`, and `EMAIL` fields must be provided.
+* The person’s phone number must be unique — duplicates are not allowed.
+* When multiple tags are provided, they will all be added to the person.
+
+**Examples:**
+
+* `add n/John Doe p/91234567 e/john@example.com a/Kent Ridge t/friend t/colleague`
+  Adds a detailed contact with tags.
+* `add n/Betsy Crower p/93456789 e/betsy@example.com a/Clementi`
+  Adds a new person without tags.
+
 
 ### Editing a person : `edit`
 
@@ -128,6 +158,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+### Filtering contacts: `filter`
+
+Filters contacts whose information contains any of the given tags.
+
+Format `filter t/[TAG]...`
+
+* Filter is case-insensitive. e.g `t/FRIENDS will be treated as t/friends`
+* The order of tags does not matter.
+* Only full tags will be matched
+* Contacts containing at least one tag will be shown (i.e. `OR` search).
 ### Sorting contacts: `sort`
 
 Orders contacts in a chosen sequence.

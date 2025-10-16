@@ -27,8 +27,9 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        fullName = name;
+        String normalized = name.trim().replaceAll("\\s+", " ");
+        checkArgument(isValidName(normalized), MESSAGE_CONSTRAINTS);
+        fullName = normalized;
     }
 
     /**
