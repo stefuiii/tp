@@ -3,8 +3,11 @@
 </head-bottom>
 
 <header sticky>
-  <navbar type="dark">
-    <a slot="brand" href="{{baseUrl}}/index.html" title="Home" class="navbar-brand">FastCard</a>
+  <navbar type="dark" class="top-nav">
+    <a slot="brand" href="{{baseUrl}}/index.html" title="Home" class="navbar-brand">
+        FastCard
+        <img src="{{baseUrl}}/images/fastcard_logo_plain_small.png" class="nav-logo"/>
+    </a>
     <li><a href="{{baseUrl}}/index.html" class="nav-link">Home</a></li>
     <li><a href="{{baseUrl}}/UserGuide.html" class="nav-link">User Guide</a></li>
     <li><a href="{{baseUrl}}/DeveloperGuide.html" class="nav-link">Developer Guide</a></li>

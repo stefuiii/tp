@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -47,4 +48,20 @@ public interface Logic {
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Saves command into history
+     */
+    void saveNewCommand(String newCommand);
+
+    /**
+     * Returns the String of the previous command (relative to previous command index user is on)
+     */
+    String getPreviousCommand() throws EndOfCommandHistoryException;
+
+    /**
+     * Returns the String of the next command (relative to previous command index user is on)
+     */
+    String getNextCommand();
+
 }
