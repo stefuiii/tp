@@ -64,11 +64,12 @@ public class CommandBox extends UiPart<Region> {
         if (event.getCode() == KeyCode.UP) {
             String prevCommand = historyGetter.navigateCommandHistory(-1);
             commandTextField.setText(prevCommand);
+            Platform.runLater(() -> commandTextField.end()); // Set cursor to end of line
         } else if (event.getCode() == KeyCode.DOWN) {
             String nextCommand = historyGetter.navigateCommandHistory(1);
             commandTextField.setText(nextCommand);
+            Platform.runLater(() -> commandTextField.end()); // Set cursor to end of line
         }
-        Platform.runLater(() -> commandTextField.end()); // Set cursor to end of line
 
 
     }
