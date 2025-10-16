@@ -135,14 +135,17 @@ Examples:
 
 ### Filtering contacts: `filter`
 
-Filters contacts whose information contains any of the given tags.
+Filters contacts whose information contains any of the given tags listed.
 
 Format `filter t/[TAG]...`
 
+* You must specify at least one tag.
+* You can specify more than one tag.
+    * If you specify more than one tag, contacts that contain **any** of the tags listed will be shown in the filtered list.
+* You may list the tags in any order. e.g `filter t/friends t/colleague` and `filter t/colleague t/friends` will be treated the same
 * Filter is case-insensitive. e.g `t/FRIENDS will be treated as t/friends`
-* The order of tags does not matter.
-* Only full tags will be matched
-* Contacts containing at least one tag will be shown (i.e. `OR` search).
+* Only full tags will be matched. e.g `t/friend` and `t/friends` are considered different tags
+
 ### Sorting contacts: `sort`
 
 Orders the current view of contacts by the specified field in alphabetically ascending or descending order.
