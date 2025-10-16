@@ -251,4 +251,49 @@ public class EditCommandTest {
         assertEquals(expected, editCommand.toString());
     }
 
+    @Test
+    public void equals_nameBased() {
+        String nameRef = "Alice Pauline";
+        EditPersonDescriptor descriptor = new EditPersonDescriptor(DESC_AMY);
+
+        // same values -> returns true
+        assertTrue(
+                new EditCommand(nameRef, descriptor)
+                        .equals(new EditCommand(nameRef, new EditPersonDescriptor(DESC_AMY)))
+        );
+
+        // different name -> returns false
+        assertFalse(
+                new EditCommand(nameRef, descriptor)
+                        .equals(new EditCommand(
+                                "Alice   Pauline  ",
+                                new EditPersonDescriptor(DESC_AMY)
+                        ))
+        );
+    }
+
+    @Test
+    public void executeByName_normalizationSingleMatch_success() throws Exception {
+        // Build a model with a single matching name (case-insensitive, extra spaces)
+        AddressBook addressBook = new AddressBook();
+        Person john = new PersonBuilder().withName("John Smith").withPhone("80000001")
+                .withEmail("john@example.com").withAddress("A Street").build();
+        Person jane = new PersonBuilder().withName("Jane Doe").withPhone("80000002")
+                .withEmail("jane@example.com").withAddress("B Street").build();
+        addressBook.addPerson(john);
+        addressBook.addPerson(jane);
+        Model singleModel = new ModelManager(addressBook, new UserPrefs());
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand("  JOHN    SMITH  ", descriptor);
+
+        Person editedJohn = new PersonBuilder(john).withPhone(VALID_PHONE_BOB).build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedJohn));
+
+        Model expectedModel = new ModelManager(new AddressBook(singleModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(john, editedJohn);
+
+        assertCommandSuccess(editCommand, singleModel, expectedMessage, expectedModel);
+    }
+
 }
