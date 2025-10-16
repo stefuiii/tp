@@ -128,6 +128,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+### Filtering contacts: `filter`
+
+Filters contacts whose information contains any of the given tags.
+
+Format `filter t/[TAG]...`
+
+* Filter is case-insensitive. e.g `t/FRIENDS will be treated as t/friends`
+* The order of tags does not matter.
+* Only full tags will be matched
+* Contacts containing at least one tag will be shown (i.e. `OR` search).
 ### Sorting contacts: `sort`
 
 Orders contacts in a chosen sequence.
