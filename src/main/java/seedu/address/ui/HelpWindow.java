@@ -15,7 +15,7 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
+    public static final String USERGUIDE_URL = "https://ay2526s1-cs2103t-f11-4.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
@@ -23,6 +23,9 @@ public class HelpWindow extends UiPart<Stage> {
 
     @FXML
     private Button copyButton;
+
+    @FXML
+    private Button openButton;
 
     @FXML
     private Label helpMessage;
@@ -98,5 +101,16 @@ public class HelpWindow extends UiPart<Stage> {
         final ClipboardContent url = new ClipboardContent();
         url.putString(USERGUIDE_URL);
         clipboard.setContent(url);
+    }
+
+    @FXML
+    private void openUserGuideLink() {
+        try {
+            // Opens a new browser tab with UserGuide Link and close the help window
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(USERGUIDE_URL));
+            getRoot().close();
+        } catch (Exception e) {
+            logger.fine(e.getMessage());
+        }
     }
 }
