@@ -15,6 +15,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
 
@@ -128,5 +129,36 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void saveAndRetrieveCommandsFromHistory() {
+        // Save commands
+        modelManager.saveNewCommand("test3");
+        modelManager.saveNewCommand("test2");
+        modelManager.saveNewCommand("test1");
+        modelManager.saveNewCommand("test0");
+
+        for (int i = 0; i < 5; i++) {
+            try {
+                // Get the first 4 and assert commands are accurate
+                String command = modelManager.getPreviousCommand();
+                assertEquals("test" + i, command);
+            } catch (EndOfCommandHistoryException e) {
+                // Check out-of-bounds return proper error message
+                assertEquals("End of Command History reached", e.getMessage());
+            }
+        }
+
+        // Check get Next Features
+        for (int i = 3; i >= 0; i--) {
+            // Reverse direction and get the 4 commands again using NextCommand
+            String command = modelManager.getNextCommand();
+            assertEquals("test" + i, command);
+        }
+
+        // Check twice getting beyond latest command (Expect return empty string)
+        assertEquals("", modelManager.getNextCommand());
+        assertEquals("", modelManager.getNextCommand());
     }
 }

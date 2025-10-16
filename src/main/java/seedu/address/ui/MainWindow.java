@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -119,7 +120,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        CommandBox commandBox = new CommandBox(this::executeCommand, this::navigateCommandHistory);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -173,6 +174,10 @@ public class MainWindow extends UiPart<Stage> {
      * @see seedu.address.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
+
+        // Save command typed into history
+        logic.saveNewCommand(commandText);
+
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
@@ -186,11 +191,37 @@ public class MainWindow extends UiPart<Stage> {
                 handleExit();
             }
 
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
+
     }
+
+    /**
+     * Gets either previous or next command
+     * Previous (-1)
+     * Next (1)
+     * @return String of command in history
+     */
+    private String navigateCommandHistory(int historyDirection) {
+        String targetCommand = "";
+        try {
+            if (historyDirection == -1) {
+                targetCommand = logic.getPreviousCommand();
+            } else if (historyDirection == 1) {
+                targetCommand = logic.getNextCommand();
+            }
+            // Clear Feedback pane when valid history call
+            resultDisplay.setFeedbackToUser("");
+
+        } catch (EndOfCommandHistoryException e) {
+            resultDisplay.setFeedbackToUser(e.getMessage());
+        }
+        return targetCommand;
+    }
+
 }

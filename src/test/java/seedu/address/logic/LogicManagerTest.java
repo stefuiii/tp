@@ -18,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ListCommand;
@@ -85,6 +86,37 @@ public class LogicManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void saveAndRetrieveCommandsFromHistory() {
+        // Save commands
+        logic.saveNewCommand("test3");
+        logic.saveNewCommand("test2");
+        logic.saveNewCommand("test1");
+        logic.saveNewCommand("test0");
+
+        for (int i = 0; i < 5; i++) {
+            try {
+                // Get the first 4 and assert commands are accurate
+                String command = logic.getPreviousCommand();
+                assertEquals("test" + i, command);
+            } catch (EndOfCommandHistoryException e) {
+                // Check out-of-bounds return proper error message
+                assertEquals("End of Command History reached", e.getMessage());
+            }
+        }
+
+        // Check get Next Features
+        for (int i = 3; i >= 0; i--) {
+            // Reverse direction and get the 4 commands again using NextCommand
+            String command = logic.getNextCommand();
+            assertEquals("test" + i, command);
+        }
+
+        // Check twice getting beyond latest command (Expect return empty string)
+        assertEquals("", logic.getNextCommand());
+        assertEquals("", logic.getNextCommand());
     }
 
     /**

@@ -1,14 +1,14 @@
-# FastCard - For Efficient Professionals
+# FastCard
 
 [![CI Status](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-F11-4/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/github/AY2526S1-CS2103T-F11-4/tp/graph/badge.svg?token=C7VKPW98S1)](https://codecov.io/github/AY2526S1-CS2103T-F11-4/tp)
 
-![Ui](images/Ui.png)
+![Hero Image](images/fastcard_hero.png)
 
-**AddressBook is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
+**FastCard is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 
-* If you are interested in using AddressBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
-* If you are interested about developing AddressBook, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
+* If you are interested in using FastCard, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
+* If you are interested about developing FastCard, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
 ---
 
 ### Acknowledgement

@@ -34,12 +34,23 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        Index index;
-
+        String preamble = argMultimap.getPreamble();
+        Index index = null;
+        boolean isIndex;
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            index = ParserUtil.parseIndex(preamble);
+            isIndex = true;
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+            isIndex = false;
+        }
+
+        boolean anyFieldPresent = argMultimap.getValue(PREFIX_NAME).isPresent()
+                || argMultimap.getValue(PREFIX_PHONE).isPresent()
+                || argMultimap.getValue(PREFIX_EMAIL).isPresent()
+                || argMultimap.getValue(PREFIX_ADDRESS).isPresent()
+                || !argMultimap.getAllValues(PREFIX_TAG).isEmpty();
+        if ((preamble == null || preamble.trim().isEmpty()) && !anyFieldPresent) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
@@ -64,7 +75,16 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        if (isIndex) {
+            return new EditCommand(index, editPersonDescriptor);
+        }
+
+        // Name-based: require non-empty preamble after trimming; validation will occur during execution
+        String nameReference = preamble == null ? "" : preamble.trim();
+        if (nameReference.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        return new EditCommand(nameReference, editPersonDescriptor);
     }
 
     /**
