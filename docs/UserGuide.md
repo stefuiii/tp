@@ -145,7 +145,7 @@ Format `filter t/[TAG]...`
 * Contacts containing at least one tag will be shown (i.e. `OR` search).
 ### Sorting contacts: `sort`
 
-Orders contacts in a chosen sequence.
+Orders the current view of contacts by the specified field in alphabetically ascending or descending order.
 
 Format: `sort f/[FIELD] o/[ORDER]`
 
@@ -153,6 +153,11 @@ Format: `sort f/[FIELD] o/[ORDER]`
 * The order of keywords does not matter. e.g `sort f/name o/asc` and `sort o/asc f/name` will be treated the name.
 * Only one field and one order can be used in a sort command.
 * Abbreviated order formats will be treated as their full formats. e.g `o/asc` and `o/desc` will be treated as `o/ascending` and `o/descending`
+
+Example: 
+* `sort f/name o/asc` sorts contacts by name in alphabetical order
+* `sort f/tag o/desc` sorts contacts by the first alphabetically ordered tag in descending order.
+    * Note that if a contact has no tags, it is treated as though it has a tag that precedes all others alphabetically.
 
 ### Deleting a person : `delete`
 
