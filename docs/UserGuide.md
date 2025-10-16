@@ -128,6 +128,11 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
+
 ### Filtering contacts: `filter`
 
 Filters contacts whose information contains any of the given tags.
@@ -148,11 +153,6 @@ Format: `sort f/[FIELD] o/[ORDER]`
 * The order of keywords does not matter. e.g `sort f/name o/asc` and `sort o/asc f/name` will be treated the name.
 * Only one field and one order can be used in a sort command.
 * Abbreviated order formats will be treated as their full formats. e.g `o/asc` and `o/desc` will be treated as `o/ascending` and `o/descending`
-
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a person : `delete`
 
