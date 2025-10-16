@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -100,6 +101,62 @@ public class EditCommandTest {
     }
 
     @Test
+    public void executeByName_someFieldsSpecifiedUnfilteredList_success() {
+        Person original = model.getFilteredPersonList().get(0);
+        String targetName = original.getName().toString();
+
+        Person editedPerson = new PersonBuilder(original).withPhone(VALID_PHONE_BOB).build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand(targetName, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(original, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void executeByName_multipleMatches_failure() {
+        // Build a model with two persons of the same name
+        AddressBook addressBook = new AddressBook();
+        Person john1 = new PersonBuilder().withName("John Smith").withPhone("80000001")
+                .withEmail("john1@example.com").withAddress("A Street").build();
+        Person john2 = new PersonBuilder().withName("John Smith").withPhone("80000002")
+                .withEmail("john2@example.com").withAddress("B Street").build();
+        Person other = new PersonBuilder().withName("Jane Doe").withPhone("80000003")
+                .withEmail("jane@example.com").withAddress("C Street").build();
+        addressBook.addPerson(john1);
+        addressBook.addPerson(john2);
+        addressBook.addPerson(other);
+        Model multiModel = new ModelManager(addressBook, new UserPrefs());
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand("John   Smith", descriptor); // extra spaces to test normalization
+
+        try {
+            editCommand.execute(multiModel);
+        } catch (CommandException ce) {
+            assertEquals(EditCommand.MESSAGE_MULTIPLE_MATCHING_PERSONS, ce.getMessage());
+            // filtered list should now contain only the two Johns
+            assertEquals(2, multiModel.getFilteredPersonList().size());
+            assertTrue(multiModel.getFilteredPersonList().contains(john1));
+            assertTrue(multiModel.getFilteredPersonList().contains(john2));
+            return;
+        }
+        throw new AssertionError("Expected CommandException was not thrown.");
+    }
+
+    @Test
+    public void executeByName_nameNotFound_failure() {
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand("Nonexistent Name", descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_PERSON_NAME_NOT_FOUND);
+    }
+
+    @Test
     public void execute_duplicatePersonUnfilteredList_failure() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
@@ -169,6 +226,9 @@ public class EditCommandTest {
 
         // different descriptor -> returns false
         assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+
+        // name-based vs index-based -> returns false
+        assertFalse(standardCommand.equals(new EditCommand("Alice Pauline", DESC_AMY)));
     }
 
     @Test
@@ -176,8 +236,18 @@ public class EditCommandTest {
         Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         EditCommand editCommand = new EditCommand(index, editPersonDescriptor);
-        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
-                + editPersonDescriptor + "}";
+        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", nameReference=" + null
+                + ", editPersonDescriptor=" + editPersonDescriptor + "}";
+        assertEquals(expected, editCommand.toString());
+    }
+
+    @Test
+    public void toStringMethod_nameBased() {
+        String nameRef = "Alice Pauline";
+        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditCommand editCommand = new EditCommand(nameRef, editPersonDescriptor);
+        String expected = EditCommand.class.getCanonicalName() + "{index=" + null + ", nameReference=" + nameRef
+                + ", editPersonDescriptor=" + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
 

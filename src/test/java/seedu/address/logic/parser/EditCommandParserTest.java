@@ -56,8 +56,8 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        // no index specified but name provided with no fields
+        assertParseFailure(parser, VALID_NAME_AMY, EditCommand.MESSAGE_NOT_EDITED);
 
         // no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
@@ -68,17 +68,11 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        // invalid arguments being parsed as preamble (index specified, but no valid fields)
+        assertParseFailure(parser, "1 some random string", EditCommand.MESSAGE_NOT_EDITED);
 
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        // invalid prefix being parsed as preamble (index specified, but no valid fields)
+        assertParseFailure(parser, "1 i/ string", EditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
@@ -160,6 +154,14 @@ public class EditCommandParserTest {
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_namePreamble_success() {
+        String userInput = VALID_NAME_AMY + PHONE_DESC_BOB;
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB).build();
+        EditCommand expectedCommand = new EditCommand(VALID_NAME_AMY, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
