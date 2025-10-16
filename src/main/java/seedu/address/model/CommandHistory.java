@@ -2,6 +2,9 @@ package seedu.address.model;
 
 import java.util.ArrayList;
 
+import seedu.address.commons.exceptions.EndOfCommandHistoryException;
+
+
 /**
  * Represents in-memory Record of Command Usage in order
  */
@@ -13,11 +16,20 @@ public class CommandHistory implements ReadOnlyCommandHistory {
     private ArrayList<String> commandHistoryList = new ArrayList<>();
 
     /**
+     * Current Command Index (-1 if not in history) - Max is Size of List
+     * Previous Command: +1
+     * Next Command = -1
+     */
+    private int currCommandIndex = -1;
+
+    /**
      * Adds a new command string to commandHistoryList for tracking
      * Commands are added to the end of the array
      */
     public void saveNewCommand(String newCommand) {
         this.commandHistoryList.add(newCommand);
+        this.currCommandIndex = -1; // Reset index
+        System.out.println("SAVED NEW COMMAND: " + newCommand);
     }
 
     /**
@@ -50,5 +62,36 @@ public class CommandHistory implements ReadOnlyCommandHistory {
 
         // If index valid, return command string
         return this.commandHistoryList.get(targetIndex);
+    }
+
+    /**
+     * Gets the previous command relative to user's position in history
+     * @return Previous Command String
+     */
+    public String getPreviousCommand() throws EndOfCommandHistoryException {
+        // Limit to point within available range
+        currCommandIndex = Math.min(currCommandIndex + 1, commandHistoryList.size());
+
+        if (currCommandIndex >= commandHistoryList.size()) {
+            throw new EndOfCommandHistoryException("End of Command History reached");
+        }
+
+        return getLastCommand(currCommandIndex);
+    }
+
+    /**
+     * Get the Next Command relative to user's position in history
+     * @return Next Command String
+     */
+    public String getNextCommand() {
+        // Limit to minimum of -1 currentIndex to represent history not in focus
+        currCommandIndex = Math.max(currCommandIndex - 1, -1);
+
+        // If there is no next command
+        if (currCommandIndex < 0) {
+            return "";
+        } else {
+            return getLastCommand(currCommandIndex);
+        }
     }
 }

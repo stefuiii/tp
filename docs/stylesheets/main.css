@@ -1,3 +1,17 @@
+body {
+  background-color: #EFF6FF;
+  /*background-color: #F0F0F0;*/
+}
+
+.top-nav > nav {
+  background-color: #00096B !important;
+}
+
+.nav-logo {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 mark {
   background-color: #ff0;
   border-radius: 5px;
