@@ -202,7 +202,7 @@ Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these
 The sequence diagram below shows how the sort operation works:
 ![Sort Sequence Diagram](diagrams/SortSequenceDiagram.puml)
 
-The activity diagram below illustrates depicts the execution flow of the sort command:
+The activity diagram below depicts the execution flow of the sort command:
 ![Sort Activity Diagram](diagrams/SortActivityDiagram.puml)
 
 [To include implementations once finalised - with PUML]
