@@ -188,11 +188,11 @@ This section describes some noteworthy details on how certain features are imple
 
 Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these steps:
 
-1. **User input parsing**: `SortCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing the field and order values, then validates the tokens and creates a `SortCommand` object with the parsed parameters.  
+1. **User input parsing**: `SortCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing the field and order values, then validates the tokens and creates a `SortCommand` object with the parsed parameters.
 
-2. **Comparator Creation**: `SortCommand#execute()` calls `SortCommand#getComparator()` which creates the appropriate `Comparator<Person>` based on the specified field (name/tag) and order (ascending/descending).  
+2. **Comparator Creation**: `SortCommand#execute()` calls `SortCommand#getComparator()` which creates the appropriate `Comparator<Person>` based on the specified field (name/tag) and order (ascending/descending).
 
-3. **Model update**: `SortCommand` invokes `Model#sortPersons(comparator)` to trigger the sorting operation.  
+3. **Model update**: `SortCommand` invokes `Model#sortPersons(comparator)` to trigger the sorting operation.
 
 4. **Sorting execution**: The sort operation cascades through:
     * `Model#sortPersons(comparator)` &rarr; `AddressBook#sortPersons(comparator)` &rarr; `UniquePersonList#sortPersons(comparator)`
@@ -315,7 +315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1b. The given number already exists.
 
    *  1b1. FastCard shows an error message.
-  
+
       Use case resumes at step 1.
 
 
@@ -323,7 +323,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to edit a contact's information 
+1.  User requests to edit a contact's information
 2.  FastCard looks for person with their phone number
 3.  FastCard updates the person's particulars
 
@@ -355,7 +355,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6.  Should be portable without the need for an installer.
 7.  System must ensure that long term data is not lost unexpectedly, even in cases of abrupt shutdowns or crashes
 8.  Automated Testing should cover all core functionality implementations
-9.  Error messages should be prominent and usually provide specific information regarding the issue 
+9.  Error messages should be prominent and usually provide specific information regarding the issue
 
 ### Glossary
 
@@ -434,10 +434,10 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete Alice Pauline`<br>
      Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-   
+
    1. Test case: 'delete 1'<br>
      Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-   
+
    1. Test case: `delete 0`<br>
      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
