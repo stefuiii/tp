@@ -6,7 +6,7 @@
 
 # FastCard User Guide
 
-FastCard is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). 
+FastCard is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
 If you can type fast, FastCard can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
@@ -35,7 +35,7 @@ If you can type fast, FastCard can get your contact management tasks done faster
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FastCard.
 
    * `delete 83556666` : Deletes the contact with the phone number `83556666` from the current list.
-   * 
+   *
    * `clear` : Deletes all contacts.
 
    * `exit` : Exits the app.

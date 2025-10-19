@@ -7,6 +7,28 @@
 # FastCard Developer Guide
 
 <!-- * Table of Contents -->
+## **Table of Contents**
+
+- [Acknowledgements](#acknowledgements)
+- [Setting up, Getting started](#setting-up-getting-started)
+- [Design](#design)
+    - [Architecture](#architecture)
+    - [UI Component](#ui-component)
+    - [Logic Component](#logic-component)
+    - [Model Component](#model-component)
+    - [Storage Component](#storage-component)
+    - [Common Classes](#common-classes)
+- [Implementation](#implementation)
+    - [Sort Feature](#sort-feature)
+- [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#appendix-requirements)
+    - [Product Scope](#product-scope)
+    - [User Stories](#user-stories)
+    - [Use Cases](#use-cases)
+    - [Non-Functional Requirements](#non-functional-requirements)
+    - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -162,6 +184,26 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+#### Sort Feature
+
+Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these steps:
+
+1. **User input parsing**: `SortCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing the field and order values, then validates the tokens and creates a `SortCommand` object with the parsed parameters.
+
+2. **Comparator Creation**: `SortCommand#execute()` calls `SortCommand#getComparator()` which creates the appropriate `Comparator<Person>` based on the specified field (name/tag) and order (ascending/descending).
+
+3. **Model update**: `SortCommand` invokes `Model#sortPersons(comparator)` to trigger the sorting operation.
+
+4. **Sorting execution**: The sort operation cascades through:
+    * `Model#sortPersons(comparator)` &rarr; `AddressBook#sortPersons(comparator)` &rarr; `UniquePersonList#sortPersons(comparator)`
+
+5. **Result**: A `CommandResult` is returned to display the success message to the user.
+
+The sequence diagram below shows how the sort operation works:
+![Sort Sequence Diagram](diagrams/SortSequenceDiagram.puml)
+
+The activity diagram below depicts the execution flow of the sort command:
+![Sort Activity Diagram](diagrams/SortActivityDiagram.puml)
 
 [To include implementations once finalised - with PUML]
 
@@ -273,7 +315,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1b. The given number already exists.
 
    *  1b1. FastCard shows an error message.
-  
+
       Use case resumes at step 1.
 
 
@@ -281,7 +323,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to edit a contact's information 
+1.  User requests to edit a contact's information
 2.  FastCard looks for person with their phone number
 3.  FastCard updates the person's particulars
 
@@ -313,7 +355,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 6.  Should be portable without the need for an installer.
 7.  System must ensure that long term data is not lost unexpectedly, even in cases of abrupt shutdowns or crashes
 8.  Automated Testing should cover all core functionality implementations
-9.  Error messages should be prominent and usually provide specific information regarding the issue 
+9.  Error messages should be prominent and usually provide specific information regarding the issue
 
 ### Glossary
 
@@ -392,10 +434,10 @@ testers are expected to do more *exploratory* testing.
 
    1. Test case: `delete Alice Pauline`<br>
      Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-   
+
    1. Test case: 'delete 1'<br>
      Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-   
+
    1. Test case: `delete 0`<br>
      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
