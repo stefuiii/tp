@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.tag.TagsContainTagPredicate;
@@ -21,6 +24,8 @@ public class FilterCommand extends Command {
             + "Parameters: t/[TAG]...\n"
             + "Example: " + COMMAND_WORD + " t/ friends t/ colleague";
 
+    private static final Logger logger = LogsCenter.getLogger(FilterCommand.class);
+
     private final TagsContainTagPredicate predicate;
 
     /**
@@ -30,14 +35,21 @@ public class FilterCommand extends Command {
     public FilterCommand(TagsContainTagPredicate predicate) {
         requireNonNull(predicate);
         this.predicate = predicate;
+        logger.fine("FilterCommand object created with predicate: " + predicate);
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.info("Executing filter command");
+
         model.updateFilteredPersonList(predicate);
+        int filteredListSize = model.getFilteredPersonList().size();
+
+        logger.info("Filter command executed successfully. Number of persons found: " + filteredListSize);
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, filteredListSize));
     }
 
     @Override
