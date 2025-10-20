@@ -203,10 +203,10 @@ Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these
 5. **Result**: A `CommandResult` is returned to display the success message to the user.
 
 The sequence diagram below shows how the sort operation works:
-![Sort Sequence Diagram](diagrams/SortSequenceDiagram.puml)
+![Sort Sequence Diagram](images/SortSequenceDiagram.png)
 
 The activity diagram below depicts the execution flow of the sort command:
-![Sort Activity Diagram](diagrams/SortActivityDiagram.puml)
+![Sort Activity Diagram](images/SortActivityDiagram.png)
 
 
 #### Filter Feature
@@ -227,10 +227,10 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
 5. **Result**: A `CommandResult` is returned displaying the number of persons found matching the filter criteria.
 
 The sequence diagram below shows how the filter operation works:
-![Filter Sequence Diagram](diagrams/FilterSequenceDiagram.puml)
+![Filter Sequence Diagram](images/FilterSequenceDiagram.png)
 
 The activity diagram below depicts the execution flow of the filter command:
-![Filter Activity Diagram](diagrams/FilterActivityDiagram.puml)
+![Filter Activity Diagram](images/FilterActivityDiagram.png)
 
 [To include implementations once finalised - with PUML]
 

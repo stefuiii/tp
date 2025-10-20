@@ -10,6 +10,8 @@ participant "command:FilterCommand" as FilterCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
 end box
 
+skinparam boxPadding 10
+
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
