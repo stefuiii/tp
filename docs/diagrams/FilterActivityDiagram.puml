@@ -13,16 +13,16 @@ if () then ([valid arguments])
       if () then ([no empty tags])
         if () then ([valid tag names])
           :Extract tag values;
-          
+
           :Convert tags to lowercase;
-          
+
           :Remove duplicate tags;
-          
+
           :Create TagsContainTagPredicate;
-          
+
           :Filter persons in model
           using predicate;
-          
+
           :Display success message
           with count of filtered persons;
         else ([else])
