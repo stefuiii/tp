@@ -95,17 +95,17 @@ public class PersonTest {
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+                + ", email=" + ALICE.getEmail() + ", company=" + ALICE.getCompany() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
 
     @Test
     public void isSamePerson_caseInsensitiveAndWhitespaceIgnored_returnsTrue() {
         Person p1 = new Person(new Name("John   Doe"), new Phone("91234567"), new Email("john@example.com"),
-                new Address("Kent Ridge"), new HashSet<>());
+                new Company("Kent Ridge"), new HashSet<>());
 
         Person p2 = new Person(new Name("  john doe "), new Phone("91234567"), new Email("john.d@example.com"),
-                new Address("Kent Ridge"), new HashSet<>());
+                new Company("Kent Ridge"), new HashSet<>());
 
         assertTrue(p1.isSamePerson(p2));
     }
@@ -113,10 +113,10 @@ public class PersonTest {
     @Test
     public void isSamePerson_differentPhone_returnsFalse() {
         Person p1 = new Person(new Name("John Doe"), new Phone("91234567"), new Email("john@example.com"),
-                new Address("Kent Ridge"), new HashSet<>());
+                new Company("Kent Ridge"), new HashSet<>());
 
         Person p2 = new Person(new Name("John Doe"), new Phone("98765432"), new Email("john@example.com"),
-                new Address("Kent Ridge"), new HashSet<>());
+                new Company("Kent Ridge"), new HashSet<>());
 
         assertFalse(p1.isSamePerson(p2));
     }

@@ -35,7 +35,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
+    private Label company;
     @FXML
     private Label email;
     @FXML
@@ -52,11 +52,11 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         // Only show address if it is non-empty
         // coverage:ignore-start
-        if ("N/A".equals(person.getAddress().value)) {
-            address.setManaged(false);
-            address.setVisible(false);
+        if ("N/A".equals(person.getCompany().value)) {
+            company.setManaged(false);
+            company.setVisible(false);
         } else {
-            address.setText(person.getAddress().value);
+            company.setText(person.getCompany().value);
         }
         // coverage:ignore-end
 

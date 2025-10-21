@@ -151,7 +151,7 @@ Opens a help window with a link to the full user guide.
 Shows a list of all persons in the FastCard.
 
 **What it does:**
-  * Shows all contacts in your address book (removes any filters).
+  * Shows all contacts in your company book (removes any filters).
   * Resets the view to display everyone.
   * Useful after using `find` or `filter` commands.
 
@@ -196,7 +196,7 @@ add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
 **What you need to provide:**
   * **Name** (`n/`) - Full name (letters, numbers, and spaces only), must be unique
   * **Phone** (`p/`) - At least 3 digits, must be unique
-  * **Email** (`e/`) - Valid email address
+  * **Email** (`e/`) - Valid email company
   * **Company** (`c/`) - Any company format
   * **Tags** (`t/`) - Optional labels like "friend" or "colleague" (add as many as you want)
 
@@ -243,7 +243,7 @@ Format:
     specifying any tags after it.
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` — Edits the phone number and email address of the 1st person.
+* `edit 1 p/91234567 e/johndoe@example.com` — Edits the phone number and email company of the 1st person.
 * `edit 2 n/Betsy Crower t/` — Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
 * `edit John Doe e/john.doe@company.com` — Edits the email of the contact named `John Doe` (case-insensitive name match).
 * If multiple `John Doe` exist: run `edit 3 p/88888888` to specify the intended person from the filtered list.

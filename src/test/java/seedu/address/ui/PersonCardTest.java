@@ -17,7 +17,7 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -82,7 +82,7 @@ public class PersonCardTest {
                 new Name("Linghui"),
                 new Phone("80396190"),
                 new Email("linghui@nus.edu.sg"),
-                new Address("NUS Computing"),
+                new Company("NUS Computing"),
                 tags
         );
 
@@ -127,7 +127,7 @@ public class PersonCardTest {
                 new Name("Placeholder"),
                 new Phone("00000000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<>()
         );
 

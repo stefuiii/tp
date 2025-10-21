@@ -62,7 +62,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -94,13 +94,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -111,7 +111,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -143,14 +143,14 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the company book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * stores a `CommandHistory` object that keeps track of the commands a user inputs during runtime. This is exposed to the outside as a `ReadOnlyCommandHistory` object.
@@ -167,18 +167,18 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
+* can save both company book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package.
+Classes used by multiple components are in the `seedu.company.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -271,12 +271,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | not lose time during meetings and can fill in the details later when convenient         |
 | `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
 | `* * *`  | sales / procurement professional | assign category tags when I add new customers (e.g company)              | better manage different types of clients by knowing their industry                      |
-| `* * *`  | sales / procurement professional | delete a contact in my address book                                      | remove contacts that are no longer a prospect                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my address book                                     | access all contact records to manage sales and procurement activities                   |
+| `* * *`  | sales / procurement professional | delete a contact in my company book                                      | remove contacts that are no longer a prospect                                           |
+| `* * *`  | sales / procurement professional | list all contacts in my company book                                     | access all contact records to manage sales and procurement activities                   |
 | `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, contact number, etc)        | view relevant clients easily or rank clients easily                                     |
 | `* * *`  | sales / procurement professional | filter my contacts based on each client's tags                           | quickly find relevant clients and manage my outreach more efficiently                   |
 | `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my address book                                        |
+| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my company book                                        |
 | `* * *`  | forgetful user                   | be able to do a fuzzy search for customers                               | still find customers information even if I only remember part of the information        |
 | `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
 | `* *`    | careless user                    | navigate through my past commands                                        | reduce time spent retyping my previous commands in case of any mistakes                 |
@@ -452,7 +452,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **FastCard**: The product name of this application.
-* **Contact (Person)**: An entity representing a business contact with name, phone, email, address, and tags.
+* **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
 * **Tag**: A short label attached to a contact for categorization (e.g., client, supplier, industry).
 * **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
 * **Index**: A 1-based position of a contact within the currently displayed list.
@@ -462,13 +462,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **CLI (Command Line Interface)**: Text-based interaction via the command input box.
 * **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
 * **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
-* **Storage**: Persists and retrieves data (address book and user prefs) from JSON files.
+* **Storage**: Persists and retrieves data (company book and user prefs) from JSON files.
 * **User preferences**: Settings such as window size and file paths (read-only view exposed as `ReadOnlyUserPref`).
 * **ObservableList**: A JavaFX list implementation that notifies the UI of changes.
 * **UniquePersonList**: An internal list that enforces uniqueness for contacts.
 * **Parser / XYZCommandParser**: Classes that convert user input into executable command objects.
 * **CommandResult**: The outcome of executing a command, including the feedback message shown to the user.
-* **Undo/Redo**: Feature that reverts or reapplies recent changes to the address book using stored history.
+* **Undo/Redo**: Feature that reverts or reapplies recent changes to the company book using stored history.
 * **MSS (Main Success Scenario)**: The primary, exception-free flow of a use case.
 * **NFR (Non-Functional Requirement)**: A quality constraint on the system (e.g., performance, portability).
 * **Actor**: The user interacting with FastCard in use cases.
@@ -544,7 +544,7 @@ testers are expected to do more *exploratory* testing.
 
 1.  Sorting contacts by name
 
-    -  Prerequisites: Multiple contacts in the address book with different names.
+    -  Prerequisites: Multiple contacts in the company book with different names.
 
     -  Test case: `sort f/name o/asc`<br>
        Expected: Contacts are sorted alphabetically by name in ascending order. Success message shows "Sorted all persons by name in ascending order".
@@ -560,7 +560,7 @@ testers are expected to do more *exploratory* testing.
 
 2. Sorting contacts by tag
 
-    -  Prerequisites: Multiple contacts in the address book with different tags.
+    -  Prerequisites: Multiple contacts in the company book with different tags.
 
     -  Test case: `sort f/tag o/asc`<br>
        Expected: Contacts are sorted by their first tag alphabetically (case-insensitive) in ascending order. Contacts without tags appear first.
@@ -588,7 +588,7 @@ testers are expected to do more *exploratory* testing.
 ### Filtering contacts by tags
 1. Filtering contacts with single tag
    
-    -  Prerequisites: Multiple contacts in the address book, some with the tag "friends", some without.
+    -  Prerequisites: Multiple contacts in the company book, some with the tag "friends", some without.
 
     -  Test case: `filter t/friends`<br>
        Expected: Only contacts with the "friends" tag are displayed. Status message shows the number of persons listed (e.g., "3 persons listed!").
