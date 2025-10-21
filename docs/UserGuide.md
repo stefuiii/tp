@@ -28,19 +28,6 @@ If you can type fast, FastCard can get your contact management tasks done faster
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
-
-   * `list` : Lists all contacts.
-
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FastCard.
-
-   * `delete 83556666` : Deletes the contact with the phone number `83556666` from the current list.
-   
-   * `edit John Doe e/john.doe@company.com` : Edits the email of the contact named `John Doe`.
-
-   * `clear` : Deletes all contacts.
-
-   * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -80,13 +67,13 @@ Format: `help`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the FastCard.
 
 Format: `list`
 
 ### **Adding a person (basic information only)** : `addbasic`
 
-Adds a person with only basic information (name and phone number) to the address book.
+Adds a person with only basic information (name and phone number) to FastCard.
 
 **Format:**
 
@@ -109,24 +96,24 @@ addbasic n/NAME p/PHONE
 
 ### **Adding a person (with detailed information)** : `add`
 
-Adds a person with detailed information such as name, phone, email, address, and tags.
+Adds a person with detailed information such as name, phone, email, company, and tags.
 
 **Format:**
 
 ```
-add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
+add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
 ```
 
-* Adds a person with all specified details to the address book.
-* The `NAME`, `PHONE`, `ADDRESS`, and `EMAIL` fields must be provided.
+* Adds a person with all specified details to the FastCard contact book.
+* The `NAME`, `PHONE`, `COMPANY`, and `EMAIL` fields must be provided.
 * The person’s phone number must be unique — duplicates are not allowed.
 * When multiple tags are provided, they will all be added to the person.
 
 **Examples:**
 
-* `add n/John Doe p/91234567 e/john@example.com a/Kent Ridge t/friend t/colleague`
+* `add n/John Doe p/91234567 e/john@example.com c/Shopee t/colleague`
   Adds a detailed contact with tags.
-* `add n/Betsy Crower p/93456789 e/betsy@example.com a/Clementi`
+* `add n/Betsy Crower p/93456789 e/betsy@example.com c/Meta`
   Adds a new person without tags.
 
 
@@ -135,8 +122,8 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
 Edits an existing person in FastCard.
 
 Format:
-- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
 
 * Edit by index: the `INDEX` refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * Edit by name: the `NAME` is matched case-insensitively; leading/trailing spaces are ignored and multiple spaces are treated as one (e.g., `Jane         Smith` = `Jane Smith`).
@@ -298,10 +285,10 @@ Furthermore, certain edits can cause the FastCard to behave in unexpected ways (
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
 **Delete** | `delete PHONE`<br> e.g., `delete 83556666`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
