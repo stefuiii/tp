@@ -197,7 +197,7 @@ add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
   * **Name** (`n/`) - Full name (letters, numbers, and spaces only), must be unique
   * **Phone** (`p/`) - At least 3 digits, must be unique
   * **Email** (`e/`) - Valid email address
-  * **Address** (`c/`) - Any company format
+  * **Company** (`c/`) - Any company format
   * **Tags** (`t/`) - Optional labels like "friend" or "colleague" (add as many as you want)
 
 **What you need to know:**
@@ -215,7 +215,7 @@ add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
 **Examples:**
 
 * `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend t/colleague`
-  Adds John Doe with email, address, and two tags.
+  Adds John Doe with email, company, and two tags.
 * `add n/Betsy Crower p/93456789 e/betsy@example.com c/Shopee`
   Adds Betsy Crower with full details but no tags (tags are optional).
 
