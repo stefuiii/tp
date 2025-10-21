@@ -80,7 +80,7 @@ The command box is at the top of the window. Type a command and press **Enter** 
 
 **Try these example commands:**
 1. See all contacts: `list`
-2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com a/123 John Street, #01-01`
+2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com c/Shopee`
 3. Search for a contact: `find John`
 4. Delete a contact: (First, note the phone number of a contact you want to remove): `delete John Doe`
 5. Get help: `help`
@@ -447,7 +447,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
 **Delete** | `delete PHONE`<br> e.g., `delete 83556666`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
