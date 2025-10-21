@@ -6,7 +6,7 @@
 
 # FastCard User Guide
 
-FastCard is a desktop contact manager that lets you control everything by typing commands. No clicking through menus required. If you're comfortable with a keyboard, you can add, find, and update contacts in seconds instead of minutes.
+FastCard is a desktop contact manager controlled largely by keyboard commands, letting you add, find, and update contacts in seconds; No fumbling with menus, Pure Speed!
 
 <!-- * Table of Contents -->
 ## **Table of Contents**
