@@ -166,6 +166,13 @@ public class EditCommandParserTest {
     }
 
     @Test
+    public void parse_whitespaceNamePreambleWithFields_failure() {
+        // whitespace-only preamble should be rejected even if fields are provided (name-based edit requires non-empty)
+        String userInput = "   " + PHONE_DESC_BOB;
+        assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
     public void parse_multipleRepeatedFields_failure() {
         // More extensive testing of duplicate parameter detections is done in
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
@@ -195,6 +202,20 @@ public class EditCommandParserTest {
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+    }
+
+    @Test
+    public void parse_duplicateNamePrefix_failure() {
+        // Duplicate name prefix should be detected as duplicate prefix error
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + "n/Amy" + " " + "n/Bob";
+        assertParseFailure(
+                parser,
+                userInput,
+                Messages.getErrorMessageForDuplicatePrefixes(
+                        seedu.address.logic.parser.CliSyntax.PREFIX_NAME
+                )
+        );
     }
 
     @Test

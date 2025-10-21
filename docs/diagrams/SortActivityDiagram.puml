@@ -1,0 +1,47 @@
+@startuml
+title Sort Command Activity Diagram
+
+start
+
+:User enters sort command;
+
+:Parse command arguments;
+
+if () then ([valid arguments])
+  :Extract field and order parameters;
+
+  if () then ([valid field])
+    if () then ([valid order])
+      :Create appropriate comparator;
+
+      switch ()
+      case ([field == "name"])
+        :Create name comparator;
+      case ([field == "tag"])
+        :Create tag comparator;
+      endswitch
+
+      if () then ([descending order])
+        :Reverse comparator;
+      else ([else])
+        :Use comparator as-is;
+      endif
+
+      :Sort persons in model;
+      :Display success message;
+    else ([else])
+      :Display error message;
+      stop
+    endif
+  else ([else])
+    :Display error message;
+    stop
+  endif
+else ([else])
+  :Display error message;
+  stop
+endif
+
+stop
+
+@enduml
