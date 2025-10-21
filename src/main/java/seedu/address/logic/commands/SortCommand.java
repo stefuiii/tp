@@ -4,7 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Comparator;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -25,6 +27,8 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Sorted all persons by %s in %s order";
 
+    private static final Logger logger = LogsCenter.getLogger(SortCommand.class);
+
     private String field;
     private String order;
 
@@ -39,12 +43,18 @@ public class SortCommand extends Command {
         requireAllNonNull(field, order);
         this.field = field;
         this.order = order;
+        logger.fine("SortCommand created with field: " + field + ", order: " + order);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        logger.info("Executing sort command with field: " + field + ", order: " + order);
+
         Comparator<Person> comparator = getComparator();
         model.sortPersons(comparator);
+
+        logger.info("Sort command executed successfully. "
+                + "Sorted by " + field + " in " + getOrderFullFormat() + " order");
         return new CommandResult(String.format(MESSAGE_SUCCESS, field, getOrderFullFormat()));
     }
 
@@ -68,9 +78,11 @@ public class SortCommand extends Command {
 
         switch (field.toLowerCase()) {
         case "name":
+            logger.fine("Creating name comparator");
             comparator = Comparator.comparing(person -> person.getName().toString(), String.CASE_INSENSITIVE_ORDER);
             break;
         case "tag":
+            logger.fine("Creating tag comparator");
             comparator = Comparator.comparing(person ->
                     person.getTags().stream()
                           .map(tag -> tag.tagName.toLowerCase())
@@ -79,17 +91,21 @@ public class SortCommand extends Command {
                           .orElse(""));
             break;
         default:
+            logger.warning("Invalid field specified: " + field);
             throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 
         switch (order.toLowerCase()) {
         case "asc":
         case "ascending":
+            logger.fine("Applying ascending order");
             return comparator;
         case "desc":
         case "descending":
+            logger.fine("Applying descending order");
             return comparator.reversed();
         default:
+            logger.warning("Invalid order specified: " + order);
             throw new CommandException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
     }

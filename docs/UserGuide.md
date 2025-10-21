@@ -6,7 +6,7 @@
 
 # FastCard User Guide
 
-FastCard is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI).
+FastCard is a **desktop app for managing contacts, optimized for use via your keyboard while still having the benefits of a Graphical User Interface (GUI).
 If you can type fast, FastCard can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
@@ -35,7 +35,9 @@ If you can type fast, FastCard can get your contact management tasks done faster
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FastCard.
 
    * `delete 83556666` : Deletes the contact with the phone number `83556666` from the current list.
-   *
+   
+   * `edit John Doe e/john.doe@company.com` : Edits the email of the contact named `John Doe`.
+
    * `clear` : Deletes all contacts.
 
    * `exit` : Exits the app.
@@ -132,9 +134,14 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
 
 Edits an existing person in FastCard.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format:
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edit by index: the `INDEX` refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edit by name: the `NAME` is matched case-insensitively; leading/trailing spaces are ignored and multiple spaces are treated as one (e.g., `Jane         Smith` = `Jane Smith`).
+* If multiple contacts share the same name, FastCard will display the matched contacts and prompt: “There are multiple contacts’ names matched with the reference. Please use the edit /index {index} to specify the contact you want to edit.”
+  * Continue by running `edit {index} ...` with the index shown in that filtered list.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -142,8 +149,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` — Edits the phone number and email address of the 1st person.
+* `edit 2 n/Betsy Crower t/` — Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
+* `edit John Doe e/john.doe@company.com` — Edits the email of the contact named `John Doe` (case-insensitive name match).
+* If multiple `John Doe` exist: run `edit 3 p/88888888` to specify the intended person from the filtered list.
 
 ### Locating persons by name: `find`
 
@@ -165,27 +174,41 @@ Examples:
 
 ### Filtering contacts: `filter`
 
-Filters contacts whose information contains any of the given tags listed.
+Shows only contacts that have specific tags.
 
-Format `filter t/[TAG]...`
+Format `filter [t/TAG]…`
+
+**What you need to know:**
 
 * You must specify at least one tag.
 * You can specify more than one tag.
-    * If you specify more than one tag, contacts that contain **any** of the tags listed will be shown in the filtered list.
-* You may list the tags in any order. e.g `filter t/friends t/colleague` and `filter t/colleague t/friends` will be treated the same
-* Filter is case-insensitive. e.g `t/FRIENDS will be treated as t/friends`
-* Only full tags will be matched. e.g `t/friend` and `t/friends` are considered different tags
+    * If you specify more than one tag, contacts with **any** of those tags will appear (not all tags required).
+* Tags are not case-sensitive (`t/friends` = `t/FRIENDS` = `t/Friends`)
+* You may list the tags in any order.
+* The exact tag name must match (e.g., `friend` won't find contacts tagged with `friends`)
 
 ### Sorting contacts: `sort`
 
-Orders the current view of contacts by the specified field in alphabetically ascending or descending order.
+Arranges your contacts in alphabetical order based on the information you choose.
 
-Format: `sort f/[FIELD] o/[ORDER]`
+Format: `sort f/FIELD o/ORDER`
 
-* Sorting is case-insensitive. e.g `sort f/NAME o/ASC` will be treated as `sort f/name o/asc`
-* The order of keywords does not matter. e.g `sort f/name o/asc` and `sort o/asc f/name` will be treated the name.
-* Only one field and one order can be used in a sort command.
-* Abbreviated order formats will be treated as their full formats. e.g `o/asc` and `o/desc` will be treated as `o/ascending` and `o/descending`
+**Available fields:**
+
+* `name` - Sort by contact name
+* `tag` - Sort by the first tag alphabetically
+
+**Available orders:**
+
+* `asc` or `ascending` - sorts in alphabetical order
+* `desc` or `descending` - sorts in reverse alphabetical order
+
+**What you need to know:**
+
+* You must specify both a field and an order.
+* Field and order are not case-sensitive. (`NAME = name`, `ASC` = `asc`)
+* You can write field and order in any sequence.
+* Contacts without the sorted field appear first/last if sorted in ascending/descending order respectively (e.g., contacts without tags when sorting by tag)
 
 Examples:
 * `find John` returns `john` and `John Doe`
@@ -225,6 +248,18 @@ Exits the program.
 
 Format: `exit`
 
+### Repeat commands
+
+FastCard allows you to quickly repeat commands that you entered previously. Simply:
+
+- Press &uarr; (Up Arrow) - Go back in  command history
+
+- Press &darr; (Down Arrow) - Go forward in  command history
+
+<box type="info" seamless>
+
+**Note:** When the command history limit is reached, the feedback box will display "End of Command History reached" along with a blank input field. You may enter any command as per usual there.
+
 ### Saving the data
 
 FastCard data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -240,17 +275,6 @@ If your changes to the data file makes its format invalid, FastCard will discard
 Furthermore, certain edits can cause the FastCard to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Repeat commands
-
-FastCard allows you to quickly repeat commands that you entered previously. Simply:
-
-- Press &uarr; (Up Arrow) - Go back in  command history
-
-- Press &darr; (Down Arrow) - Go forward in  command history
-
-<box type="info" seamless>
-
-**Note:** When the command history limit is reached, the feedback box will display "End of Command History reached" along with a blank input field. You may enter any command as per usual there.
 
 </box>
 
@@ -275,9 +299,13 @@ FastCard allows you to quickly repeat commands that you entered previously. Simp
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-***Delete** | `delete PHONE`<br> e.g., `delete 83556666`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
+**Delete** | `delete PHONE`<br> e.g., `delete 83556666`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
+**Filter** | `filter [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Clear**  | `clear`
 **List**   | `list`
 **Help**   | `help`
+**Repeat Commands** | &uarr; (Up Arrow Key) &darr; (Down Arrow Key)

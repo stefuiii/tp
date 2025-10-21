@@ -1,0 +1,51 @@
+@startuml
+title Filter Command Activity Diagram
+
+start
+
+:User enters filter command;
+
+:Parse command arguments;
+
+if () then ([valid arguments])
+  if () then ([preamble empty])
+    if () then ([tags present])
+      if () then ([no empty tags])
+        if () then ([valid tag names])
+          :Extract tag values;
+
+          :Convert tags to lowercase;
+
+          :Remove duplicate tags;
+
+          :Create TagsContainTagPredicate;
+
+          :Filter persons in model
+          using predicate;
+
+          :Display success message
+          with count of filtered persons;
+        else ([else])
+          :Display error message;
+          stop
+        endif
+      else ([else])
+        :Display error message;
+        stop
+      endif
+    else ([else])
+      :Display error message;
+      stop
+    endif
+  else ([else])
+    :Display error message;
+    stop
+  endif
+else ([else])
+  :Display error message;
+  stop
+endif
+
+stop
+
+@enduml

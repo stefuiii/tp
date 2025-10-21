@@ -20,6 +20,7 @@
     - [Common Classes](#common-classes)
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
+    - [Filter Feature](#filter-feature)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
     - [Product Scope](#product-scope)
@@ -184,6 +185,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+
 #### Sort Feature
 
 Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these steps:
@@ -200,10 +203,34 @@ Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these
 5. **Result**: A `CommandResult` is returned to display the success message to the user.
 
 The sequence diagram below shows how the sort operation works:
-![Sort Sequence Diagram](diagrams/SortSequenceDiagram.puml)
+![Sort Sequence Diagram](images/SortSequenceDiagram.png)
 
 The activity diagram below depicts the execution flow of the sort command:
-![Sort Activity Diagram](diagrams/SortActivityDiagram.puml)
+![Sort Activity Diagram](images/SortActivityDiagram.png)
+
+
+#### Filter Feature
+The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandParser`, following these steps:
+
+1. **User input parsing**: `FilterCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing tag values, then validates the tokens through `FilterCommandParser#checkValidTokens()`. The parser converts all tags to lowercase, removes duplicates, and creates a `TagsContainTagPredicate` object with the processed tags. A `FilterCommand` object is then instantiated with this predicate.
+
+2. **Validation checks**: The parser performs several validations:
+    * Ensures that at least one `PREFIX_TAG` token exists
+    * Verifies no input exists between "filter" and the first prefix
+    * Confirms no empty tags are present
+    * Validates all tag names are alphanumeric
+
+3. **Model update**: `FilterCommand#execute()` invokes `Model#updateFilteredPersonList(predicate)` to apply the filtering operation.
+
+4. **Filtering execution**: The model updates its filtered person list by applying the `TagsContainTagPredicate`, which matches any person whose tags contain at least one of the specified tags (case-insensitive matching).
+
+5. **Result**: A `CommandResult` is returned displaying the number of persons found matching the filter criteria.
+
+The sequence diagram below shows how the filter operation works:
+![Filter Sequence Diagram](images/FilterSequenceDiagram.png)
+
+The activity diagram below depicts the execution flow of the filter command:
+![Filter Activity Diagram](images/FilterActivityDiagram.png)
 
 [To include implementations once finalised - with PUML]
 
