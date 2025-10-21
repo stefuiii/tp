@@ -82,7 +82,7 @@ The command box is at the top of the window. Type a command and press **Enter** 
 1. See all contacts: `list`
 2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com a/123 John Street, #01-01`
 3. Search for a contact: `find John`
-4. Delete a contact: (First, note the phone number of a contact you want to remove): `delete 98765432`
+4. Delete a contact: (First, note the phone number of a contact you want to remove): `delete John Doe`
 5. Get help: `help`
 
 **Step 6: Learn more commands**
@@ -313,7 +313,7 @@ Example:
 
 Deletes the specified person from FastCard.
 
-Format: `delete NAME` OR 'delete INDEX'
+Format: `delete NAME` OR `delete INDEX`
 
 * When a name is provided, FastCard deletes the contact whose name matches the input (case-insensitive).
 * If multiple contacts share the same name, FastCard automatically lists the matching contacts. Delete the intended person by running `delete INDEX` using the index shown in that list.
@@ -444,7 +444,7 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
-**Delete** | `delete PHONE`<br> e.g., `delete 83556666`
+**Delete** | `delete NAME` or `delete INDEX` <br> e.g., `delete Jadon`, `delete 1`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
