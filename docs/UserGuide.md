@@ -35,7 +35,7 @@ FastCard is a desktop contact manager controlled largely by keyboard commands, l
 
 ## Getting Started with FastCard
 
-**Step 1: Install Java (if you haven't already)**
+**Step 1: Install Java (if you haven't already)** <br>
 FastCard requires **Java 17 or newer** to run. Java is free software that lets your computer run applications like FastCard.
 
 **Check if you already have Java:**
@@ -54,7 +54,7 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 
 **Step 3: Set up your FastCard folder**
 1. Create a new folder where you want to keep FastCard and all your contact data.
-  * Example: Create a folder called "FastCard" in your Documents.
+    * Example: Create a folder called "FastCard" in your Documents.
 2. Move the `fastcard.jar` file into this folder.
 3. Remember this location. This is where all your data will be saved.
 
@@ -80,7 +80,7 @@ The command box is at the top of the window. Type a command and press **Enter** 
 
 **Try these example commands:**
 1. See all contacts: `list`
-2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com a/123 John Street, #01-01`
+2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com c/Shopee`
 3. Search for a contact: `find John`
 4. Delete a contact: (First, note the phone number of a contact you want to remove): `delete John Doe`
 5. Get help: `help`
@@ -197,7 +197,7 @@ add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
   * **Name** (`n/`) - Full name (letters, numbers, and spaces only), must be unique
   * **Phone** (`p/`) - At least 3 digits, must be unique
   * **Email** (`e/`) - Valid email address
-  * **Address** (`c/`) - Any company format
+  * **Company** (`c/`) - Any company format
   * **Tags** (`t/`) - Optional labels like "friend" or "colleague" (add as many as you want)
 
 **What you need to know:**
@@ -215,7 +215,7 @@ add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
 **Examples:**
 
 * `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend t/colleague`
-  Adds John Doe with email, address, and two tags.
+  Adds John Doe with email, company, and two tags.
 * `add n/Betsy Crower p/93456789 e/betsy@example.com c/Shopee`
   Adds Betsy Crower with full details but no tags (tags are optional).
 
@@ -354,9 +354,9 @@ FastCard allows you to quickly repeat commands that you entered previously. Simp
 
 - Press &darr; (Down Arrow) - Go forward in  command history
 
-<box type="info" seamless>
-
 **Note:** When the command history limit is reached, the feedback box will display "End of Command History reached" along with a blank input field. You may enter any command as per usual there.
+
+<box type="info" seamless>
 
 ### Saving the data
 
@@ -447,7 +447,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
 **Delete** | `delete PHONE`<br> e.g., `delete 83556666`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
