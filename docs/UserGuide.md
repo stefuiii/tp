@@ -354,9 +354,9 @@ FastCard allows you to quickly repeat commands that you entered previously. Simp
 
 - Press &darr; (Down Arrow) - Go forward in  command history
 
-<box type="info" seamless>
-
 **Note:** When the command history limit is reached, the feedback box will display "End of Command History reached" along with a blank input field. You may enter any command as per usual there.
+
+<box type="info" seamless>
 
 ### Saving the data
 
