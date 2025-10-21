@@ -230,9 +230,14 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
 
 Edits an existing person in FastCard.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format:
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edit by index: the `INDEX` refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edit by name: the `NAME` is matched case-insensitively; leading/trailing spaces are ignored and multiple spaces are treated as one (e.g., `Jane         Smith` = `Jane Smith`).
+* If multiple contacts share the same name, FastCard will display the matched contacts and prompt: “There are multiple contacts’ names matched with the reference. Please use the edit /index {index} to specify the contact you want to edit.”
+  * Continue by running `edit {index} ...` with the index shown in that filtered list.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -240,8 +245,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
     specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` — Edits the phone number and email address of the 1st person.
+* `edit 2 n/Betsy Crower t/` — Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
+* `edit John Doe e/john.doe@company.com` — Edits the email of the contact named `John Doe` (case-insensitive name match).
+* If multiple `John Doe` exist: run `edit 3 p/88888888` to specify the intended person from the filtered list.
 
 ### Locating persons by name: `find`
 
@@ -280,7 +287,7 @@ Format `filter t/TAG [t/TAG]…`
 
 Arranges your contacts in alphabetical order based on the information you choose.
 
-Format: `sort f/[FIELD] o/[ORDER]`
+Format: `sort f/FIELD o/ORDER`
 
 **Available fields:**
 
@@ -445,9 +452,9 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
 **Delete** | `delete NAME` or `delete INDEX` <br> e.g., `delete Jadon`, `delete 1`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` <br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
-**Filter** | `filter [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
+**Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Clear**  | `clear`
 **List**   | `list`
