@@ -148,9 +148,7 @@ Opens a help window with a link to the full user guide.
 
 ### Listing all persons : `list`
 
-Displays your complete contact list, showing every person in FastCard.
-
-**Format:** `list`
+Shows a list of all persons in the FastCard.
 
 **What it does:**
   * Shows all contacts in your address book (removes any filters).
@@ -164,7 +162,7 @@ Displays your complete contact list, showing every person in FastCard.
 
 ### **Adding a person (basic information only)** : `addbasic`
 
-Adds a person with only basic information (name and phone number) to the address book.
+Adds a person with only basic information (name and phone number) to FastCard.
 
 **Format:**
 
@@ -187,19 +185,19 @@ addbasic n/NAME p/PHONE
 
 ### **Adding a person (with detailed information)** : `add`
 
-Adds a contact with complete information including name, phone, email, address, and optional tags.
+Adds a person with detailed information such as name, phone, email, company, and optional tags.
 
 **Format:**
 
 ```
-add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
+add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…
 ```
 
 **What you need to provide:**
   * **Name** (`n/`) - Full name (letters, numbers, and spaces only), must be unique
   * **Phone** (`p/`) - At least 3 digits, must be unique
   * **Email** (`e/`) - Valid email address
-  * **Address** (`a/`) - Any address format
+  * **Address** (`c/`) - Any company format
   * **Tags** (`t/`) - Optional labels like "friend" or "colleague" (add as many as you want)
 
 **What you need to know:**
@@ -216,13 +214,13 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
 
 **Examples:**
 
-* `add n/John Doe p/91234567 e/john@example.com a/Kent Ridge t/friend t/colleague`
+* `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend t/colleague`
   Adds John Doe with email, address, and two tags.
-* `add n/Betsy Crower p/93456789 e/betsy@example.com a/Clementi`
+* `add n/Betsy Crower p/93456789 e/betsy@example.com c/Shopee`
   Adds Betsy Crower with full details but no tags (tags are optional).
 
 **Common Mistakes:**
-  * Forgetting to include all required fields (name, phone, email, address)
+  * Forgetting to include all required fields (name, phone, email, company)
   * Using an existing name and phone number (name and phone number pair must be unique)
   *  Writing `e/john@example` instead of `e/john@example.com` (incomplete email)
 
@@ -231,8 +229,8 @@ add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…
 Edits an existing person in FastCard.
 
 Format:
-- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
-- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
 
 * Edit by index: the `INDEX` refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * Edit by name: the `NAME` is matched case-insensitively; leading/trailing spaces are ignored and multiple spaces are treated as one (e.g., `Jane         Smith` = `Jane Smith`).
@@ -415,7 +413,7 @@ Advanced users are welcome to update data directly by editing that data file.
 **A:** Your data is safe. Since FastCard saves automatically after every change, you'll only lose any command you were typing when it crashed (not the data itself).
 
 **Q: I accidentally deleted a contact. Can I recover it?**
-**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your addressbook.json file regularly.
+**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your `addressbook.json`F file regularly.
 
 **Q: Why isn't my command working?**
 **A:** Common reasons include:
@@ -449,10 +447,10 @@ Advanced users are welcome to update data directly by editing that data file.
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
-**Delete** | `delete NAME` or `delete INDEX` <br> e.g., `delete Jadon`, `delete 1`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​` <br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete PHONE`<br> e.g., `delete 83556666`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
