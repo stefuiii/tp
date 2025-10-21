@@ -191,7 +191,7 @@ Format `filter [t/TAG]…`
 
 Arranges your contacts in alphabetical order based on the information you choose.
 
-Format: `sort f/[FIELD] o/[ORDER]`
+Format: `sort f/FIELD o/ORDER`
 
 **Available fields:**
 
