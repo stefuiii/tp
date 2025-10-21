@@ -35,6 +35,7 @@ If you can type fast, FastCard can get your contact management tasks done faster
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FastCard.
 
    * `delete Jadon` : Deletes the contact with the name `Jadon` from the current list.
+   * `delete 1` : Deletes the 1st contact currently displayed
    * 
    * `clear` : Deletes all contacts.
 
