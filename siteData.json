@@ -62,6 +62,8 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-person": "Deleting a person",
+        "sorting-contacts": "Sorting contacts",
+        "filtering-contacts-by-tags": "Filtering contacts by tags",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
@@ -107,7 +109,8 @@
       "title": "User Guide",
       "headings": {
         "fastcard-user-guide": "FastCard User Guide",
-        "quick-start": "Quick start",
+        "table-of-contents": "Table of Contents",
+        "getting-started-with-fastcard": "Getting Started with FastCard",
         "features": "Features",
         "viewing-help-help": "Viewing help : help",
         "listing-all-persons-list": "Listing all persons : list",
@@ -121,7 +124,7 @@
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
         "repeat-commands": "Repeat commands",
-        "saving-the-data": "Saving the data",
+        "saving-data": "Saving data",
         "editing-the-data-file": "Editing the data file",
         "faq": "FAQ",
         "known-issues": "Known issues",
