@@ -34,7 +34,7 @@ If you can type fast, FastCard can get your contact management tasks done faster
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to FastCard.
 
-   * `delete 83556666` : Deletes the contact with the phone number `83556666` from the current list.
+   * `delete Jadon` : Deletes the contact with the name `Jadon` from the current list.
    * 
    * `clear` : Deletes all contacts.
 
@@ -201,7 +201,7 @@ Example:
 
 Deletes the specified person from FastCard.
 
-Format: `delete NAME` OR 'delete INDEX'
+Format: `delete NAME` OR `delete INDEX`
 
 * When a name is provided, FastCard deletes the contact whose name matches the input (case-insensitive).
 * If multiple contacts share the same name, FastCard automatically lists the matching contacts. Delete the intended person by running `delete INDEX` using the index shown in that list.
@@ -211,7 +211,7 @@ Format: `delete NAME` OR 'delete INDEX'
 
 Examples:
 * `delete Alice Pauline` deletes the contact named `Alice Pauline` when she is the only contact with that name.
-* `find Jadon` followed by `delete 2` deletes the second person named `Jadon` shown in the results of the `find` command after multiple Jadons were listed.
+* `find Jadon` followed by `delete 2` deletes the second person named `Jadon`, who is shown in the results of the `find` command, after multiple Jadons were listed.
 
 ### Clearing all entries : `clear`
 
