@@ -35,7 +35,7 @@ FastCard is a desktop contact manager controlled largely by keyboard commands, l
 
 ## Getting Started with FastCard
 
-**Step 1: Install Java (if you haven't already)**
+**Step 1: Install Java (if you haven't already)** <br>
 FastCard requires **Java 17 or newer** to run. Java is free software that lets your computer run applications like FastCard.
 
 **Check if you already have Java:**
@@ -54,7 +54,7 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 
 **Step 3: Set up your FastCard folder**
 1. Create a new folder where you want to keep FastCard and all your contact data.
-  * Example: Create a folder called "FastCard" in your Documents.
+    * Example: Create a folder called "FastCard" in your Documents.
 2. Move the `fastcard.jar` file into this folder.
 3. Remember this location. This is where all your data will be saved.
 
