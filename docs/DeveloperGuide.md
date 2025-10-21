@@ -370,6 +370,71 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. FastCard shows an error message.
 
       Use case resumes at step 1.
+
+**Use case: UC04 - Sort contacts**
+
+**MSS**
+1.  User requests to sort contacts by a specific field and order.
+2.  FastCard validates the field and order parameters
+3.  FastCard sorts the contacts according to the specified criteria
+4.  FastCard displays the sorted contact list with a success message
+
+    Use case ends.
+
+**Extensions**
+   
+  * 1a. User does not provide both field and order parameters.
+    * 1a1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 1b. User provides input between "sort" and the first prefix.
+    * 1b1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 1c. User provides duplicate prefixes.
+    * 1c1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 2a. The provided field is invalid (not "name" or "tag").
+    * 2a1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 2b. The provided order is invalid (not "asc", "desc", "ascending", or "descending").
+    * 2b1. FastCard shows an error message.
+    Use case resumes at step 1.
+
+**Use case UC05 - Filter contacts by tags**
+
+**MSS**
+1.  User requests to filter contacts by one or more tags
+2.  FastCard validates the tag parameters.
+3.  FastCard filters the contacts to show only those containing any of the specified tags.
+4.  FastCard displays the filtered contact list with the count of matching contacts.
+
+    Use case ends.
+
+**Extensions**
+
+  * 1a. User does not provide any tag parameters.
+    * 1a1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 1b. User provides input between "filter" and the first tag prefix.
+    * 1b1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 2a. One or more tags are empty.
+    * 2b1. FastCard shows an error message.
+      Use case resumes at step 1.
+  
+  * 2b. One or more tags contain non-alphanumeric characters
+    * 2b1. FastCard shows an error message.
+      Use case resumes at step 1.
+
+  * 3a. No contacts match the specified tags.
+    * 3a1. FastCard displays an empty list with a count of 0 persons.
+    Use case ends.
+
 *{More to be added}*
 
 ### Non-Functional Requirements
@@ -438,42 +503,134 @@ testers are expected to do more *exploratory* testing.
 
 ### Launch and shutdown
 
-1. Initial launch
+1.  Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1.  Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1.  Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+1.  Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   1.  Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   1.  Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1.  Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    -  Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete Alice Pauline`<br>
-     Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    -  Test case: `delete Alice Pauline`<br>
+       Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: 'delete 1'<br>
-     Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    -  Test case: `delete 1`<br>
+       Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-     Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    -  Test case: `delete 0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Test case: `delete Jadon Ye` when multiple Jadons exist<br>
-   Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
+    -  Test case: `delete Jadon Ye` when multiple Jadons exist<br>
+       Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
+    -  Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
+
+### Sorting contacts
+
+1.  Sorting contacts by name
+
+    -  Prerequisites: Multiple contacts in the address book with different names.
+
+    -  Test case: `sort f/name o/asc`<br>
+       Expected: Contacts are sorted alphabetically by name in ascending order. Success message shows "Sorted all persons by name in ascending order".
+
+    -  Test case: `sort f/name o/desc`<br>
+       Expected: Contacts are sorted alphabetically by name in descending order. Success message shows "Sorted all persons by name in descending order".
+
+    -  Test case: `sort f/name o/ascending`<br>
+       Expected: Same as `sort f/name o/asc`.
+
+    -  Test case: `sort f/name o/descending`<br>
+       Expected: Same as `sort f/name o/desc`.
+
+2. Sorting contacts by tag
+
+    -  Prerequisites: Multiple contacts in the address book with different tags.
+
+    -  Test case: `sort f/tag o/asc`<br>
+       Expected: Contacts are sorted by their first tag alphabetically (case-insensitive) in ascending order. Contacts without tags appear first.
+
+    -  Test case: `sort f/tag o/desc`<br>
+       Expected: Contacts are sorted by their first tag alphabetically in descending order.
+
+3. Invalid sort commands
+
+    -  Test case: `sort f/name`<br>
+       Expected: No sorting occurs. Error message shows invalid command format.
+
+    -  Test case: `sort f/phone o/asc`<br>
+       Expected: No sorting occurs. Error message shows invalid command format.
+
+    -  Test case: `sort f/name o/random`<br>
+       Expected: No sorting occurs. Error message shows invalid command format.
+
+    -  Test case: `sort f/name o/asc f/tag`<br>
+       Expected: No sorting occurs. Error message shows duplicate prefixes are not allowed.
+
+    -  Test case: `sort random f/name o/asc`<br>
+       Expected: No sorting occurs. Error message shows invalid command format.
+
+### Filtering contacts by tags
+1. Filtering contacts with single tag
+   
+    -  Prerequisites: Multiple contacts in the address book, some with the tag "friends", some without.
+
+    -  Test case: `filter t/friends`<br>
+       Expected: Only contacts with the "friends" tag are displayed. Status message shows the number of persons listed (e.g., "3 persons listed!").
+
+    -  Test case: `filter t/FRIENDS`<br>
+       Expected: Same as above. Tag matching is case-insensitive.
+
+    -  Test case: `filter t/colleagues`<br>
+       Expected: Only contacts with the "colleague" tag are displayed.
+    
+2. Filtering contacts with multiple tags
+
+    -  Prerequisites: Multiple contacts with various tags (e.g., "friends", "family", "colleagues").
+
+    -  Test case: `filter t/friends t/family`<br>
+       Expected: Contacts with either "friends" OR "family" tags are displayed. Shows count of all matching contacts.
+
+    -  Test case: `filter t/friends t/friends t/family`<br>
+       Expected: Same as above. Duplicate tags are automatically removed.
+
+3. Filtering with no matches
+  
+    -  Prerequisites: No contacts have the tag "nonexistent".
+
+    -  Test case: `filter t/nonexistent`<br>
+       Expected: Empty list is displayed. Status message shows "0 persons listed!".
+
+4. Invalid filter commands
+
+    -  Test case: `filter`<br>
+       Expected: No filtering occurs. Error message shows invalid command format with usage instructions.
+
+    -  Test case: `filter friends`<br>
+       Expected: Same as above.
+
+    -  Test case: `filter t/`<br>
+       Expected: Same as above.
+
+5. Clearing the filter
+
+    -  Test case: `list`
+       Expected: All contacts are displayed again, removing the filter.
 
 ### Saving data
 
