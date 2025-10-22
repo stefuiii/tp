@@ -11,6 +11,8 @@
 * If you are interested about developing FastCard, the [**Developer Guide**](DeveloperGuide.html) is a good place to start.
 ---
 
+![FastCard Screen Grab](images/Ui.png)
+
 ### Acknowledgement
 * This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 * Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
