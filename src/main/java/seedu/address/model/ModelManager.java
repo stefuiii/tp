@@ -14,6 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -99,7 +100,18 @@ public class ModelManager implements Model {
 
     @Override
     public void deletePerson(Person target) {
+        requireNonNull(target);
+        assert addressBook != null : "Address book should not be null when deleting a person";
+
+        if (!addressBook.hasPerson(target)) {
+            logger.warning(() -> "Attempted to delete a non-existent person: " + target);
+            throw new PersonNotFoundException();
+        }
+
+        logger.fine(() -> "Deleting person: " + target);
         addressBook.removePerson(target);
+        assert !addressBook.hasPerson(target) : "Person should be removed from the address book after deletion";
+        logger.fine(() -> "Successfully deleted person: " + target);
     }
 
     @Override
