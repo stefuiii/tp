@@ -1,0 +1,41 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+box Ui UI_COLOR_T1
+participant ":CommandBox" as CommandBox UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant ":CommandHistory" as CommandHistory MODEL_COLOR
+end box
+
+activate CommandBox
+CommandBox -> CommandBox : handleKeyPressed()
+CommandBox -> MainWindow : navigateCommandHistory(-1)
+
+activate MainWindow
+MainWindow -> LogicManager : getPreviousCommand()
+activate LogicManager
+
+LogicManager -> ModelManager : getPreviousCommand()
+activate ModelManager
+
+ModelManager -> CommandHistory : getPreviousCommand()
+activate CommandHistory
+CommandHistory -> CommandHistory : getLastCommand(currCommandIndex)
+CommandHistory --> ModelManager
+
+ModelManager --> LogicManager
+LogicManager --> MainWindow
+MainWindow --> CommandBox
+
+CommandBox -> CommandBox : commandTextField.setText()
+
+deactivate LogicManager
+@enduml

@@ -232,6 +232,22 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 ![Filter Activity Diagram](images/FilterActivityDiagram.png)
 
+#### Repeat Command Feature
+The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
+
+The Sequence diagram for a NextCommand Operation
+
+1. **Key Pressed**: `CommandBox` handles the event with a call to `navigateCommandHistory(x)` with `x` being '-1' for previous command, and `1' for next command in history.
+
+2. **Command Bubbles Down**: A series of function calls are then passed through the Logic Component and the Model Component
+
+3. **Get Last Nth Command**: `CommandHistory` gets the last nth command based on its current context of `currCommandIndex` and returns the respective string value of the command saved in history.
+
+4. **Update CommandBox**: Target Command String gets returned back and `CommandBox` updates its text field to show the command, along with setting the cursor to end of line.
+
+<puml src="diagrams/CommandHistoryDiagram.puml" width="100%" />
+
+
 [To include implementations once finalised - with PUML]
 
 --------------------------------------------------------------------------------------------------------------------
