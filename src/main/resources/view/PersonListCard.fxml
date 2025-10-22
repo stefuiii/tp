@@ -72,7 +72,7 @@
           </image>
         </ImageView>
 
-        <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+        <Label fx:id="company" styleClass="cell_small_label" text="\$company" />
       </HBox>
 
 
