@@ -86,6 +86,6 @@ public class PersonCard extends UiPart<Region> {
         phoneIcon.visibleProperty().bind(phone.textProperty().isNotEqualTo("$phone"));
         emailIcon.visibleProperty().bind(email.textProperty().isNotEqualTo("$email"));
         //  Using Address now but to change to company later
-        companyIcon.visibleProperty().bind(address.textProperty().isNotEqualTo("$address"));
+        companyIcon.visibleProperty().bind(company.textProperty().isNotEqualTo("$company"));
     }
 }
