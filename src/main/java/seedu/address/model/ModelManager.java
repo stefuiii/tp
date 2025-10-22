@@ -101,7 +101,10 @@ public class ModelManager implements Model {
     @Override
     public void deletePerson(Person target) {
         requireNonNull(target);
-        assert addressBook != null : "Address book should not be null when deleting a person";
+
+        if (addressBook == null) {
+            throw new AssertionError("Address book should not be null when deleting a person");
+        }
 
         if (!addressBook.hasPerson(target)) {
             logger.warning(() -> "Attempted to delete a non-existent person: " + target);
@@ -109,8 +112,10 @@ public class ModelManager implements Model {
         }
 
         logger.fine(() -> "Deleting person: " + target);
-        addressBook.removePerson(target);
-        assert !addressBook.hasPerson(target) : "Person should be removed from the address book after deletion";
+        if (addressBook.hasPerson(target)) {
+            throw new AssertionError("Person should be removed from the address book after deletion");
+        }
+
         logger.fine(() -> "Successfully deleted person: " + target);
     }
 
