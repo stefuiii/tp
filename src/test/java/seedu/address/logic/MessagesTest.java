@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -20,7 +20,7 @@ public class MessagesTest {
                 new Name("Linghui"),
                 new Phone("80396190"),
                 new Email("linghui@nus.edu.sg"), // valid
-                new Address("NUS Computing"), // valid
+                new Company("NUS Computing"), // valid
                 new HashSet<>()
         );
 
@@ -28,6 +28,6 @@ public class MessagesTest {
 
         assertTrue(formatted.contains("Name: Linghui"));
         assertTrue(formatted.contains("Email: linghui@nus.edu.sg"));
-        assertTrue(formatted.contains("Address: NUS Computing"));
+        assertTrue(formatted.contains("Company: NUS Computing"));
     }
 }

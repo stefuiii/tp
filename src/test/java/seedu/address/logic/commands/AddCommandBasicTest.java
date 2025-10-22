@@ -14,7 +14,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -37,7 +37,7 @@ public class AddCommandBasicTest {
                 new Name("John Doe"),
                 new Phone("88880000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         AddCommandBasic command = new AddCommandBasic(validPerson);
@@ -53,7 +53,7 @@ public class AddCommandBasicTest {
                 new Name("John Doe"),
                 new Phone("88880000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         model.addPerson(validPerson);
@@ -68,14 +68,14 @@ public class AddCommandBasicTest {
                 new Name("John Doe"),
                 new Phone("88880000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         Person amy = new Person(
                 new Name("Amy Bee"),
                 new Phone("85355255"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         AddCommandBasic addJohnCommand = new AddCommandBasic(john);
@@ -104,7 +104,7 @@ public class AddCommandBasicTest {
                 new Name("John Doe"),
                 new Phone("88880000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         AddCommandBasic command = new AddCommandBasic(john);

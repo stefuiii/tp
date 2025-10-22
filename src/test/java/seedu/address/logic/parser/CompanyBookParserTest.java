@@ -37,7 +37,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
-public class AddressBookParserTest {
+public class CompanyBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 

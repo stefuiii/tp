@@ -7,7 +7,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommandBasic;
-import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -30,7 +30,7 @@ public class AddCommandBasicParserTest {
                 new Name("John Doe"),
                 new Phone("88880000"),
                 new Email("unknown@example.com"),
-                new Address("N/A"),
+                new Company("N/A"),
                 new HashSet<Tag>());
 
         AddCommandBasic expectedCommand = new AddCommandBasic(expectedPerson);

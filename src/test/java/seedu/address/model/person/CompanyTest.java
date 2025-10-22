@@ -1,68 +1,56 @@
 package seedu.address.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * Tests for {@link Company}.
- */
 public class CompanyTest {
 
     @Test
-    public void toString_returnsValue() {
-        Company company = new Company("Suntory");
-        assertEquals("Suntory", company.toString());
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Company(null));
     }
 
     @Test
-    public void equals_sameObject_returnsTrue() {
-        Company company = new Company("Suntory");
-        // self-equality branch
+    public void constructor_invalidAddress_throwsIllegalArgumentException() {
+        String invalidAddress = "";
+        assertThrows(IllegalArgumentException.class, () -> new Company(invalidAddress));
+    }
+
+    @Test
+    public void isValidAddress() {
+        // null address
+        assertThrows(NullPointerException.class, () -> Company.isValidAddress(null));
+
+        // invalid addresses
+        assertFalse(Company.isValidAddress("")); // empty string
+        assertFalse(Company.isValidAddress(" ")); // spaces only
+
+        // valid addresses
+        assertTrue(Company.isValidAddress("Blk 456, Den Road, #01-355"));
+        assertTrue(Company.isValidAddress("-")); // one character
+        assertTrue(Company.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+    }
+
+    @Test
+    public void equals() {
+        Company company = new Company("Valid Address");
+
+        // same values -> returns true
+        assertTrue(company.equals(new Company("Valid Address")));
+
+        // same object -> returns true
         assertTrue(company.equals(company));
-    }
 
-    @Test
-    public void equals_sameValue_returnsTrue() {
-        Company companyA = new Company("Suntory");
-        Company companyB = new Company("Suntory");
-        assertEquals(companyA, companyB);
-    }
+        // null -> returns false
+        assertFalse(company.equals(null));
 
-    @Test
-    public void equals_differentValue_returnsFalse() {
-        Company companyA = new Company("Suntory");
-        Company companyB = new Company("NUS Computing");
-        assertNotEquals(companyA, companyB);
-    }
+        // different types -> returns false
+        assertFalse(company.equals(5.0f));
 
-    @Test
-    public void equals_differentType_returnsFalse() {
-        Company company = new Company("Suntory");
-        assertNotEquals(company, "Suntory"); // trigger instanceof false branch
-    }
-
-    @Test
-    public void hashCode_sameValue_returnsSameHash() {
-        Company companyA = new Company("Suntory");
-        Company companyB = new Company("Suntory");
-        assertEquals(companyA.hashCode(), companyB.hashCode());
-    }
-
-    @Test
-    public void hashCode_differentValue_returnsDifferentHash() {
-        Company companyA = new Company("Suntory");
-        Company companyB = new Company("NUS Computing");
-        assertNotEquals(companyA.hashCode(), companyB.hashCode());
-    }
-
-    @Test
-    public void hashCode_consistentAcrossCalls() {
-        Company company = new Company("Suntory");
-        int hash1 = company.hashCode();
-        int hash2 = company.hashCode();
-        assertEquals(hash1, hash2);
+        // different values -> returns false
+        assertFalse(company.equals(new Company("Other Valid Address")));
     }
 }
