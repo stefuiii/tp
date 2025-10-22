@@ -50,7 +50,7 @@ public class EditCommand extends Command {
             + "Example: " + COMMAND_WORD + " John Doe "
             + PREFIX_EMAIL + "john.doe@company.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_MULTIPLE_MATCHING_PERSONS =
@@ -141,7 +141,7 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Company updatedCompany = editPersonDescriptor.getAddress().orElse(personToEdit.getCompany());
+        Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedCompany, updatedTags);
@@ -199,7 +199,7 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.company);
+            setCompany(toCopy.company);
             setTags(toCopy.tags);
         }
 
@@ -234,11 +234,11 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setAddress(Company company) {
+        public void setCompany(Company company) {
             this.company = company;
         }
 
-        public Optional<Company> getAddress() {
+        public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
         }
 
@@ -284,7 +284,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", company)
+                    .add("company", company)
                     .add("tags", tags)
                     .toString();
         }
