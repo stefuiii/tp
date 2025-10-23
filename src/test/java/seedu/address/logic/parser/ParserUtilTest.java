@@ -25,8 +25,8 @@ public class ParserUtilTest {
     private static final String INVALID_NAME_TOO_LONG = "a".repeat(Name.MAX_LENGTH + 1);
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_PHONE_TOO_LONG = "1".repeat(Phone.MAX_LENGTH + 1);
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_ADDRESS_TOO_LONG = "a".repeat(Company.MAX_LENGTH + 1);
+    private static final String INVALID_COMPANY = " ";
+    private static final String INVALID_COMPANY_TOO_LONG = "a".repeat(Company.MAX_LENGTH + 1);
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_EMAIL_TOO_LONG =
             "a".repeat(Email.MAX_LENGTH - "@example.com".length() + 1) + "@example.com";
@@ -35,7 +35,7 @@ public class ParserUtilTest {
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
+    private static final String VALID_COMPANY = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
@@ -119,31 +119,31 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
+    public void parseCompany_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseCompany((String) null));
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
+    public void parseCompany_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCompany(INVALID_COMPANY));
     }
 
     @Test
-    public void parseAddress_valueTooLong_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS_TOO_LONG));
+    public void parseCompany_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCompany(INVALID_COMPANY_TOO_LONG));
     }
 
     @Test
-    public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Company expectedCompany = new Company(VALID_ADDRESS);
-        assertEquals(expectedCompany, ParserUtil.parseAddress(VALID_ADDRESS));
+    public void parseCompany_validValueWithoutWhitespace_returnsCompany() throws Exception {
+        Company expectedCompany = new Company(VALID_COMPANY);
+        assertEquals(expectedCompany, ParserUtil.parseCompany(VALID_COMPANY));
     }
 
     @Test
-    public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
-        String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Company expectedCompany = new Company(VALID_ADDRESS);
-        assertEquals(expectedCompany, ParserUtil.parseAddress(addressWithWhitespace));
+    public void parseCompany_validValueWithWhitespace_returnsTrimmedCompany() throws Exception {
+        String companyWithWhitespace = WHITESPACE + VALID_COMPANY + WHITESPACE;
+        Company expectedCompany = new Company(VALID_COMPANY);
+        assertEquals(expectedCompany, ParserUtil.parseCompany(companyWithWhitespace));
     }
 
     @Test

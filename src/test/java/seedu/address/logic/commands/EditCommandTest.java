@@ -122,11 +122,11 @@ public class EditCommandTest {
         // Build a model with two persons of the same name
         AddressBook addressBook = new AddressBook();
         Person john1 = new PersonBuilder().withName("John Smith").withPhone("80000001")
-                .withEmail("john1@example.com").withAddress("A Street").build();
+                .withEmail("john1@example.com").withCompany("Google").build();
         Person john2 = new PersonBuilder().withName("John Smith").withPhone("80000002")
-                .withEmail("john2@example.com").withAddress("B Street").build();
+                .withEmail("john2@example.com").withCompany("Microsoft").build();
         Person other = new PersonBuilder().withName("Jane Doe").withPhone("80000003")
-                .withEmail("jane@example.com").withAddress("C Street").build();
+                .withEmail("jane@example.com").withCompany("Amazon").build();
         addressBook.addPerson(john1);
         addressBook.addPerson(john2);
         addressBook.addPerson(other);
@@ -277,9 +277,9 @@ public class EditCommandTest {
         // Build a model with a single matching name (case-insensitive, extra spaces)
         AddressBook addressBook = new AddressBook();
         Person john = new PersonBuilder().withName("John Smith").withPhone("80000001")
-                .withEmail("john@example.com").withAddress("A Street").build();
+                .withEmail("john@example.com").withCompany("Google").build();
         Person jane = new PersonBuilder().withName("Jane Doe").withPhone("80000002")
-                .withEmail("jane@example.com").withAddress("B Street").build();
+                .withEmail("jane@example.com").withCompany("Microsoft").build();
         addressBook.addPerson(john);
         addressBook.addPerson(jane);
         Model singleModel = new ModelManager(addressBook, new UserPrefs());
