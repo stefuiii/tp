@@ -1,0 +1,56 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Ui UI_COLOR_T1
+participant ":User" as User UI_COLOR
+participant ":CommandBox" as CommandBox UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddCommandBasic" as AddCommandBasic LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant ":Messages" as Messages MODEL_COLOR
+end box
+
+
+== User triggers AddBasic command ==
+activate User
+User -> CommandBox : enters "addbasic n/Jadon p/88880000"
+activate CommandBox
+CommandBox -> MainWindow : sendCommand("addbasic n/Jadon p/88880000")
+
+activate MainWindow
+MainWindow -> LogicManager : execute("addbasic n/Jadon p/88880000")
+activate LogicManager
+
+LogicManager -> AddCommandBasic : new AddCommandBasic(Person)
+activate AddCommandBasic
+
+== Command Execution ==
+AddCommandBasic -> ModelManager : hasPerson(toAdd)
+activate ModelManager
+ModelManager --> AddCommandBasic : false  (person not found)
+
+AddCommandBasic -> ModelManager : addPerson(toAdd)
+AddCommandBasic -> Messages : format(toAdd)
+activate Messages
+Messages --> AddCommandBasic : formatted string
+
+AddCommandBasic --> LogicManager : CommandResult(success message)
+deactivate AddCommandBasic
+
+LogicManager --> MainWindow : CommandResult
+deactivate LogicManager
+
+MainWindow --> CommandBox : display success message
+deactivate MainWindow
+deactivate CommandBox
+deactivate User
+
+@enduml

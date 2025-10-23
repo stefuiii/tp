@@ -233,7 +233,26 @@ The activity diagram below depicts the execution flow of the filter command:
 ![Filter Activity Diagram](images/FilterActivityDiagram.png)
 
 [To include implementations once finalised - with PUML]
+### Add Contact with Basic Information
+The add operation is facilitated by the `AddCommandBasic` class within the Logic and Model components.
 
+The Sequence diagram for an **Add Basic Command** operation is shown below.
+
+1. **User Input**: The user enters the command `addbasic n/NAME p/PHONE` in the `CommandBox` (e.g., `addbasic n/Jadon p/88880000`).
+
+2. **Command Parsing and Execution**:  
+   The input is passed from the `CommandBox` to the `MainWindow`, which then invokes the `LogicManager` to execute the command.  
+   `LogicManager` constructs an `AddCommandBasic` object with a `Person` instance containing the specified name and phone number.
+
+3. **Model Update**:  
+   The `AddCommandBasic` checks through the `ModelManager` to verify if the person already exists.  
+   If not found, the new person is added to the model and stored in memory.
+
+4. **Success Message**:  
+   Upon successful addition, `Messages.format()` is called to format the result, and a `CommandResult` is returned to `LogicManager`.  
+   The `MainWindow` then updates the UI to display the success message in the `CommandBox`.
+
+<puml src="diagrams/AddCommandBasicDiagram.puml" width="100%" />
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
