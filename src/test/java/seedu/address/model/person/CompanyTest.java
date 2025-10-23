@@ -20,28 +20,28 @@ public class CompanyTest {
     }
 
     @Test
-    public void isValidAddress() {
-        // null address
-        assertThrows(NullPointerException.class, () -> Company.isValidAddress(null));
+    public void isValidCompany() {
+        // null company
+        assertThrows(NullPointerException.class, () -> Company.isValidCompany(null));
 
-        // invalid addresses
-        assertFalse(Company.isValidAddress("")); // empty string
-        assertFalse(Company.isValidAddress(" ")); // spaces only
-        assertFalse(Company.isValidAddress(generateString(Company.MAX_LENGTH + 1))); // too long
+        // invalid companies
+        assertFalse(Company.isValidCompany("")); // empty string
+        assertFalse(Company.isValidCompany(" ")); // spaces only
+        assertFalse(Company.isValidCompany(generateString(Company.MAX_LENGTH + 1))); // too long
 
-        // valid addresses
-        assertTrue(Company.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(Company.isValidAddress("-")); // one character
-        assertTrue(Company.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
-        assertTrue(Company.isValidAddress(generateString(Company.MAX_LENGTH))); // boundary length
+        // valid companies
+        assertTrue(Company.isValidCompany("Google"));
+        assertTrue(Company.isValidCompany("-")); // one character
+        assertTrue(Company.isValidCompany("International Business Machines Corporation")); // long text
+        assertTrue(Company.isValidCompany(generateString(Company.MAX_LENGTH))); // boundary length
     }
 
     @Test
     public void equals() {
-        Company company = new Company("Valid Address");
+        Company company = new Company("Google");
 
         // same values -> returns true
-        assertTrue(company.equals(new Company("Valid Address")));
+        assertTrue(company.equals(new Company("Google")));
 
         // same object -> returns true
         assertTrue(company.equals(company));
@@ -53,7 +53,7 @@ public class CompanyTest {
         assertFalse(company.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(company.equals(new Company("Other Valid Address")));
+        assertFalse(company.equals(new Company("Microsoft")));
     }
 
     private String generateString(int length) {

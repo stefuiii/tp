@@ -59,7 +59,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
-        // Only show address if it is non-empty
+        // Only show company if it is non-empty
         // coverage:ignore-start
         if ("N/A".equals(person.getCompany().value)) {
             company.setManaged(false);
@@ -85,7 +85,7 @@ public class PersonCard extends UiPart<Region> {
         // Show Icons only if label are visible
         phoneIcon.visibleProperty().bind(phone.textProperty().isNotEqualTo("$phone"));
         emailIcon.visibleProperty().bind(email.textProperty().isNotEqualTo("$email"));
-        //  Using Address now but to change to company later
+        //  Using company now and bind visibility to non-placeholder text
         companyIcon.visibleProperty().bind(company.textProperty().isNotEqualTo("$company"));
     }
 }
