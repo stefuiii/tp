@@ -8,6 +8,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.EndOfCommandHistoryException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -87,6 +90,58 @@ public class ModelManagerTest {
     public void hasPerson_personInAddressBook_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
+    }
+    @Test
+    public void deletePerson_nullPerson_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deletePerson(null));
+    }
+
+    @Test
+    public void deletePerson_personNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deletePerson(ALICE));
+    }
+
+    @Test
+    public void deletePerson_personInAddressBook_personRemovedFromAddressBook() {
+        modelManager.addPerson(ALICE);
+        modelManager.deletePerson(ALICE);
+        assertFalse(modelManager.hasPerson(ALICE));
+    }
+
+    @Test
+    public void deletePerson_personInAddressBook_filteredListUpdated() {
+        modelManager.addPerson(ALICE);
+        modelManager.updateFilteredPersonList(person -> person.equals(ALICE));
+        assertEquals(1, modelManager.getFilteredPersonList().size());
+
+        modelManager.deletePerson(ALICE);
+
+        assertEquals(0, modelManager.getFilteredPersonList().size());
+    }
+
+    @Test
+    public void deletePerson_personDeletedTwice_throwsPersonNotFoundException() {
+        modelManager.addPerson(ALICE);
+        modelManager.deletePerson(ALICE);
+
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deletePerson(ALICE));
+    }
+
+    @Test
+    public void deletePerson_addressBookNull_throwsAssertionError() {
+        ModelManager manager = new ModelManager();
+        setAddressBook(manager, null);
+
+        assertThrows(AssertionError.class, () -> manager.deletePerson(ALICE));
+    }
+
+    @Test
+    public void deletePerson_personNotRemoved_throwsAssertionError() {
+        ModelManager manager = new ModelManager();
+        AddressBook stubbornAddressBook = new AddressBookThatDoesNotRemove(ALICE);
+        setAddressBook(manager, stubbornAddressBook);
+
+        assertThrows(AssertionError.class, () -> manager.deletePerson(ALICE));
     }
 
     @Test
@@ -160,5 +215,26 @@ public class ModelManagerTest {
         // Check twice getting beyond latest command (Expect return empty string)
         assertEquals("", modelManager.getNextCommand());
         assertEquals("", modelManager.getNextCommand());
+    }
+
+    private void setAddressBook(ModelManager manager, AddressBook replacement) {
+        try {
+            Field addressBookField = ModelManager.class.getDeclaredField("addressBook");
+            addressBookField.setAccessible(true);
+            addressBookField.set(manager, replacement);
+        } catch (ReflectiveOperationException e) {
+            throw new AssertionError("Unable to configure address book for test", e);
+        }
+    }
+
+    private static class AddressBookThatDoesNotRemove extends AddressBook {
+        AddressBookThatDoesNotRemove(Person stubbornPerson) {
+            addPerson(stubbornPerson);
+        }
+
+        @Override
+        public void removePerson(Person key) {
+            // Do nothing to simulate a failed removal
+        }
     }
 }
