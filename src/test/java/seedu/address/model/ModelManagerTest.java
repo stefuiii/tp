@@ -107,6 +107,25 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void deletePerson_personInAddressBook_filteredListUpdated() {
+        modelManager.addPerson(ALICE);
+        modelManager.updateFilteredPersonList(person -> person.equals(ALICE));
+        assertEquals(1, modelManager.getFilteredPersonList().size());
+
+        modelManager.deletePerson(ALICE);
+
+        assertEquals(0, modelManager.getFilteredPersonList().size());
+    }
+
+    @Test
+    public void deletePerson_personDeletedTwice_throwsPersonNotFoundException() {
+        modelManager.addPerson(ALICE);
+        modelManager.deletePerson(ALICE);
+
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deletePerson(ALICE));
+    }
+
+    @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
     }

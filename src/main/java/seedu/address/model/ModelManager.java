@@ -112,6 +112,9 @@ public class ModelManager implements Model {
         }
 
         logger.fine(() -> "Deleting person: " + target);
+
+        addressBook.removePerson(target);
+
         if (addressBook.hasPerson(target)) {
             throw new AssertionError("Person should be removed from the address book after deletion");
         }
