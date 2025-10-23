@@ -82,7 +82,7 @@ public class PersonCardTest {
                 new Name("Linghui"),
                 new Phone("80396190"),
                 new Email("linghui@nus.edu.sg"),
-                new Company("NUS Computing"),
+                new Company("Microsoft"),
                 tags
         );
 
@@ -100,7 +100,7 @@ public class PersonCardTest {
                 assertEquals("1. ", id.getText());
                 assertEquals("Linghui", name.getText());
                 assertEquals("80396190", phone.getText());
-                assertEquals("NUS Computing", company.getText());
+                assertEquals("Microsoft", company.getText());
                 assertTrue(company.isVisible());
                 assertEquals("linghui@nus.edu.sg", email.getText());
                 assertTrue(email.isVisible());
