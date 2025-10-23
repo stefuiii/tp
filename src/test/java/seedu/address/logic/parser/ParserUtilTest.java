@@ -22,10 +22,16 @@ import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
+    private static final String INVALID_NAME_TOO_LONG = "a".repeat(Name.MAX_LENGTH + 1);
     private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_PHONE_TOO_LONG = "1".repeat(Phone.MAX_LENGTH + 1);
     private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_ADDRESS_TOO_LONG = "a".repeat(Company.MAX_LENGTH + 1);
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_EMAIL_TOO_LONG =
+            "a".repeat(Email.MAX_LENGTH - "@example.com".length() + 1) + "@example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TAG_TOO_LONG = "a".repeat(Tag.MAX_LENGTH + 1);
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -67,6 +73,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseName_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseName(INVALID_NAME_TOO_LONG));
+    }
+
+    @Test
     public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {
         Name expectedName = new Name(VALID_NAME);
         assertEquals(expectedName, ParserUtil.parseName(VALID_NAME));
@@ -87,6 +98,11 @@ public class ParserUtilTest {
     @Test
     public void parsePhone_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
+    }
+
+    @Test
+    public void parsePhone_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePhone(INVALID_PHONE_TOO_LONG));
     }
 
     @Test
@@ -113,6 +129,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseAddress_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS_TOO_LONG));
+    }
+
+    @Test
     public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
         Company expectedCompany = new Company(VALID_ADDRESS);
         assertEquals(expectedCompany, ParserUtil.parseAddress(VALID_ADDRESS));
@@ -136,6 +157,11 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseEmail_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL_TOO_LONG));
+    }
+
+    @Test
     public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
         Email expectedEmail = new Email(VALID_EMAIL);
         assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
@@ -156,6 +182,11 @@ public class ParserUtilTest {
     @Test
     public void parseTag_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseTag(INVALID_TAG));
+    }
+
+    @Test
+    public void parseTag_valueTooLong_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseTag(INVALID_TAG_TOO_LONG));
     }
 
     @Test

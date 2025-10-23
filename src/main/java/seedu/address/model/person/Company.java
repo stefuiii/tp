@@ -9,7 +9,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Company {
 
-    public static final String MESSAGE_CONSTRAINTS = "Company can take any values, and it should not be blank";
+    public static final int MAX_LENGTH = 100;
+    public static final String MESSAGE_CONSTRAINTS =
+            "Company can take any values, should not be blank, and must be at most " + MAX_LENGTH + " characters";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -34,7 +36,10 @@ public class Company {
      * Returns true if a given string is a valid email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(VALIDATION_REGEX);
+        Boolean bool1 = test.length() <= MAX_LENGTH;
+        Boolean bool2 = test.matches(VALIDATION_REGEX);
+
+        return bool1 && bool2;
     }
 
     @Override
