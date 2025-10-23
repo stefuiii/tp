@@ -20,20 +20,20 @@ public class CompanyTest {
     }
 
     @Test
-    public void isValidAddress() {
-        // null address
-        assertThrows(NullPointerException.class, () -> Company.isValidAddress(null));
+    public void isValidCompany() {
+        // null company
+        assertThrows(NullPointerException.class, () -> Company.isValidCompany(null));
 
-        // invalid addresses
-        assertFalse(Company.isValidAddress("")); // empty string
-        assertFalse(Company.isValidAddress(" ")); // spaces only
-        assertFalse(Company.isValidAddress(generateString(Company.MAX_LENGTH + 1))); // too long
+        // invalid companies
+        assertFalse(Company.isValidCompany("")); // empty string
+        assertFalse(Company.isValidCompany(" ")); // spaces only
+        assertFalse(Company.isValidCompany(generateString(Company.MAX_LENGTH + 1))); // too long
 
-        // valid addresses
-        assertTrue(Company.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(Company.isValidAddress("-")); // one character
-        assertTrue(Company.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
-        assertTrue(Company.isValidAddress(generateString(Company.MAX_LENGTH))); // boundary length
+        // valid companies
+        assertTrue(Company.isValidCompany("Blk 456, Den Road, #01-355"));
+        assertTrue(Company.isValidCompany("-")); // one character
+        assertTrue(Company.isValidCompany("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long text
+        assertTrue(Company.isValidCompany(generateString(Company.MAX_LENGTH))); // boundary length
     }
 
     @Test

@@ -92,7 +92,7 @@ public class PersonCardTest {
                 Label id = getPrivateField(card, "id", Label.class);
                 Label name = getPrivateField(card, "name", Label.class);
                 Label phone = getPrivateField(card, "phone", Label.class);
-                Label address = getPrivateField(card, "address", Label.class);
+                Label company = getPrivateField(card, "company", Label.class);
                 Label email = getPrivateField(card, "email", Label.class);
                 FlowPane tagPane = getPrivateField(card, "tags", FlowPane.class);
 
@@ -100,8 +100,8 @@ public class PersonCardTest {
                 assertEquals("1. ", id.getText());
                 assertEquals("Linghui", name.getText());
                 assertEquals("80396190", phone.getText());
-                assertEquals("NUS Computing", address.getText());
-                assertTrue(address.isVisible());
+                assertEquals("NUS Computing", company.getText());
+                assertTrue(company.isVisible());
                 assertEquals("linghui@nus.edu.sg", email.getText());
                 assertTrue(email.isVisible());
 
@@ -134,10 +134,10 @@ public class PersonCardTest {
         runOnFxThread(() -> {
             PersonCard card = new PersonCard(placeholderPerson, 2);
             try {
-                Label address = getPrivateField(card, "address", Label.class);
+                Label company = getPrivateField(card, "company", Label.class);
                 Label email = getPrivateField(card, "email", Label.class);
 
-                assertFalse(address.isVisible());
+                assertFalse(company.isVisible());
                 assertFalse(email.isVisible());
             } catch (Exception e) {
                 throw new RuntimeException(e);
