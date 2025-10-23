@@ -103,7 +103,7 @@ public class ModelManager implements Model {
         requireNonNull(target);
 
         if (addressBook == null) {
-            throw new AssertionError("Address book should not be null when deleting a person");
+            throw new IllegalStateException("Address book should not be null when deleting a person");
         }
 
         if (!addressBook.hasPerson(target)) {
