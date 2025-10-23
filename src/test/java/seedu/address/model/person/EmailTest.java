@@ -51,6 +51,7 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("peterjack@-example.com")); // domain name starts with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.com-")); // domain name ends with a hyphen
         assertFalse(Email.isValidEmail("peterjack@example.c")); // top level domain has less than two chars
+        assertFalse(Email.isValidEmail(createEmailOfLength(Email.MAX_LENGTH + 1))); // too long
 
         // valid email
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com")); // underscore in local part
@@ -64,6 +65,7 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com")); // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com")); // long local part
         assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
+        assertTrue(Email.isValidEmail(createEmailOfLength(Email.MAX_LENGTH))); // boundary length
     }
 
     @Test
@@ -84,5 +86,14 @@ public class EmailTest {
 
         // different values -> returns false
         assertFalse(email.equals(new Email("other.valid@email")));
+    }
+
+    private String createEmailOfLength(int length) {
+        String domain = "@example.com";
+        int localPartLength = length - domain.length();
+        if (localPartLength <= 0) {
+            throw new IllegalArgumentException("Length must be greater than domain portion");
+        }
+        return "a".repeat(localPartLength) + domain;
     }
 }

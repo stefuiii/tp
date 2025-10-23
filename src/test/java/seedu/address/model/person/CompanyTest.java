@@ -27,11 +27,13 @@ public class CompanyTest {
         // invalid addresses
         assertFalse(Company.isValidAddress("")); // empty string
         assertFalse(Company.isValidAddress(" ")); // spaces only
+        assertFalse(Company.isValidAddress(generateString(Company.MAX_LENGTH + 1))); // too long
 
         // valid addresses
         assertTrue(Company.isValidAddress("Blk 456, Den Road, #01-355"));
         assertTrue(Company.isValidAddress("-")); // one character
         assertTrue(Company.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(Company.isValidAddress(generateString(Company.MAX_LENGTH))); // boundary length
     }
 
     @Test
@@ -52,5 +54,9 @@ public class CompanyTest {
 
         // different values -> returns false
         assertFalse(company.equals(new Company("Other Valid Address")));
+    }
+
+    private String generateString(int length) {
+        return "a".repeat(length);
     }
 }
