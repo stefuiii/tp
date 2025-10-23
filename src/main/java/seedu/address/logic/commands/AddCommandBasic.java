@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -29,6 +31,7 @@ public class AddCommandBasic extends Command {
     public static final String MESSAGE_SUCCESS = "You have successfully added this contact: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
+    private static final Logger logger = Logger.getLogger(AddCommandBasic.class.getName());
     private final Person toAdd;
 
     /**
@@ -48,7 +51,7 @@ public class AddCommandBasic extends Command {
         }
 
         model.addPerson(toAdd);
-        System.out.println(">>> Adding a new person with basic information: " + toAdd);
+        logger.info("Adding a new person with basic information: " + toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
