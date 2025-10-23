@@ -4,7 +4,11 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.Cursor;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -48,6 +52,10 @@ public class PersonCard extends UiPart<Region> {
     private ImageView emailIcon;
     @FXML
     private ImageView companyIcon;
+    @FXML
+    private ImageView phoneCopyIcon;
+    @FXML
+    private ImageView emailCopyIcon;
 
 
     /**
@@ -84,8 +92,32 @@ public class PersonCard extends UiPart<Region> {
 
         // Show Icons only if label are visible
         phoneIcon.visibleProperty().bind(phone.textProperty().isNotEqualTo("$phone"));
-        emailIcon.visibleProperty().bind(email.textProperty().isNotEqualTo("$email"));
+        emailIcon.visibleProperty().bind(email.visibleProperty());
         //  Using Address now but to change to company later
         companyIcon.visibleProperty().bind(company.textProperty().isNotEqualTo("$company"));
+
+        // Right-side copy icons: visibility and handlers
+        phoneCopyIcon.visibleProperty().bind(phone.textProperty().isNotEqualTo("$phone"));
+        emailCopyIcon.visibleProperty().bind(email.visibleProperty());
+
+        // Keep layout tight when email is hidden
+        emailIcon.managedProperty().bind(email.visibleProperty());
+        emailCopyIcon.managedProperty().bind(email.visibleProperty());
+        configureCopyIcon(phoneCopyIcon, phone);
+        configureCopyIcon(emailCopyIcon, email);
+    }
+
+    private void configureCopyIcon(ImageView icon, Label sourceLabel) {
+        icon.setPickOnBounds(true);
+        icon.setCursor(Cursor.HAND);
+        Tooltip.install(icon, new Tooltip("Copy"));
+        icon.setOnMouseClicked(event -> copyToClipboard(sourceLabel.getText()));
+    }
+
+    private void copyToClipboard(String value) {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(value);
+        clipboard.setContent(content);
     }
 }
