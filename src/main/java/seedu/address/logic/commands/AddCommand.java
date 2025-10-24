@@ -32,11 +32,11 @@ public class AddCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@ms.com "
             + PREFIX_COMPANY + "Morgan Stanley "
-            + PREFIX_TAG + "ex Colleague "
-            + PREFIX_TAG + "to catch up";
+            + PREFIX_TAG + "competitor"
+            + PREFIX_TAG + "delta one sales";
 
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;
 
