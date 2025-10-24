@@ -12,13 +12,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Sorts all persons in the address book for the user.
+ * Sorts all persons in the contact book for the user.
  */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": sorts all persons in address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": sorts all persons in contact book "
             + "based on the sorting comparator passed in.\n"
             + "Parameters: f/[FIELD] o/[ORDER]\n"
             + "Example: " + COMMAND_WORD + " f/name o/asc\n"

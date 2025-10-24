@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.tag.TagsContainTagPredicate;
 
 /**
- * Filters and lists all persons in the address book whose contact information contains any of the tags.
+ * Filters and lists all persons in the contact book whose contact information contains any of the tags.
  * Keyword matching is case insensitive.
  */
 public class FilterCommand extends Command {
