@@ -21,8 +21,8 @@ public class FilterCommand extends Command {
             + ": Filters all persons whose contact information contains any of "
             + "the specified tags (case-insensitive) and displays them as a list.\n"
             + "Tags should be alphanumeric.\n"
-            + "Parameters: t/[TAG]...\n"
-            + "Example: " + COMMAND_WORD + " t/ friends t/ colleague";
+            + "Parameters: t/TAG [t/TAG]...\n"
+            + "Example: " + COMMAND_WORD + " t/ client t/ colleague";
 
     private static final Logger logger = LogsCenter.getLogger(FilterCommand.class);
 
