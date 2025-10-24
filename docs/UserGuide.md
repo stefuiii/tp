@@ -14,6 +14,24 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 - 💾 Auto-saves every change—never lose data
 - 🔒 100% offline—your data stays on your computer
 
+## Who Should Use FastCard?
+
+**Ideal for:**
+- Sales professionals managing 100+ client relationships
+- Procurement specialists tracking vendor contacts
+- Business development teams building professional networks
+- Anyone who types faster than they click through menus
+
+**What you need to know:**
+- **Basic computer skills** - Can open terminal/command prompt
+- **Comfortable with keyboard** - Typing commands is faster for you than clicking
+- **Desktop-based work** - FastCard runs on Windows, Mac, or Linux computers
+- **No programming required** - Commands are simple English words
+
+**Not suitable for:**
+- Teams needing shared databases (single-user application)
+- Users who strongly prefer graphical interfaces over typing
+
 <!-- * Table of Contents -->
 ## **Quick Navigation**
 
@@ -83,6 +101,13 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 4. Press Enter
 
 **What you should see:** FastCard's window should appear within a few seconds, showing some sample contacts to help you get started.
+
+![FastCard UI](images/Ui.png)
+
+The window shows:
+- Command box at the bottom (where you type commands)
+- Result display area (showing command feedback)
+- Contact list (showing sample contacts)
 
 **Troubleshooting:**
   * If you see "java is not recognized" &rarr; Java isn't installed correctly. Return to Step 1
@@ -190,6 +215,8 @@ help
 ### Viewing all contacts : `list`
 
 Shows your complete contact list, displaying everyone in FastCard.
+
+**Format:** `list`
 
 **What you need to know:**
   * No parameters needed - just type `list` and press Enter
@@ -368,7 +395,7 @@ Updates an existing contact's information by either their name or position numbe
   * All fields are optional, but you must provide at least one
 
 **What you need to know:**
-  * **Edit by index:** Use the number shown next to the contact (msut be 1,2, 3, etc.)
+  * **Edit by index:** Use the number shown next to the contact (must be 1,2, 3, etc.)
   * **Edit by name:** Name matching is case-insensitive (`john doe` = `John Doe`)
   * **Multiple contacts with the same name:** FastCard will show all matches and ask you to edit by index instead
   * **Existing values are replaced:** Your new input completely replaces the old information
