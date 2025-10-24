@@ -192,7 +192,7 @@ help
 **You'll see:**
   * A popup window appears with the help message
   * The window displays "Refer to the user guide:..."
-  * You can click `Browse` or `Copy URL` to access complete documentation or to copy the URL respectively.
+  * You can click `Browse` or `Copy URL` to access the complete user guide or to copy the URL respectively.
 
 **In the main window:**
   * FastCard remains open in the background
