@@ -22,16 +22,16 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 
 **📚 Core Features**
 - [Features](#features)
-  - [AddBasic Command](#adding-a-person-basic-information-only-addbasic)
-  - [Add Command](#adding-a-person-with-detailed-information-add)
-  - [Edit Command](#editing-a-person-edit)
-  - [Find Command](#locating-persons-by-name-find)
+  - [AddBasic Command](#adding-a-contact-quickly-addbasic)
+  - [Add Command](#adding-a-contact-with-complete-details--add)
+  - [Edit Command](#updating-contact-information-edit)
+  - [Find Command](#searching-for-contacts-by-name-find)
   - [Filter Command](#filtering-contacts-filter)
-  - [Sort Command](#sorting-contacts-sort)
-  - [Delete Command](#deleting-a-person-delete)
-  - [Command Recall](#repeat-commands)
-  - [Clear Command](#clearing-all-entries-clear)
-  - [Exit Command](#exiting-the-program-exit)
+  - [Sort Command](#organizing-contacts-alphabetically-sort)
+  - [Delete Command](#removing-a-contact--delete)
+  - [Command Recall](#recalling-previous-commands---command-history)
+  - [Clear Command](#removing-all-contacts--clear)
+  - [Exit Command](#closing-fastcard--exit)
 
 **🔧 Advanced**
 - [Saving Data](#saving-data)
