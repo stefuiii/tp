@@ -34,6 +34,7 @@ public class UiManager implements Ui {
 
     @Override
     public void start(Stage primaryStage) {
+        assert false : "Assertions are ON!";
         logger.info("Starting UI...");
 
         //Set the application icon.

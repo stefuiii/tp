@@ -32,29 +32,29 @@ activate DeleteCommandParser
 
 DeleteCommandParser -> DeleteCommandParser : trimmedArgs = args.trim()
 
-alt [trimmedArgs is empty]
+alt trimmedArgs is empty
     DeleteCommandParser --> AddressBookParser : ParseException
-else [trimmedArgs not empty]
+else trimmedArgs not empty
     DeleteCommandParser -> DeleteCommandParser : index = ParserUtil.parseIndex(trimmedArgs)
 
-    alt [index parsed]
+    alt index parsed
         create DeleteCommand
         DeleteCommandParser -> DeleteCommand : new DeleteCommand(index)
         activate DeleteCommand
         DeleteCommand --> DeleteCommandParser : command
         deactivate DeleteCommand
         DeleteCommandParser --> AddressBookParser : command
-    else [ParseException from index]
+    else ParseException from index
         DeleteCommandParser -> DeleteCommandParser : name = ParserUtil.parseName(args)
 
-        alt [name parsed]
+        alt name parsed
             create DeleteCommand
             DeleteCommandParser -> DeleteCommand : new DeleteCommand(name)
             activate DeleteCommand
             DeleteCommand --> DeleteCommandParser : command
             deactivate DeleteCommand
             DeleteCommandParser --> AddressBookParser : command
-        else [name parsing fails]
+        else name parsing fails
             DeleteCommandParser --> AddressBookParser : ParseException
         end
     end
@@ -62,63 +62,31 @@ end
 
 deactivate DeleteCommandParser
 
-'Hidden arrow to position the destroy marker below the end of the activation bar.
-DeleteCommandParser -[hidden]-> AddressBookParser
-destroy DeleteCommandParser
-
-alt [command parsed successfully]
+alt command parsed successfully
     AddressBookParser --> LogicManager : command
     deactivate AddressBookParser
 
     LogicManager -> DeleteCommand : execute(model)
     activate DeleteCommand
 
-    alt [command targets index]
-        DeleteCommand -> Model : getFilteredPersonList()
+    DeleteCommand -> DeleteCommand : identify target (index or name)
+
+    alt target resolved
+        DeleteCommand -> Model : deletePerson(target)
         activate Model
-        Model --> DeleteCommand : lastShownList
+        Model --> DeleteCommand
         deactivate Model
 
-        alt [index out of bounds]
-            DeleteCommand --> LogicManager : CommandException
-        else [index within bounds]
-            DeleteCommand -> Model : deletePerson(personAtIndex)
-            activate Model
-            Model --> DeleteCommand
-            deactivate Model
-
-            DeleteCommand --> LogicManager : CommandResult(success message)
-        end
-    else [command targets name]
-        DeleteCommand -> Model : getAddressBook()
-        activate Model
-        Model --> DeleteCommand : addressBook
-        deactivate Model
-
-        alt [no matches]
-            DeleteCommand --> LogicManager : CommandException
-        else [multiple matches]
-            DeleteCommand -> Model : updateFilteredPersonList(nameMatches)
-            activate Model
-            Model --> DeleteCommand
-            deactivate Model
-
-            DeleteCommand --> LogicManager : CommandResult(prompt for index)
-        else [exactly one match]
-            DeleteCommand -> Model : deletePerson(matchingPerson)
-            activate Model
-            Model --> DeleteCommand
-            deactivate Model
-
-            DeleteCommand --> LogicManager : CommandResult(success message)
-        end
+        DeleteCommand --> LogicManager : CommandResult(success message)
+    else target unresolved
+        DeleteCommand --> LogicManager : CommandException
     end
 
     deactivate DeleteCommand
 
     [<-- LogicManager
     deactivate LogicManager
-else [invalid delete arguments]
+else invalid delete arguments
     AddressBookParser --> LogicManager : ParseException
     deactivate AddressBookParser
 
