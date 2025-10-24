@@ -1,0 +1,56 @@
+@startuml
+title Delete Command Activity Diagram
+
+start
+
+:User enters delete command;
+:Trim command arguments;
+
+if () then ([arguments empty])
+  :Display invalid command format message;
+  stop
+else ([arguments present])
+  :Attempt to parse index;
+
+  if () then ([index parsed])
+    :Retrieve filtered person list;
+
+    if () then ([index within bounds])
+      :Select person at index;
+      :Delete person from model;
+      :Display delete success message;
+      stop
+    else ([else])
+      :Display invalid person index error;
+      stop
+    endif
+  else ([else])
+    :Attempt to parse name;
+
+    if () then ([name parsed])
+      :Find persons with matching name (case-insensitive);
+
+      if () then ([no matches])
+        :Display invalid person name error;
+        stop
+      else ([else])
+        if () then ([multiple matches])
+          :Update filtered list with matching persons;
+          :Prompt user to choose index for deletion;
+          stop
+        else ([else])
+          :Delete the matching person;
+          :Display delete success message;
+          stop
+        endif
+      endif
+    else ([else])
+      :Display invalid command format message;
+      stop
+    endif
+  endif
+endif
+
+stop
+
+@enduml
