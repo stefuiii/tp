@@ -939,9 +939,9 @@ Advanced users are welcome to update data directly by editing that data file.
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/friend t/colleague`
+**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/client t/highPriority`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
-**Delete** | `delete PHONE`<br> e.g., `delete 83556666`
+**Delete** | `delete PHONE` or `delete INDEX` <br> e.g., `delete John Doe`
 **Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
