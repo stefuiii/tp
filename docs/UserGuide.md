@@ -72,7 +72,7 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 **Check if you already have Java:**
 1. Open your command terminal (Command Prompt on Windows, Terminal on Mac/Linux).
 2. Type `java -version` and press Enter.
-3. If you see "java version 17" or higher, you're ready. skip to Step 2.
+3. If you see "java version 17" or higher, you're ready. Skip to Step 2.
 4. If you see an error or a lower version number, install Java:
     * **Windows users:** Download Java 17 from [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html#switching-between-java-versions).
     * **Linux users:** Download Java 17 from [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html#switching-between-java-versions).
@@ -105,16 +105,16 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 ![FastCard UI](images/Ui.png)
 
 The window shows:
-- Command box at the bottom (where you type commands)
-- Result display area (showing command feedback)
 - Contact list (showing sample contacts)
+- Result display area (showing command feedback)
+- Command box (where you type commands)
 
 **Troubleshooting:**
   * If you see "java is not recognized" &rarr; Java isn't installed correctly. Return to Step 1
   * If you see "file not found" &rarr; You're not in the right folder. Check Step 4.2
 
 **Step 5: Try your first commands**
-The command box is at the top of the window. Type a command and press **Enter** to execute it.
+Type a command in the command box and press **Enter** to execute it.
 
 **Try these example commands:**
 1. See all contacts: `list`
@@ -941,8 +941,8 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/client t/highPriority`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444
-**Delete** | `delete PHONE` or `delete INDEX` <br> e.g., `delete John Doe`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` or `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete NAME`<br> `delete INDEX` <br> e.g., `delete John Doe` or `delete 2`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` <br> `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com` or `edit John Doe t/colleague`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
