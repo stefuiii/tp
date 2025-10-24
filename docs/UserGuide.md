@@ -141,37 +141,90 @@ If you're reading this as a PDF and copying commands, be aware that spaces may g
 **Solution:** After pasting, check that spaces are still there, especially around line breaks.
 </box>
 
-### Viewing help : `help`
+### Getting help : `help`
 
-Opens a help window with a link to the full user guide.
+Opens a help window with a link to the complete user guide.
 
 **Format:** `help`
 
-![help message](images/helpMessage.png)
-
-**What it does:**
-  * Displays a popup window with instructions for accessing detailed help.
-  * Provides the URL to the complete guide.
-  * Can be closed to return to FastCard.
-
-**When to use this:**
-  * You forgot how a command works.
-  * You want to see all the available commands.
-  * You need detailed examples.
-
-### Listing all persons : `list`
-
-Shows a list of all persons in the FastCard.
-
-**What it does:**
-  * Shows all contacts in your company book (removes any filters).
-  * Resets the view to display everyone.
-  * Useful after using `find` or `filter` commands.
+**What you need to know:**
+  * No parameters needed - just type `help` and press Enter
+  * Opens a popup window with help information
+  * You can close the window to return to FastCard
+  * You can also press `F1` as a keyboard shortcut
 
 **When to use this:**
-  * After searching or filtering, to see everyone again.
-  * To check your total number of contacts.
-  * To start fresh before a new search.
+  * You forgot how a command works
+  * You want to see all available commands
+  * You need detailed examples or explanations
+  * You're learning FastCard for the first time
+
+**Example: Opening help window**
+```
+help
+```
+**You'll see:**
+  * A popup window appears with the help message
+  * The window displays "Refer to the User Guide:..."
+  * You can click the link or copy the URL to access complete documentation
+
+**In the main window:**
+  * FastCard remains open in the background
+  * You can continue using FastCard after closing the help window
+
+&rarr; Quick access to full documentation when you need guidance
+
+<box type="tip" seamless>
+
+💡 Pro Tips:
+  * **Use `F1` shortcut** - Press `F1` on your keyboard for instant help access without typing
+  * **Keep guide bookmarked** - Save the user guide URL in your browser for quick reference
+  * **Check before experimenting** - Review command formats in the guide before trying new commands
+
+</box>
+
+**Common mistakes:**
+  * Typing `help COMMAND` expecting command-specific help &rarr; FastCard shows general help only (no per-command help)
+  * Looking for help in the FastCard application &rarr; Help opens in a separate window, check your screen (you may refer to [here](#known-issues) if you do not see the help window)
+
+### Viewing all contacts : `list`
+
+Shows your complete contact list, displaying everyone in FastCard.
+
+**What you need to know:**
+  * No parameters needed - just type `list` and press Enter
+  * Removes any active filters or searches
+
+**When to use this:**
+  * After you use `find` or `filter` to return to full view
+  * You want to see all of contacts
+  * To start fresh before a new search or filter
+
+**Example: Viewing all contacts:**
+```
+list
+```
+**You'll see:**
+```
+Listed all persons
+```
+**In the contact list:**
+  * All contacts reappear (any previous filters are removed)
+
+&rarr; Use this as your "reset" command to see everyone after any operation
+
+<box type="tip" seamless>
+
+💡 Pro Tips:
+  * **Your reset button** - Think of `list` as your "show everything" reset whenever you're narrowed down
+  * **Before filtering** - Run `list` first to ensure you're starting with everyone visible
+  * **After accidental filter** - If you filtered by mistake and can't find contacts, `list` brings everyone back
+
+</box>
+
+**Common mistakes:**
+  * Expecting `list` to show filtered results &rarr; It shows **ALL** contacts (removes filters)
+  * Thinking contacts are deleted when filtered &rarr; They're just hidden; `list` reveals them all
 
 ### Adding a contact quickly: `addbasic`
 
