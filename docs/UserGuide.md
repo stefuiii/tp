@@ -761,7 +761,7 @@ Now press &uarr;
 ```
 filter t/vendor
 ```
-The command appears in your comannd box, ready to be edited or executed again.
+The command appears in your command box, ready to be edited or executed again.
 
 <box type="tip" seamless>
 
