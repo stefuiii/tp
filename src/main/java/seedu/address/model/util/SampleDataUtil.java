@@ -21,7 +21,7 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Company("Google"),
-                getTagSet("Sales")),
+                getTagSet("sales")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Company("Amazon"),
                 getTagSet("colleagues", "friends", "procurement")),
