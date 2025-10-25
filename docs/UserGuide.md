@@ -548,6 +548,7 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * The exact tag name must match (e.g., `client` won't find contacts tagged with `clients`)
   * Tags specified must be alphanumeric and at most 30 characters
   * Leading and trailing whitespaces are trimmed
+  * If no contacts contain any of the specified tags, an empty contact list will be shown
 
 **When to use this:**
   * You want to view all contacts in a specific category (all clients, all vendors, etc.)
