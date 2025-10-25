@@ -801,7 +801,7 @@ Before using `clear`:
 ```
 clear
 ```
-**You'll see 1 of the following messages (depends on whether there are contacts or not):**
+**You'll see one of the following messages (depends on whether there are contacts or not):**
 ```
 Contact book has been cleared!
 ```
