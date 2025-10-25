@@ -801,9 +801,12 @@ Before using `clear`:
 ```
 clear
 ```
-**You'll see:**
+**You'll see 1 of the following messages (depends on whether there are contacts or not):**
 ```
-Address book has been cleared!
+Contact book has been cleared!
+```
+```
+Contact book is already empty.
 ```
 **In the contact list:**
   * All contacts disappear immediately
@@ -935,7 +938,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Command Summary
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
