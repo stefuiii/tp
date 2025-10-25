@@ -20,19 +20,30 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private Label tempFocusName;
 
+
     /**
      * Creates a {@code PersonDetailPanel} with the given {@code Person}.
      */
     public PersonDetailPanel(SimpleObjectProperty<Person> focusPersonObservable) {
         super(FXML);
 
-        Person focusPerson = focusPersonObservable.get();
+        focusPersonObservable.addListener((obs, oldPerson, newPerson) -> {
+            updateDetails(newPerson);
+        });
 
-        if (focusPerson == null) {
-            tempFocusName.setText("UNKNOWN");
-        } else {
-            tempFocusName.setText(focusPerson.getName().toString());
-        }
+        // Init
+        Person focusPerson = focusPersonObservable.get();
+        updateDetails(focusPerson);
     }
 
+    /**
+     * Helper method to streamline updating of UI Elements
+     */
+    private void updateDetails(Person p) {
+        if (p == null) {
+            tempFocusName.setText("UNKNOWN");
+        } else {
+            tempFocusName.setText(p.getName().toString());
+        }
+    }
 }

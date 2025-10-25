@@ -196,6 +196,13 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    @FXML
+    private void showDetailPane() {
+        detailsPane.setVisible(true);
+        mainSplitpane.setDividerPosition(0, 0.7);
+        detailsPane.setManaged(true);
+    }
+
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
     }
@@ -225,6 +232,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isToggleDetail()) {
                 toggleDetailsPane();
+            }
+
+            if (commandResult.isShowDetail()) {
+                showDetailPane();
             }
 
 

@@ -85,6 +85,14 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     SimpleObjectProperty<Person> getFocusedPerson();
 
+
+    /**
+     * Updates focus Person by the given {@code index} relative to filtered list indexing.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFocusedPerson(int index);
+
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

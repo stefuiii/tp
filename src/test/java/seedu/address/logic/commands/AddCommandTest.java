@@ -166,6 +166,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFocusedPerson(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void sortPersons(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }

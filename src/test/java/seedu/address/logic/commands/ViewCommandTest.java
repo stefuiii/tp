@@ -14,7 +14,7 @@ public class ViewCommandTest {
 
     @Test
     public void toggle_view_success() {
-        CommandResult expectedCommandResult = new CommandResult(TOGGLE_ACKNOWLEDGEMENT, false, false, true);
+        CommandResult expectedCommandResult = new CommandResult(TOGGLE_ACKNOWLEDGEMENT, false, false, true, -1);
         assertCommandSuccess(new ViewCommand(), model, expectedCommandResult, expectedModel);
     }
 }

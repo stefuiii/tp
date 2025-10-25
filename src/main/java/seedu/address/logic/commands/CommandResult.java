@@ -23,13 +23,20 @@ public class CommandResult {
     private final boolean toggleDetail;
 
     /**
+     * Person's index (from filteredList) that the Detail Pane Must Show
+     * [-1] -> No Change from previous index (Don't force show)
+    */
+    private final int focusIndex;
+
+    /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean toggleDetail) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean toggleDetail, int focusIndex) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.toggleDetail = toggleDetail;
         this.exit = exit;
+        this.focusIndex = focusIndex;
     }
 
     /**
@@ -37,7 +44,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false, false);
+        this(feedbackToUser, false, false, false, -1);
     }
 
     public String getFeedbackToUser() {
@@ -54,6 +61,10 @@ public class CommandResult {
 
     public boolean isToggleDetail() {
         return toggleDetail;
+    }
+
+    public boolean isShowDetail() {
+        return focusIndex != -1;
     }
 
     @Override

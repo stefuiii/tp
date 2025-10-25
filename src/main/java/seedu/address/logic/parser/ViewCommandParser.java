@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -13,6 +15,24 @@ public class ViewCommandParser implements Parser<ViewCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ViewCommand parse(String args) throws ParseException {
-        return new ViewCommand();
+        String[] processedArgs = args.trim().split("\\s+");
+
+        if (processedArgs.length > 1) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+        } else if (processedArgs.length == 1 && processedArgs[0] != "") {
+            // Index provided
+
+            int index;
+            try {
+                index = Integer.parseInt(processedArgs[0]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE));
+            }
+
+            return new ViewCommand(index);
+
+        } else {
+            return new ViewCommand();
+        }
     }
 }

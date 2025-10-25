@@ -26,7 +26,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-    private final Person focusedPerson;
+    private SimpleObjectProperty<Person> focusedPerson;
     private final CommandHistory commandHistory;
 
     /**
@@ -41,7 +41,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         this.commandHistory = new CommandHistory();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        focusedPerson = null;
+        focusedPerson = new SimpleObjectProperty<>(null);
     }
 
     public ModelManager() {
@@ -160,7 +160,13 @@ public class ModelManager implements Model {
      */
     @Override
     public SimpleObjectProperty<Person> getFocusedPerson() {
-        return new SimpleObjectProperty<>(focusedPerson);
+        return focusedPerson;
+    }
+
+    @Override
+    public void updateFocusedPerson(int index) {
+        requireAllNonNull(index);
+        focusedPerson.set(filteredPersons.get(index));
     }
 
     @Override
