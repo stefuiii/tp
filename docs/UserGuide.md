@@ -41,15 +41,16 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 **📚 Core Features**
 - [Features](#features)
   - [AddBasic Command](#adding-a-contact-quickly-addbasic)
-  - [Add Command](#adding-a-contact-with-complete-details--add)
+  - [Add Command](#adding-a-contact-with-complete-details-add)
   - [Edit Command](#updating-contact-information-edit)
   - [Find Command](#searching-for-contacts-by-name-find)
   - [Filter Command](#filtering-contacts-filter)
   - [Sort Command](#organizing-contacts-alphabetically-sort)
   - [Delete Command](#removing-a-contact--delete)
-  - [Command Recall](#recalling-previous-commands---command-history)
-  - [Clear Command](#removing-all-contacts--clear)
-  - [Exit Command](#closing-fastcard--exit)
+  - [View Command](#view-details-view)
+  - [Command Recall](#recalling-previous-commands-command-history)
+  - [Clear Command](#removing-all-contacts-clear)
+  - [Exit Command](#closing-fastcard-exit)
 
 **🔧 Advanced**
 - [Saving Data](#saving-data)
@@ -100,14 +101,20 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 3. Run FastCard by typing: `java -jar fastcard.jar`
 4. Press Enter
 
-**What you should see:** FastCard's window should appear within a few seconds, showing a guiding message to get you get started.
+**What you should see:**
+(First Use): FastCard's window should appear within a few seconds, showing a guiding message to get you get started.
+![FastCard UI Initial](images/Ui.png)
 
-![FastCard UI](images/Ui_init.png)
 
 The window shows:
 - Contact list (showing sample contacts)
 - Result display area (showing command feedback)
 - Command box (where you type commands)
+
+__Lets Start Fresh!__
+
+(Subsequent - if empty): After starting fresh with [`clear`](#removing-all-contacts-clear), you'll be greeted with this message
+![FastCard UI](images/Ui_init.png)
 
 **Troubleshooting:**
   * If you see "java is not recognized" &rarr; Java isn't installed correctly. Return to Step 1
@@ -730,6 +737,25 @@ Multiple persons named John Doe found. Please specify the index to delete.
 **Common mistakes:**
   * `delete 0` &rarr; Invalid index (index starts at 1, not 0)
   * `delete 5` when only 3 contacts shown &rarr; Index out of range (must be within displayed list)
+
+### View Details: `view`
+
+Toggles the Detail Pane showing specified user in detail.
+
+- Temporary holding image (To update with details pane screenshot once done)
+![FastCard UI](images/Ui_init.png)
+
+**Format:**
+  * `view INDEX`
+
+**Examples:**
+**Example 1: View Details of contact in index 1**
+```
+view 1
+```
+**You'll see:**
+  * Detail Pane toggle to view (if not already visible)
+  * Detail Pane shows information about current target contact
 
 ### Recalling previous commands - Command History
 

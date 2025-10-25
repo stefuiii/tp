@@ -13,10 +13,10 @@ public class ViewCommand extends Command {
             + "Parameters: [CONTACT_INDEX]\n"
             + "Example: " + COMMAND_WORD + "1";
 
-    public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Toggling Detail Pane";
+    public static final String TOGGLE_ACKNOWLEDGEMENT = "Toggling Detail Pane";
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, false, false, true);
+        return new CommandResult(TOGGLE_ACKNOWLEDGEMENT, false, false, true);
     }
 }
