@@ -44,6 +44,13 @@ public class EditCommandParser implements Parser<EditCommand> {
             isIndex = false;
         }
 
+        // If the preamble is explicitly "0", surface an invalid index error
+        // instead of treating it as a name-based edit.
+        String trimmedPreamble = preamble == null ? "" : preamble.trim();
+        if (!isIndex && "0".equals(trimmedPreamble)) {
+            throw new ParseException(ParserUtil.MESSAGE_INVALID_INDEX);
+        }
+
         boolean anyFieldPresent = argMultimap.getValue(PREFIX_NAME).isPresent()
                 || argMultimap.getValue(PREFIX_PHONE).isPresent()
                 || argMultimap.getValue(PREFIX_EMAIL).isPresent()
