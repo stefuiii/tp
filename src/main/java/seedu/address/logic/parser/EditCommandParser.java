@@ -46,7 +46,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         // If the preamble is explicitly "0", surface an invalid index error
         // instead of treating it as a name-based edit.
-        String trimmedPreamble = preamble == null ? "" : preamble.trim();
+        String trimmedPreamble = preamble.trim();
         if (!isIndex && "0".equals(trimmedPreamble)) {
             throw new ParseException(ParserUtil.MESSAGE_INVALID_INDEX);
         }
@@ -56,7 +56,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 || argMultimap.getValue(PREFIX_EMAIL).isPresent()
                 || argMultimap.getValue(PREFIX_COMPANY).isPresent()
                 || !argMultimap.getAllValues(PREFIX_TAG).isEmpty();
-        if ((preamble == null || preamble.trim().isEmpty()) && !anyFieldPresent) {
+        if (trimmedPreamble.isEmpty() && !anyFieldPresent) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
@@ -87,7 +87,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         // Name-based: require non-empty preamble after trimming; validation will occur during execution
-        String nameReference = preamble == null ? "" : preamble.trim();
+        String nameReference = trimmedPreamble;
         if (nameReference.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
