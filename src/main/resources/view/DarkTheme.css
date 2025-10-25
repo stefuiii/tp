@@ -88,6 +88,10 @@
     -fx-background-color: #000321, 20%;
 }
 
+.main-split {
+    -fx-background-color: #000321;
+}
+
 .emptyListMessage {
     -fx-text-alignment: center;
     -fx-text-fill: white;

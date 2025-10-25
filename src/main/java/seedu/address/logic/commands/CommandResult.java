@@ -19,12 +19,16 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    /** The Detail Pane should toggle. */
+    private final boolean toggleDetail;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit, boolean toggleDetail) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
+        this.toggleDetail = toggleDetail;
         this.exit = exit;
     }
 
@@ -33,7 +37,7 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, false);
     }
 
     public String getFeedbackToUser() {
@@ -46,6 +50,10 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean isToggleDetail() {
+        return toggleDetail;
     }
 
     @Override
