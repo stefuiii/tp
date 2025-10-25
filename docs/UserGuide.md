@@ -618,6 +618,12 @@ Arranges your contacts in alphabetical order based on the field you choose - use
   * If multiple contacts contain the same field to be sorted by, the relative ordering of these contacts will be the same as the relative ordering before sorting.
   * Sorting is case insensitive. Similar to above, contacts with the same sort field but different casing will still be in the same relative ordering before sorting.
 
+<box type="warning" seamless>
+
+The `sort` command works on the overall contact list and not just a filtered list from `find` or `filter`.
+
+</box>
+
 **When to use this:**
   * You want to organize your contact list for easier scanning
   * You need to prepare alphabetically ordered lists for meetings or reports
@@ -649,9 +655,8 @@ sort f/name o/desc
 
 <box type="tip" seamless>
 
-💡 Pro Tips:
+💡 Pro Tip:
   * **Check tag organization** - Use `sort f/tag o/asc` to see how well your tagging system groups contacts
-  * **Combine with filter** - Filter by tag first, then sort the filtered results: `filter t/client` &rarr; `sort f/name o/asc`
 
 </box>
 
