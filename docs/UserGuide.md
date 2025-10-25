@@ -543,8 +543,11 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
     * Contacts with **any** of those tags will appear (not all tags required)
     * Specifying the same tag multiple times will be treated as it being specified once
   * Tags are not case-sensitive (`t/client` = `t/CLIENT`)
+  * You should only specify tags (specifying other parameters is invalid e.g., `filter t/colleague n/John`)
   * You may list the tags in any order.
   * The exact tag name must match (e.g., `client` won't find contacts tagged with `clients`)
+  * Tags specified must be alphanumeric and at most 30 characters
+  * Leading and trailing whitespaces are trimmed
 
 **When to use this:**
   * You want to view all contacts in a specific category (all clients, all vendors, etc.)
@@ -599,16 +602,21 @@ Arranges your contacts in alphabetical order based on the field you choose - use
 
 **Available fields:**
   * `name` - Sort by contact name
-  * `tag` - Sort by the first tag alphabetically
+  * `tag` - Sort by the first tag alphabetically (e.g., If a contact has tags `vendor` and `priority`, the `priority` tag will be used for sorting)
 
 **Available orders:**
   * `asc` or `ascending` - A to Z order
   * `desc` or `descending` - Z to A order
 
 **What you need to know:**
-  * You must specify both field and order
-  * Field and order are not case-sensitive (`NAME = name`, `ASC` = `asc`)
-  * Contacts without the sorted field appear at the start (ascending) or end (descending)
+  * You should specify both field and order only (Specifying other parameters is invalid)
+  * You should only specify one field and one order
+  * Field and order are not case-sensitive. (`NAME = name`, `ASC` = `asc`)
+  * Contacts without the sorted field appear at the start (for ascending order) or end (for descending order)
+  * Leading and trailing whitespaces are trimmed
+  * Sorting permanently reorders your contacts (Reloading FastCard will preserve the ordering of the contacts you sorted)
+  * If multiple contacts contain the same field to be sorted by, the relative ordering of these contacts will be the same as the relative ordering before sorting.
+  * Sorting is case insensitive. Similar to above, contacts with the same sort field but different casing will still be in the same relative ordering before sorting.
 
 **When to use this:**
   * You want to organize your contact list for easier scanning
