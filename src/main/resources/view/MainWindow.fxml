@@ -49,8 +49,7 @@
             </VBox>
 
             <AnchorPane fx:id="detailsPane" visible="false" managed="false" minWidth="0">
-              <Label text="Details"/>
-              <!--  Add  Details VBox here   -->
+              <StackPane fx:id="personDetailPanelPlaceholder" VBox.vgrow="ALWAYS"/>
             </AnchorPane>
           </items>
         </SplitPane>
