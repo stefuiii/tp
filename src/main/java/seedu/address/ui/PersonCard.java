@@ -92,7 +92,7 @@ public class PersonCard extends UiPart<Region> {
 
         // Show Icons only if label are visible
         phoneIcon.visibleProperty().bind(phone.textProperty().isNotEqualTo("$phone"));
-        emailIcon.visibleProperty().bind(email.textProperty().isNotEqualTo("$email"));
+        emailIcon.visibleProperty().bind(email.visibleProperty());
         //  Using company now and bind visibility to non-placeholder text
         companyIcon.visibleProperty().bind(company.textProperty().isNotEqualTo("$company"));
 
