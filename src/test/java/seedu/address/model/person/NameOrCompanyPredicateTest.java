@@ -115,4 +115,35 @@ public class NameOrCompanyPredicateTest {
                 new NameOrCompanyPredicate(Optional.empty(), Optional.empty());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withCompany("Google").build()));
     }
+
+    @Test
+    public void equals_companyKeywordVariants() {
+        NameOrCompanyPredicate predicateA =
+                new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Google"));
+        NameOrCompanyPredicate predicateB_same =
+                new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Google"));
+        NameOrCompanyPredicate predicateC_diffCompany =
+                new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Amazon"));
+        NameOrCompanyPredicate predicateD_diffName =
+                new NameOrCompanyPredicate(Optional.of("Bob"), Optional.of("Google"));
+
+        // same object -> true
+        assertTrue(predicateA.equals(predicateA));
+
+        // same name & company -> true
+        assertTrue(predicateA.equals(predicateB_same));
+
+        // different company keyword -> false
+        assertFalse(predicateA.equals(predicateC_diffCompany));
+
+        // different name keyword -> false
+        assertFalse(predicateA.equals(predicateD_diffName));
+
+        // different type -> false
+        assertFalse(predicateA.equals("Some String"));
+
+        // null -> false
+        assertFalse(predicateA.equals(null));
+    }
+
 }
