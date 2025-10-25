@@ -34,6 +34,10 @@ public class SortCommandParser implements Parser<SortCommand> {
         String field = argMultimap.getValue(PREFIX_FIELD).orElse("");
         String order = argMultimap.getValue(PREFIX_ORDER).orElse("");
 
+        if (field.isEmpty() || order.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+
         logger.info("Successfully parsed sort command - field: " + field + ", order: " + order);
         return new SortCommand(field, order);
     }

@@ -116,7 +116,7 @@ public class SortCommand extends Command {
      * @return String containing the full format of the order
      */
     private String getOrderFullFormat() {
-        switch (order) {
+        switch (order.toLowerCase()) {
         case "asc":
             return "ascending";
         case "desc":

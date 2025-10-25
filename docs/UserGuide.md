@@ -606,8 +606,8 @@ Arranges your contacts in alphabetical order based on the field you choose - use
   * `tag` - Sort by the first tag alphabetically (e.g., If a contact has tags `vendor` and `priority`, the `priority` tag will be used for sorting)
 
 **Available orders:**
-  * `asc` or `ascending` - A to Z order
-  * `desc` or `descending` - Z to A order
+  * `asc` or `ascending` - 0 to 9 followed by A to Z order
+  * `desc` or `descending` - Z to A followed by 9 to 0 order
 
 **What you need to know:**
   * You should specify both field and order only (Specifying other parameters is invalid)
@@ -616,8 +616,7 @@ Arranges your contacts in alphabetical order based on the field you choose - use
   * Contacts without the sorted field appear at the start (for ascending order) or end (for descending order)
   * Leading and trailing whitespaces are trimmed
   * Sorting permanently reorders your contacts (Reloading FastCard will preserve the ordering of the contacts you sorted)
-  * If multiple contacts contain the same field to be sorted by, the relative ordering of these contacts will be the same as the relative ordering before sorting.
-  * Sorting is case insensitive. Similar to above, contacts with the same sort field but different casing will still be in the same relative ordering before sorting.
+  * If multiple contacts contain the same field to be sorted by (ignoring case-sensitivity), the relative ordering of these contacts will be the same as the relative ordering before sorting.
 
 <box type="warning" seamless>
 
