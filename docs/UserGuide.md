@@ -100,9 +100,9 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 3. Run FastCard by typing: `java -jar fastcard.jar`
 4. Press Enter
 
-**What you should see:** FastCard's window should appear within a few seconds, showing some sample contacts to help you get started.
+**What you should see:** FastCard's window should appear within a few seconds, showing a guiding message to get you get started.
 
-![FastCard UI](images/Ui.png)
+![FastCard UI](images/Ui_init.png)
 
 The window shows:
 - Contact list (showing sample contacts)

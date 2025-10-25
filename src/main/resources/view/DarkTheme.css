@@ -88,6 +88,11 @@
     -fx-background-color: #000321, 20%;
 }
 
+.emptyListMessage {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+}
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
