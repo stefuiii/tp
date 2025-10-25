@@ -82,6 +82,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "0" + PHONE_DESC_AMY, MESSAGE_INVALID_INDEX);
         assertParseFailure(parser, "  0  " + PHONE_DESC_AMY, MESSAGE_INVALID_INDEX);
         assertParseFailure(parser, "0", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "   0   ", MESSAGE_INVALID_INDEX);
     }
 
     @Test
