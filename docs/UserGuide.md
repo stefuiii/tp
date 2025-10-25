@@ -603,7 +603,7 @@ Arranges your contacts in alphabetical order based on the field you choose - use
 
 **Available fields:**
   * `name` - Sort by contact name
-  * `tag` - Sort by the first tag alphabetically (e.g., If a contact has tags `vendor` and `priority`, the `priority` tag will be used for sorting)
+  * `tag` - Sort by the first tag alphabetically (e.g., If a contact has tags `vendor` and `priority`, the `priority` tag will be used for sorting by tag as it is the first tag in alphabetical order)
 
 **Available orders:**
   * `asc` or `ascending` - 0 to 9 followed by A to Z order

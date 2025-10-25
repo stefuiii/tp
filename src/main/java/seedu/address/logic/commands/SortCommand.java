@@ -55,7 +55,7 @@ public class SortCommand extends Command {
 
         logger.info("Sort command executed successfully. "
                 + "Sorted by " + field + " in " + getOrderFullFormat() + " order");
-        return new CommandResult(String.format(MESSAGE_SUCCESS, field, getOrderFullFormat()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, field.toLowerCase(), getOrderFullFormat()));
     }
 
     @Override
@@ -122,7 +122,7 @@ public class SortCommand extends Command {
         case "desc":
             return "descending";
         default:
-            return order;
+            return order.toLowerCase();
         }
     }
 }
