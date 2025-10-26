@@ -39,7 +39,7 @@ public interface Logic {
     SimpleObjectProperty<Person> getFocusedPerson();
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' contact book file path.
      */
     Path getAddressBookFilePath();
 

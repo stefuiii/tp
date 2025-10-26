@@ -241,7 +241,7 @@ public class ModelManagerTest {
             addressBookField.setAccessible(true);
             addressBookField.set(manager, replacement);
         } catch (ReflectiveOperationException e) {
-            throw new AssertionError("Unable to configure address book for test", e);
+            throw new AssertionError("Unable to configure contact book for test", e);
         }
     }
 
