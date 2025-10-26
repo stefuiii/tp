@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Sorts all persons in the address book for the user.
+ * Sorts all persons in the contact book for the user.
  */
 public class SortCommand extends Command {
 

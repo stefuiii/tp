@@ -17,7 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the contact book data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
@@ -33,7 +33,7 @@ public class ModelManager implements Model {
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
         requireAllNonNull(addressBook, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with contact book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
@@ -103,7 +103,7 @@ public class ModelManager implements Model {
         requireNonNull(target);
 
         if (addressBook == null) {
-            throw new AssertionError("Address book should not be null when deleting a person");
+            throw new AssertionError("Contact book should not be null when deleting a person");
         }
 
         if (!addressBook.hasPerson(target)) {
@@ -116,7 +116,7 @@ public class ModelManager implements Model {
         addressBook.removePerson(target);
 
         if (addressBook.hasPerson(target)) {
-            throw new AssertionError("Person should be removed from the address book after deletion");
+            throw new AssertionError("Person should be removed from the contact book after deletion");
         }
 
         logger.fine(() -> "Successfully deleted person: " + target);

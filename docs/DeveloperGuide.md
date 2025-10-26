@@ -490,7 +490,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
 * **Index**: A 1-based position of a contact within the currently displayed list.
 * **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
-* **Address Book**: The collection of contacts managed by FastCard.
+* **Contact book**: The collection of contacts managed by FastCard.
 * **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
 * **CLI (Command Line Interface)**: Text-based interaction via the command input box.
 * **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
