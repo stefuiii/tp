@@ -60,4 +60,19 @@ public class CommandResultTest {
                 + ", exit=" + commandResult.isExit() + "}";
         assertEquals(expected, commandResult.toString());
     }
+
+    @Test
+    public void detailsTest() {
+        // Toggle True, Index Default
+        CommandResult commandResult = new CommandResult("feedback", false, false, true, -1);
+        assertTrue(commandResult.isToggleDetail());
+
+        // Toggle False, Index Provided
+        commandResult = new CommandResult("feedback", false, false, false, 0);
+        assertTrue(commandResult.isShowDetail());
+
+        // Toggle True, Index Provided
+        commandResult = new CommandResult("feedback", false, false, true, 0);
+        assertTrue(commandResult.isShowDetail());
+    }
 }

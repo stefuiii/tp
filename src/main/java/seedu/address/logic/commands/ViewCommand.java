@@ -11,6 +11,7 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_INDEX_NOT_FOUND = "Index provided invalid";
+    public static final String MESSAGE_SHOWING = "Showing Details for Index ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles Detail Pane \n"
             + "Parameters: [CONTACT_INDEX]\n"
             + "Example: " + COMMAND_WORD + "1";
@@ -39,7 +40,26 @@ public class ViewCommand extends Command {
             } catch (IndexOutOfBoundsException e) {
                 throw new CommandException(MESSAGE_INDEX_NOT_FOUND);
             }
-            return new CommandResult("Showing Details for index " + this.targetIndex, false, false, false, targetIndex);
+            return new CommandResult(MESSAGE_SHOWING + this.targetIndex, false, false, false, targetIndex);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ViewCommand)) {
+            return false;
+        }
+
+        ViewCommand otherViewCommand = (ViewCommand) other;
+
+        if (targetIndex == null) {
+            return otherViewCommand.targetIndex == null;
+        } else {
+            return targetIndex.equals(otherViewCommand.targetIndex);
         }
     }
 }
