@@ -72,7 +72,7 @@ javafx {
 }
 
 shadowJar {
-    archiveFileName = 'addressbook.jar'
+    archiveFileName = 'fastcard.jar'
 }
 
 run {

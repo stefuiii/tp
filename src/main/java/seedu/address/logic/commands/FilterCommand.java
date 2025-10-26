@@ -7,10 +7,11 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagsContainTagPredicate;
 
 /**
- * Filters and lists all persons in the address book whose contact information contains any of the tags.
+ * Filters and lists all persons in the contact book whose contact information contains any of the tags.
  * Keyword matching is case insensitive.
  */
 public class FilterCommand extends Command {
@@ -20,7 +21,7 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters all persons whose contact information contains any of "
             + "the specified tags (case-insensitive) and displays them as a list.\n"
-            + "Tags should be alphanumeric.\n"
+            + "Tags should be alphanumeric and at most " + Tag.MAX_LENGTH + " characters long.\n"
             + "Parameters: t/TAG [t/TAG]...\n"
             + "Example: " + COMMAND_WORD + " t/ client t/ colleague";
 

@@ -3,3 +3,5 @@
 
 ignore:
   - "src/main/java/seedu/address/ui"
+  - "src/main/java/seedu/address/model/util/SampleDataUtil.java"
+  - "src/test/java/seedu/address/testutil/*"

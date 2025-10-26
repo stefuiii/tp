@@ -28,6 +28,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -73,6 +74,15 @@ public class EditCommandParserTest {
 
         // invalid prefix being parsed as preamble (index specified, but no valid fields)
         assertParseFailure(parser, "1 i/ string", EditCommand.MESSAGE_NOT_EDITED);
+    }
+
+    @Test
+    public void parse_zeroIndex_failure() {
+        // exactly zero should be treated as invalid index, not name-based
+        assertParseFailure(parser, "0" + PHONE_DESC_AMY, MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "  0  " + PHONE_DESC_AMY, MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "0", MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, "   0   ", MESSAGE_INVALID_INDEX);
     }
 
     @Test

@@ -13,13 +13,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a person with only name and phone to the address book.
+ * Adds a person with only name and phone to the contact book.
  */
 public class AddCommandBasic extends Command {
 
     public static final String COMMAND_WORD = "addbasic";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to contact book "
             + "with only name and phone. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
@@ -29,7 +29,7 @@ public class AddCommandBasic extends Command {
             + PREFIX_PHONE + "88880000";
 
     public static final String MESSAGE_SUCCESS = "You have successfully added this contact: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
 
     private static final Logger logger = Logger.getLogger(AddCommandBasic.class.getName());
     private final Person toAdd;
