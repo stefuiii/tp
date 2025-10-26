@@ -16,8 +16,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-
-
 public class ViewCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -49,6 +47,7 @@ public class ViewCommandTest {
         ViewCommand same = new ViewCommand(1);
         ViewCommand empty = new ViewCommand();
         ViewCommand empty2 = new ViewCommand();
+        HelpCommand help = new HelpCommand();
 
         assertEquals(original, original);
         assertEquals(original, same);
@@ -57,6 +56,7 @@ public class ViewCommandTest {
         // Invalid Equality
         assertNotEquals(original, empty);
         assertNotEquals(empty2, same);
+        assertNotEquals(original, help);
 
     }
 }

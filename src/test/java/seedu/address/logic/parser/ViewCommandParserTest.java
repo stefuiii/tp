@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -11,6 +12,7 @@ import seedu.address.logic.commands.ViewCommand;
 public class ViewCommandParserTest {
 
     private ViewCommandParser parser = new ViewCommandParser();
+    private final AddressBookParser abParser = new AddressBookParser();
 
     @Test
     public void parse_validArgs_returnsViewCommand() {
@@ -22,6 +24,11 @@ public class ViewCommandParserTest {
         expectedViewCommand = new ViewCommand(1);
         assertParseSuccess(parser, "1", expectedViewCommand);
         assertParseSuccess(parser, "1       ", expectedViewCommand);
+    }
+
+    @Test
+    public void addressBook_parseCommand_valid() throws Exception {
+        assertTrue(abParser.parseCommand(ViewCommand.COMMAND_WORD) instanceof ViewCommand);
     }
 
 

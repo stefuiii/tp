@@ -754,6 +754,8 @@ Toggles the Detail Pane showing specified user in detail.
 view 1
 ```
 **You'll see:**
+  * (If Focus Person has not been selected yet) -> Shows Unknown.
+    - Simply run `view` with an appropriate index to populate the details pane
   * Detail Pane toggle to view (if not already visible)
   * Detail Pane shows information about current target contact
 

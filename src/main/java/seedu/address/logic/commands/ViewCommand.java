@@ -14,7 +14,7 @@ public class ViewCommand extends Command {
     public static final String MESSAGE_SHOWING = "Showing Details for Index ";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles Detail Pane \n"
             + "Parameters: [CONTACT_INDEX]\n"
-            + "Example: " + COMMAND_WORD + "1";
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String TOGGLE_ACKNOWLEDGEMENT = "Toggling Detail Pane";
 
