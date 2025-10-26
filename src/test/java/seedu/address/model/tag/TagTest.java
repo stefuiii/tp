@@ -27,11 +27,12 @@ public class TagTest {
         // invalid tag names
         assertFalse(Tag.isValidTagName("")); // empty string
         assertFalse(Tag.isValidTagName(" ")); // spaces only
-        assertFalse(Tag.isValidTagName("friend*")); // non-alphanumeric
+        assertFalse(Tag.isValidTagName("friend*")); // unsupported punctuation
         assertFalse(Tag.isValidTagName(generateString(Tag.MAX_LENGTH + 1))); // too long
 
         // valid tag names
         assertTrue(Tag.isValidTagName("friend"));
+        assertTrue(Tag.isValidTagName("delta one sales"));
         assertTrue(Tag.isValidTagName(generateString(Tag.MAX_LENGTH)));
     }
 
