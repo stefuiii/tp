@@ -45,11 +45,11 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         checkValidTokens(args, argMultimap);
 
         TagsContainTagPredicate predicate =
-                new TagsContainTagPredicate(argMultimap.getAllValues(PREFIX_TAG).stream()
-                        .map(token -> token.toLowerCase())
-                        .distinct()
-                        .map(token -> new Tag(token))
-                        .toList());
+            new TagsContainTagPredicate(argMultimap.getAllValues(PREFIX_TAG).stream()
+                .map(token -> token.toLowerCase())
+                .distinct()
+                .map(token -> new Tag(token))
+                .toList());
 
         logger.info("Successfully parsed filter command with tags: "
                 + argMultimap.getAllValues(PREFIX_TAG));
