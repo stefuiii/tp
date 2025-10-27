@@ -61,8 +61,8 @@ public class FilterCommandParserTest {
         String namePrefix = PREFIX_NAME.getPrefix();
 
         assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague ", expectedResult);
-        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague " + PREFIX_TAG + " colleague",
-                expectedResult);
+        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague "
+                + PREFIX_TAG + " colleague", expectedResult);
         assertParseFailure(parser, " " + PREFIX_TAG + " friends " + namePrefix + "buddy ", expectedResult);
         assertParseFailure(parser, " " + PREFIX_TAG + fieldPrefix + " colleague ", expectedResult);
     }
