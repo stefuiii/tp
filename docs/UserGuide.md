@@ -256,8 +256,10 @@ Quickly saves a contact with just their name and phone number - perfect when you
 **Format:** `addbasic n/NAME p/PHONE`
 
 **What you need to provide:**
-  * **Name** (`n/`) - Full name (letters, numbers and spaces only)
-  * **Phone** (`p/`) - At least 3 digits
+* **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
+    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
+      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
+* **Phone** (`p/`) - At least 3 digits
 
 **What you need to know:**
   * The combination of name **AND** phone number must be unique, you can't add two people with the same name and phone number combination
@@ -289,16 +291,13 @@ Phone: 98765432
 
 &rarr; Adds Sarah Chen immediately. Later, use `edit Sarah Chen e/sarah@example.com c/Shopee` to complete her profile.
 
-**Example 2: Adding multiple contacts quickly (one at a time)**
+**Example 2: Adding a contact with allowed special sign in the name**
 ```
-addbasic n/Mike Wong p/91112222
-addbasic n/Lisa Kumar p/93334444
-addbasic n/David Tan p/95556666
+addbasic n/Rahul s/o Kumar p/91112222
 ```
 **You'll see:**
   * Similar to above
 
-&rarr; Adds three contacts in seconds. Fill in details later when you have time.
 
 <box type="tip" seamless>
 
@@ -317,7 +316,9 @@ Adds a contact with full information including name, phone, email, company, and 
 **Format:** `add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…`
 
 **What you need to provide:**
-  * **Name** (`n/`) - Full name (letters, numbers, and spaces only)
+  * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
+    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
+      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
   * **Phone** (`p/`) - At least 3 digits
   * **Email** (`e/`) - Valid email address (e.g., name@company.com)
   * **Company** (`c/`) - Company or organization name
