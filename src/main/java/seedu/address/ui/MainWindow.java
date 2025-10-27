@@ -214,13 +214,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
 
-        // Save command typed into history
-        logic.saveNewCommand(commandText);
 
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            // Save valid command typed into history
+            logic.saveNewCommand(commandText);
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
