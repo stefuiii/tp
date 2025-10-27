@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_NAME;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.COMPANY_DESC_AMY;
@@ -86,6 +87,13 @@ public class LogicManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void getFocusedPerson_filteredList_returnsCorrectPerson() {
+        // Null Person Focused
+        Person focused = logic.getFocusedPerson().get();
+        assertNull(focused);
     }
 
     @Test

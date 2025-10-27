@@ -520,6 +520,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Status bar**: The UI footer indicating summaries such as list counts and last update time.
 * **Person card**: The UI element representing a single contact in the list.
 * **Help window**: A separate window displaying usage instructions, opened via the `help` command.
+* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -25,7 +26,9 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private SimpleObjectProperty<Person> focusedPerson;
     private final CommandHistory commandHistory;
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -39,6 +42,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         this.commandHistory = new CommandHistory();
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        focusedPerson = new SimpleObjectProperty<>(null);
     }
 
     public ModelManager() {
@@ -150,6 +154,20 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return filteredPersons;
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Person} backed by the local variable
+     */
+    @Override
+    public SimpleObjectProperty<Person> getFocusedPerson() {
+        return focusedPerson;
+    }
+
+    @Override
+    public void updateFocusedPerson(int index) {
+        requireAllNonNull(index);
+        focusedPerson.set(filteredPersons.get(index));
     }
 
     @Override

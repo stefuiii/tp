@@ -43,16 +43,16 @@ FastCard is a speed-focused contact manager for sales and procurement profession
   - [Help Command](#getting-help--help)
   - [List Command](#viewing-all-contacts--list)
   - [AddBasic Command](#adding-a-contact-quickly-addbasic)
-  - [Add Command](#adding-a-contact-with-complete-details--add)
+  - [Add Command](#adding-a-contact-with-complete-details-add)
   - [Edit Command](#updating-contact-information-edit)
   - [Find Command](#searching-for-contacts-by-name-find)
   - [Filter Command](#filtering-contacts-filter)
   - [Sort Command](#organizing-contacts-alphabetically-sort)
   - [Delete Command](#removing-a-contact--delete)
-  - [Command Recall](#recalling-previous-commands---command-history)
-  - [Clear Command](#removing-all-contacts--clear)
-  - [Exit Command](#closing-fastcard--exit)
-- [Saving Data](#saving-data)
+  - [View Command](#view-details-view)
+  - [Command Recall](#recalling-previous-commands-command-history)
+  - [Clear Command](#removing-all-contacts-clear)
+  - [Exit Command](#closing-fastcard-exit)
 
 **🔧 Advanced**
 - [Editing Data File](#editing-the-data-file)
@@ -102,14 +102,20 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 3. Run FastCard by typing: `java -jar fastcard.jar`
 4. Press Enter
 
-**What you should see:** FastCard's window should appear within a few seconds, showing some sample contacts to help you get started.
+**What you should see:**
+(First Use): FastCard's window should appear within a few seconds, showing a guiding message to get you get started.
+![FastCard UI Initial](images/Ui.png)
 
-![FastCard UI](images/Ui.png)
 
 The window shows:
 - Contact list (showing sample contacts)
 - Result display area (showing command feedback)
 - Command box (where you type commands)
+
+__Lets Start Fresh!__
+
+(Subsequent - if empty): After starting fresh with [`clear`](#removing-all-contacts-clear), you'll be greeted with this message
+![FastCard UI](images/Ui_init.png)
 
 **Troubleshooting:**
   * If you see "java is not recognized" &rarr; Java isn't installed correctly. Return to Step 1
@@ -256,8 +262,10 @@ Quickly saves a contact with just their name and phone number - perfect when you
 **Format:** `addbasic n/NAME p/PHONE`
 
 **What you need to provide:**
-  * **Name** (`n/`) - Full name (letters, numbers and spaces only)
-  * **Phone** (`p/`) - At least 3 digits
+* **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
+    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
+      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
+* **Phone** (`p/`) - At least 3 digits
 
 **What you need to know:**
   * The combination of name **AND** phone number must be unique, you can't add two people with the same name and phone number combination
@@ -289,16 +297,13 @@ Phone: 98765432
 
 &rarr; Adds Sarah Chen immediately. Later, use `edit Sarah Chen e/sarah@example.com c/Shopee` to complete her profile.
 
-**Example 2: Adding multiple contacts quickly (one at a time)**
+**Example 2: Adding a contact with allowed special sign in the name**
 ```
-addbasic n/Mike Wong p/91112222
-addbasic n/Lisa Kumar p/93334444
-addbasic n/David Tan p/95556666
+addbasic n/Rahul s/o Kumar p/91112222
 ```
 **You'll see:**
   * Similar to above
 
-&rarr; Adds three contacts in seconds. Fill in details later when you have time.
 
 <box type="tip" seamless>
 
@@ -309,6 +314,14 @@ addbasic n/David Tan p/95556666
 **Common mistakes:**
   * `addbasic n/Alice Tan` &rarr; Missing phone number (both name AND phone are required)
   * `addbasic Alice Tan 91234567` &rarr; Missing prefixes (need `n/` and `p/`)
+  * Including reserved prefixes inside a name
+    - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
+    - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `a/`, `t/`) as a new field, even if it appears inside a value.
+    - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
+        - `Alice p.o. Bob`
+        - `Alice p-o Bob`
+    - **Note:** Common official patterns like `s/o` (son of) and `d/o` (daughter of) are **allowed** and safe, because `s/` and `d/` are not reserved prefixes.
+
 
 ### **Adding a contact with complete details** : `add`
 
@@ -317,7 +330,9 @@ Adds a contact with full information including name, phone, email, company, and 
 **Format:** `add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…`
 
 **What you need to provide:**
-  * **Name** (`n/`) - Full name (letters, numbers, and spaces only)
+  * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
+    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
+      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
   * **Phone** (`p/`) - At least 3 digits
   * **Email** (`e/`) - Valid email address (e.g., name@company.com)
   * **Company** (`c/`) - Company or organization name
@@ -378,6 +393,13 @@ add n/Mike Kumar p/87654321 e/mike@company.com c/ABC Industries
   * `add n/John Doe p/91234567 e/john@ c/Shopee` &rarr; Incomplete email address (missing domain)
   * `add John Doe 91234567 john@email.com Shopee` &rarr; Missing prefixes (need `n/`, `p/`, `e/`, `c/`)
   * `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend, colleague` &rarr; Don't use commas between tags (repeat `t/` instead)
+  * Including reserved prefixes inside a name
+      - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
+      - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `a/`, `t/`) as a new field, even if it appears inside a value.
+      - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
+          - `Alice p.o. Bob`
+          - `Alice p-o Bob`
+      - **Note:** Common official patterns like `s/o` (son of) and `d/o` (daughter of) are **allowed** and safe, because `s/` and `d/` are not reserved prefixes.
 
 ### Updating contact information: `edit`
 
@@ -745,6 +767,27 @@ Multiple persons named John Doe found. Please specify the index to delete.
 **Common mistakes:**
   * `delete 0` &rarr; Invalid index (index starts at 1, not 0)
   * `delete 5` when only 3 contacts shown &rarr; Index out of range (must be within displayed list)
+
+### View Details: `view`
+
+Toggles the Detail Pane showing specified user in detail.
+
+- Temporary holding image (To update with details pane screenshot once done)
+![FastCard UI](images/Ui_init.png)
+
+**Format:**
+  * `view INDEX`
+
+**Examples:**
+**Example 1: View Details of contact in index 1**
+```
+view 1
+```
+**You'll see:**
+  * (If Focus Person has not been selected yet) -> Shows Unknown.
+    - Simply run `view` with an appropriate index to populate the details pane
+  * Detail Pane toggle to view (if not already visible)
+  * Detail Pane shows information about current target contact
 
 ### Recalling previous commands - Command History
 
