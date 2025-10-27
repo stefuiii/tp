@@ -27,10 +27,11 @@ public class PersonListPanel extends UiPart<Region> {
     public PersonListPanel(ObservableList<Person> personList) {
         super(FXML);
         personListView.setItems(personList);
+        personListView.setMouseTransparent(true);
         personListView.setCellFactory(listView -> new PersonListViewCell());
 
-        Label emptyListMessage = new Label("Welcome to FastCard!\n\n"
-                + "Your contact list is currently empty."
+        Label emptyListMessage = new Label("No Results shown currently."
+                + "\n\nAdd new contacts or list all with [list]"
                 + "\nEnter [help] for more information!"
         );
         emptyListMessage.getStyleClass().add("emptyListMessage");

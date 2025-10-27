@@ -798,7 +798,7 @@ FastCard allows you to quickly repeat commands that you entered previously - sav
   * Press &darr; (Down Arrow) - Go forward in command history
 
 **What you need to know:**
-  * Command history saves all commands from your current session
+  * Command history saves all valid executed commands from your current session
   * History persists only for the current session (resets when you restart FastCard)
   * When you reach the end of history, you'll see "End of Command History reached"
 
