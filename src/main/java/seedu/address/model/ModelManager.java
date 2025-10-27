@@ -29,6 +29,7 @@ public class ModelManager implements Model {
     private SimpleObjectProperty<Person> focusedPerson;
     private final CommandHistory commandHistory;
 
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
