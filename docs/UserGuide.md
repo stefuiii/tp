@@ -166,7 +166,7 @@ Once you're comfortable with the basics, check out the [Features](#features) sec
     * `addbasic p/91234567 n/John Doe`
 
 **Extra Words Get Ignored**
-* For simple commands like `help`, `list`, `exit`, and `clear`, anything extra you type will be ignored.<br>
+* For simple commands like `help`, `list` and `exit`, anything extra you type will be ignored.<br>
   Example: Typing `help 123` or `help please` both just run `help`.
 
 If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
