@@ -28,7 +28,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
     private static final Logger logger = LogsCenter.getLogger(FilterCommandParser.class);
     private static final Prefix[] DISALLOWED_PREFIXES = new Prefix[]{
-            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_COMPANY, PREFIX_FIELD, PREFIX_ORDER
+        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_COMPANY, PREFIX_FIELD, PREFIX_ORDER
     };
 
     /**
