@@ -55,6 +55,7 @@ public class CompanyBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD
                 + " " + ClearCommand.COMMAND_CONFIRMATION_WORD) instanceof ClearCommand);
+        assertThrows(ParseException.class, () -> parser.parseCommand(ClearCommand.COMMAND_WORD + " IncorrectWord"));
     }
 
     @Test

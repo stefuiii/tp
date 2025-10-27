@@ -24,8 +24,6 @@ public class ClearCommandParser implements Parser<ClearCommand> {
                 // Confirmation Valid -> Proceed with clearing
                 return new ClearCommand(true);
             } else {
-                System.out.println(confirmationCode);
-                System.out.println(ClearCommand.COMMAND_CONFIRMATION_WORD);
                 // Invalid Confirmation Code
                 throw new ParseException(ClearCommand.MESSAGE_CLEAR_CANCELLED);
             }
