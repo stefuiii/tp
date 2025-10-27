@@ -788,8 +788,6 @@ FastCard allows you to quickly repeat commands that you entered previously - sav
 
 **When to use this:**
   * You are repeating similar commands with slight modifications (e.g., adding multiple contacts)
-  * You need to correct a typo in a recent command
-  * You want to re-run a command that failed due to missing information
   * You want to save time and avoid retyping long commands with many fields
   * You want to check what commands you ran recently
 

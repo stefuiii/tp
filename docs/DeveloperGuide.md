@@ -301,7 +301,7 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                           | I want to …​                                                              | So that I can…​                                                                          |
+| Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
 |----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 | `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
 | `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
@@ -314,7 +314,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my contact list                                        |
 | `* * *`  | forgetful user                   | be able to do a fuzzy search for customer information                    | find customer's information even if I only remember part of their information           |
 | `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
-| `* *`    | careless user                    | be able to navigate through my past commands                             | reduce time spent retyping my previous commands in case of any mistakes                 |
+| `* *`    | efficient user                   | be able to navigate through my past commands                             | save time when adding multiple person with the similar information                      |
 
 ### Use cases
 
