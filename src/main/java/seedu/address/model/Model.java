@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.EndOfCommandHistoryException;
@@ -80,6 +81,17 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered person list */
+    SimpleObjectProperty<Person> getFocusedPerson();
+
+
+    /**
+     * Updates focus Person by the given {@code index} relative to filtered list indexing.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFocusedPerson(int index);
+
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

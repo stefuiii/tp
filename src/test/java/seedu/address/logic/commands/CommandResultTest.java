@@ -14,7 +14,7 @@ public class CommandResultTest {
 
         // same values -> returns true
         assertTrue(commandResult.equals(new CommandResult("feedback")));
-        assertTrue(commandResult.equals(new CommandResult("feedback", false, false)));
+        assertTrue(commandResult.equals(new CommandResult("feedback", false, false, false, -1)));
 
         // same object -> returns true
         assertTrue(commandResult.equals(commandResult));
@@ -29,10 +29,10 @@ public class CommandResultTest {
         assertFalse(commandResult.equals(new CommandResult("different")));
 
         // different showHelp value -> returns false
-        assertFalse(commandResult.equals(new CommandResult("feedback", true, false)));
+        assertFalse(commandResult.equals(new CommandResult("feedback", true, false, false, -1)));
 
         // different exit value -> returns false
-        assertFalse(commandResult.equals(new CommandResult("feedback", false, true)));
+        assertFalse(commandResult.equals(new CommandResult("feedback", false, true, false, -1)));
     }
 
     @Test
@@ -46,10 +46,10 @@ public class CommandResultTest {
         assertNotEquals(commandResult.hashCode(), new CommandResult("different").hashCode());
 
         // different showHelp value -> returns different hashcode
-        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", true, false).hashCode());
+        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", true, false, false, -1).hashCode());
 
         // different exit value -> returns different hashcode
-        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", false, true).hashCode());
+        assertNotEquals(commandResult.hashCode(), new CommandResult("feedback", false, true, false, -1).hashCode());
     }
 
     @Test
@@ -59,5 +59,20 @@ public class CommandResultTest {
                 + commandResult.getFeedbackToUser() + ", showHelp=" + commandResult.isShowHelp()
                 + ", exit=" + commandResult.isExit() + "}";
         assertEquals(expected, commandResult.toString());
+    }
+
+    @Test
+    public void detailsTest() {
+        // Toggle True, Index Default
+        CommandResult commandResult = new CommandResult("feedback", false, false, true, -1);
+        assertTrue(commandResult.isToggleDetail());
+
+        // Toggle False, Index Provided
+        commandResult = new CommandResult("feedback", false, false, false, 0);
+        assertTrue(commandResult.isShowDetail());
+
+        // Toggle True, Index Provided
+        commandResult = new CommandResult("feedback", false, false, true, 0);
+        assertTrue(commandResult.isShowDetail());
     }
 }
