@@ -1,7 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -44,6 +45,10 @@ public class FilterCommandParserTest {
         // PREFIX_TAG present but empty tag
         assertParseFailure(parser, " " + PREFIX_TAG, expectedResult);
 
+        // Whitespace between prefix and tag value
+        assertParseFailure(parser, " " + PREFIX_TAG + " friend", expectedResult);
+        assertParseFailure(parser, " " + PREFIX_TAG + "  friend", expectedResult);
+
         // Invalid tag name
         assertParseFailure(parser, " " + PREFIX_TAG + " invalid   tag", expectedResult);
 
@@ -52,10 +57,14 @@ public class FilterCommandParserTest {
                 parser, " " + PREFIX_TAG + " friend " + PREFIX_TAG + " " + PREFIX_TAG + " colleague", expectedResult);
 
         // Extra invalid tags (argMultimap parses wrongly)
-        //assertParseFailure(parser, " " + PREFIX_TAG + " friends " + PREFIX_FIELD + " colleague ", expectedResult);
-        /*assertParseFailure(
-                parser, " " + PREFIX_TAG + " friends " + PREFIX_FIELD + " colleague " + PREFIX_TAG + " colleague",
-                expectedResult);*/
+        String fieldPrefix = PREFIX_FIELD.getPrefix();
+        String namePrefix = PREFIX_NAME.getPrefix();
+
+        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague ", expectedResult);
+        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague " + PREFIX_TAG + " colleague",
+                expectedResult);
+        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + namePrefix + "buddy ", expectedResult);
+        assertParseFailure(parser, " " + PREFIX_TAG + fieldPrefix + " colleague ", expectedResult);
     }
 
     @Test
@@ -65,7 +74,7 @@ public class FilterCommandParserTest {
                 new TagsContainTagPredicate(Arrays.asList(new Tag("friends"))));
 
         assertParseSuccess(parser,
-                " " + PREFIX_TAG + " FRIENDS " + PREFIX_TAG + "friends " + PREFIX_TAG + "     fRiEnDs",
+                " " + PREFIX_TAG + "FRIENDS " + PREFIX_TAG + "friends " + PREFIX_TAG + "fRiEnDs",
                 expectedFilterCommand);
     }
 }

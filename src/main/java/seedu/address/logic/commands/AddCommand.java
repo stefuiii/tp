@@ -33,7 +33,7 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "johnd@ms.com "
             + PREFIX_COMPANY + "Morgan Stanley "
             + PREFIX_TAG + "competitor"
-            + PREFIX_TAG + "D1sales";
+            + PREFIX_TAG + "Deltab one sales";
 
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
