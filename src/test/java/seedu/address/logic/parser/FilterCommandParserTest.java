@@ -49,9 +49,6 @@ public class FilterCommandParserTest {
         assertParseFailure(parser, " " + PREFIX_TAG + " friend", expectedResult);
         assertParseFailure(parser, " " + PREFIX_TAG + "  friend", expectedResult);
 
-        // Invalid tag name
-        assertParseFailure(parser, " " + PREFIX_TAG + " invalid   tag", expectedResult);
-
         // Empty tag in a stream of tags
         assertParseFailure(
                 parser, " " + PREFIX_TAG + " friend " + PREFIX_TAG + " " + PREFIX_TAG + " colleague", expectedResult);
@@ -61,10 +58,22 @@ public class FilterCommandParserTest {
         String namePrefix = PREFIX_NAME.getPrefix();
 
         assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague ", expectedResult);
-        assertParseFailure(parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague "
-                + PREFIX_TAG + " colleague", expectedResult);
+        assertParseFailure(
+                parser, " " + PREFIX_TAG + " friends " + fieldPrefix + " colleague " + PREFIX_TAG + " colleague",
+                expectedResult);
         assertParseFailure(parser, " " + PREFIX_TAG + " friends " + namePrefix + "buddy ", expectedResult);
         assertParseFailure(parser, " " + PREFIX_TAG + fieldPrefix + " colleague ", expectedResult);
+    }
+
+    @Test
+    public void parse_tagsWithRepeatedSpaces_returnsFilterCommand() {
+        TagsContainTagPredicate predicate = new TagsContainTagPredicate(Arrays.asList(
+                new Tag("friend network"), new Tag("t/delta one sales")));
+        FilterCommand expectedFilterCommand = new FilterCommand(predicate);
+
+        assertParseSuccess(parser,
+                " " + PREFIX_TAG + "friend  network " + PREFIX_TAG + "t/delta   one   sales",
+                expectedFilterCommand);
     }
 
     @Test

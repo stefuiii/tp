@@ -1,5 +1,6 @@
 package seedu.address.model.tag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -33,7 +34,14 @@ public class TagTest {
         // valid tag names
         assertTrue(Tag.isValidTagName("friend"));
         assertTrue(Tag.isValidTagName("delta one sales"));
+        assertTrue(Tag.isValidTagName("friend   network"));
         assertTrue(Tag.isValidTagName(generateString(Tag.MAX_LENGTH)));
+    }
+
+    @Test
+    public void constructor_multipleSpaces_normalizesWhitespace() {
+        Tag tag = new Tag("friend   network");
+        assertEquals("friend network", tag.tagName);
     }
 
     private String generateString(int length) {

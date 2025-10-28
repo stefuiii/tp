@@ -45,11 +45,12 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         checkValidTokens(args, argMultimap);
 
         TagsContainTagPredicate predicate =
-            new TagsContainTagPredicate(argMultimap.getAllValues(PREFIX_TAG).stream()
-                .map(token -> token.toLowerCase())
-                .distinct()
-                .map(token -> new Tag(token))
-                .toList());
+                new TagsContainTagPredicate(argMultimap.getAllValues(PREFIX_TAG).stream()
+                        .map(Tag::normalizeSpacing)
+                        .map(token -> token.toLowerCase())
+                        .distinct()
+                        .map(Tag::new)
+                        .toList());
 
         logger.info("Successfully parsed filter command with tags: "
                 + argMultimap.getAllValues(PREFIX_TAG));
@@ -117,9 +118,12 @@ public class FilterCommandParser implements Parser<FilterCommand> {
     }
 
     private boolean containsDisallowedPrefix(String tagName) {
+        String normalizedTagName = Tag.normalizeSpacing(tagName);
+
         return Stream.of(DISALLOWED_PREFIXES)
                 .map(prefix -> prefix.getPrefix())
-                .anyMatch(prefix -> tagName.startsWith(prefix) || tagName.contains(" " + prefix));
+                .anyMatch(prefix -> normalizedTagName.startsWith(prefix)
+                        || normalizedTagName.contains(" " + prefix));
     }
 
     private boolean containsTagWithLeadingWhitespace(String args, List<String> tagValues) {
