@@ -995,6 +995,11 @@ Advanced users are welcome to update data directly by editing that data file.
 **What's actually happening:** The Help window is already open but minimized.
 **Solution:** Look for the minimized Help window in your taskbar and click it to restore it.
 
+**Slight Flicker when clicking cards**
+
+**Problem:** Clicking the contact card in list view may cause slight flickering
+**Solution:** Since there's no functionality tied to clicking of the items in the list. Simply refrain from doing so.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary

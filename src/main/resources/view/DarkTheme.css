@@ -73,9 +73,6 @@
     -fx-opacity: 1;
 }
 
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
-}
 
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: #000321;
@@ -122,15 +119,6 @@
 
 .list-cell:filled:odd {
     -fx-background-color: #1A1D37
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
 }
 
 .cell_id {
