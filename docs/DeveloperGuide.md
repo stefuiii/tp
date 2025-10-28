@@ -92,7 +92,7 @@ For example, the `Logic` component defines its API in the `Logic.java` interface
 
 The sections below give more details of each component.
 
-### UI component
+### UI Component
 
 The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/ui/Ui.java)
 
@@ -109,7 +109,7 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
-### Logic component
+### Logic Component
 
 **API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/logic/Logic.java)
 
@@ -142,7 +142,7 @@ How the parsing works:
 * When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
-### Model component
+### Model Component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
@@ -165,7 +165,7 @@ The `Model` component,
 </box>
 
 
-### Storage component
+### Storage Component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/storage/Storage.java)
 
@@ -176,7 +176,7 @@ The `Storage` component,
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
-### Common classes
+### Common Classes
 
 Classes used by multiple components are in the `seedu.company.commons` package.
 
@@ -271,7 +271,7 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 <puml src="diagrams/AddCommandBasicDiagram.puml" width="100%" />
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Documentation, Logging, Testing, Configuration, Dev-Ops**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -283,7 +283,7 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 
 ## **Appendix: Requirements**
 
-### Product scope
+### Product Scope
 
 **Target user profile**:
 
@@ -297,7 +297,7 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 **Value proposition**: Enable sales and procurement professionals engaged in regular business communication to efficiently capture, organize, and recall contact details in real time, minimizing information loss and improving follow-up accuracy.
 
 
-### User stories
+### User Stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
@@ -316,7 +316,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
 | `* *`    | efficient user                   | be able to navigate through my past commands                             | save time when adding multiple person with the similar information                      |
 
-### Use cases
+### Use Cases
 
 (For all use cases below, the **System** is the `FastCard` and the **Actor** is the `user`, unless specified otherwise)
 
@@ -524,7 +524,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix: Instructions for Manual Testing**
 
 Given below are instructions to test the app manually.
 
@@ -535,7 +535,7 @@ testers are expected to do more *exploratory* testing.
 
 </box>
 
-### Launch and shutdown
+### Launch and Shutdown
 
 1.  Initial launch
 
@@ -552,7 +552,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Deleting a person
+### Deleting a Person
 
 1.  Deleting a person while all persons are being shown
 
@@ -574,7 +574,7 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
-### Sorting contacts
+### Sorting Contacts
 
 1.  Sorting contacts by name
 
@@ -592,7 +592,7 @@ testers are expected to do more *exploratory* testing.
     -  Test case: `sort f/name o/descending`<br>
        Expected: Same as `sort f/name o/desc`.
 
-2. Sorting contacts by tag
+2. Sorting contacts by tags
 
     -  Prerequisites: Multiple contacts in the company book with different tags.
 
@@ -619,7 +619,7 @@ testers are expected to do more *exploratory* testing.
     -  Test case: `sort random f/name o/asc`<br>
        Expected: No sorting occurs. Error message shows invalid command format.
 
-### Filtering contacts by tags
+### Filtering Contacts by Tags
 1. Filtering contacts with single tag
    
     -  Prerequisites: Multiple contacts in the company book, some with the tag "friends", some without.
@@ -666,7 +666,7 @@ testers are expected to do more *exploratory* testing.
     -  Test case: `list`
        Expected: All contacts are displayed again, removing the filter.
 
-### Saving data
+### Saving Data
 
 1. Dealing with missing/corrupted data files
 
