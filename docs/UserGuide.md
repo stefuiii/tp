@@ -51,6 +51,7 @@ FastCard is a speed-focused contact manager for sales and procurement profession
   - [Delete Command](#removing-a-contact--delete)
   - [View Command](#view-details-view)
   - [Command Recall](#recalling-previous-commands-command-history)
+  - [Export Contact](#export-the-contact-list--export)
   - [Clear Command](#removing-all-contacts-clear)
   - [Exit Command](#closing-fastcard-exit)
 
@@ -831,6 +832,45 @@ The command appears in your command box, ready to be edited or executed again.
 **Common mistakes:**
   * Pressing &uarr; then immediately pressing Enter &rarr; Accidentally re-executes the previous command (review it first!)
   * Expecting history after restart &rarr; History clears when you close FastCard (only lasts current session)
+
+### Export the Contact List : `export`
+Exports all contacts in the address book into a **CSV** file on your **Desktop**.
+This allows users to back up or view their contact list in spreadsheet applications such as Excel or Numbers.
+
+**Format:**
+* `export f/FILENAME`
+
+**Example: Export the Contact List as a csv file with customised name**
+```
+export f/ContactList
+```
+**You'll see:**
+* A file named as "ContactList.csv" is now in your Desktop
+
+**Details:**
+
+* If a file with the same name already exists on your Desktop,
+  it will be **overwritten without confirmation**.
+* File names are **case-sensitive** —
+  `export f/Contacts` and `export f/contacts` will create two different files.
+* Allowed characters for filenames follow this regular expression:
+
+  ```
+  ^[a-zA-Z0-9._()\\-\\s]+$
+  ```
+
+  This means filenames can contain **letters, numbers, spaces, underscores `_`, dashes `-`, dots `.`, and parentheses `()`**.
+  Slashes `/` and backslashes `\` are **not allowed**.
+* Multiple spaces will automatically be **normalized into a single space**.
+  Example:
+  `export f/  my   new   list.csv` → `my new list.csv`
+
+💡 **Pro Tip:**
+* Need to share your contact list with others? Just **export it!**
+* Use the `export` command to instantly create a sharable CSV file on your Desktop.
+* Send the exported file via email or upload it to your team drive — everyone can open it easily in Excel or Numbers to view your contact list.
+
+
 
 ### Removing all contacts : `clear`
 
