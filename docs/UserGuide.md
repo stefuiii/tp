@@ -166,7 +166,7 @@ Once you're comfortable with the basics, check out the [Features](#features) sec
     * `addbasic p/91234567 n/John Doe`
 
 **Extra Words Get Ignored**
-* For simple commands like `help`, `list`, `exit`, and `clear`, anything extra you type will be ignored.<br>
+* For simple commands like `help`, `list` and `exit`, anything extra you type will be ignored.<br>
   Example: Typing `help 123` or `help please` both just run `help`.
 
 If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
@@ -549,7 +549,7 @@ find John Mike Sarah
 **Common mistakes:**
   * `find Han` expecting to find "Hans" &rarr; Partial words don't match (must be complete: `find Hans`)
 
-### Filtering contacts: `filter`
+### Filtering Contacts: `filter`
 
 Shows only contacts that have specific tags - perfect for viewing contacts by category like "client", "vendor", or "priority".
 
@@ -568,7 +568,7 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * You should only specify tags (specifying other parameters is invalid e.g., `filter t/colleague n/John`)
   * You may list the tags in any order.
   * The exact tag name must match (e.g., `client` won't find contacts tagged with `clients`)
-  * Tags specified must be alphanumeric and at most 30 characters
+  * Tags specified must be alphanumeric (spaces between words are accepted while trailing white spaces will be trimmed, e.g. Credit   Sales -> Credit Sales) and at most 30 characters
   * Leading and trailing whitespaces are trimmed
   * If no contacts contain any of the specified tags, an empty contact list will be shown
   * The global contact list shown by `list` command will be filtered, and not the currently displayed contact list
@@ -804,8 +804,6 @@ FastCard allows you to quickly repeat commands that you entered previously - sav
 
 **When to use this:**
   * You are repeating similar commands with slight modifications (e.g., adding multiple contacts)
-  * You need to correct a typo in a recent command
-  * You want to re-run a command that failed due to missing information
   * You want to save time and avoid retyping long commands with many fields
   * You want to check what commands you ran recently
 
@@ -854,14 +852,25 @@ Before using `clear`:
   * Removing specific outdated contacts - Use `delete` instead
   * Cleaning up a few contacts - Use `filter` or `find` then delete individually
 
-**Example: Starting fresh after testing**
+**Example: Starting fresh after testing. (With a filled contact list)**
 ```
 clear
 ```
 **You'll see:**
 ```
+This will delete all your contacts (action irreversible!)
+If you'd like to continue, confirm with input [clear <CONFIRM_WORD>]
+```
+The <CONFIRM_WORD> will be shown to you in the feedback screen. 
+If you accept that the list will be irreversibly cleared, simply input as guided.
+```
+clear <CONFIRM_WORD>
+```
+Finally you'll see the empty list with the response:
+```
 Contact book has been cleared!
 ```
+
 **In the contact list:**
   * All contacts disappear immediately
   * You're left with a completely empty contact list
@@ -901,7 +910,7 @@ exit
   * Click the `X` button in the window corner
   * Use `Alt+F4` (Windows) or `Cmd+Q` (Mac) keyboard shortcuts
 
-### Saving data
+### Saving Data
 
 <box type="info" seamless>
 
@@ -988,7 +997,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Command Summary
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------

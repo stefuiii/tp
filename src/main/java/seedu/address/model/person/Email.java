@@ -49,10 +49,10 @@ public class Email {
      * Returns if a given string is a valid email.
      */
     public static boolean isValidEmail(String test) {
-        Boolean bool1 = test.length() <= MAX_LENGTH;
-        Boolean bool2 = test.matches(VALIDATION_REGEX);
+        Boolean withinLength = test.length() <= MAX_LENGTH;
+        Boolean isMatch = test.matches(VALIDATION_REGEX);
 
-        return bool1 && bool2;
+        return withinLength && isMatch;
     }
 
     @Override

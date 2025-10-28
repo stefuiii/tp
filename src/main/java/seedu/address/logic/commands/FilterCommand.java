@@ -21,9 +21,9 @@ public class FilterCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Filters all persons whose contact information contains any of "
             + "the specified tags (case-insensitive) and displays them as a list.\n"
-            + "Tags should be alphanumeric and at most " + Tag.MAX_LENGTH + " characters long.\n"
+            + "Tags should be alphanumeric (spaces allowed) and at most " + Tag.MAX_LENGTH + " characters long.\n"
             + "Parameters: t/TAG [t/TAG]...\n"
-            + "Example: " + COMMAND_WORD + " t/ client t/ colleague";
+            + "Example: " + COMMAND_WORD + " t/client t/colleague";
 
     private static final Logger logger = LogsCenter.getLogger(FilterCommand.class);
 
