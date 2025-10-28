@@ -549,7 +549,7 @@ find John Mike Sarah
 **Common mistakes:**
   * `find Han` expecting to find "Hans" &rarr; Partial words don't match (must be complete: `find Hans`)
 
-### Filtering contacts: `filter`
+### Filtering Contacts: `filter`
 
 Shows only contacts that have specific tags - perfect for viewing contacts by category like "client", "vendor", or "priority".
 
@@ -910,7 +910,7 @@ exit
   * Click the `X` button in the window corner
   * Use `Alt+F4` (Windows) or `Cmd+Q` (Mac) keyboard shortcuts
 
-### Saving data
+### Saving Data
 
 <box type="info" seamless>
 
@@ -997,7 +997,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Command Summary
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
