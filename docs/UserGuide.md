@@ -493,32 +493,36 @@ Please use the edit INDEX command to specify the contact you want to edit in the
   * `edit 0 p/91234567` &rarr; Invalid index (index starts at 1, not 0)
 
 ### Searching for contacts by name: `find`
+Quickly finds contacts whose names or companies match the keywords you provide.
+You can search by name, company, or both at the same time.
 
-Quickly finds contacts whose names include the words you're looking for.
-
-**Format:** `find KEYWORD [MORE_KEYWORDS]`
+**Format:** 
+`find [n/NAME`] [`find c/COMPANY`]
 
 **What you need to provide:**
-  * **One or more keywords** - Words that appear in the contact's name
+  * `n/` – keyword that appears in the contact’s name
+  * `c/` – keyword that appears in the contact’s company
+  * At least to provide one prefix with its value. Can do search via both
 
 **What you need to know:**
-  * Only searches **names** (not phone numbers, emails, companies or tags)
-  * Not case-sensitive - `john`, `John`, and `JOHN` all find the same contacts
-  * Word order doesn't matter - `find Bo Hans` and `find Hans Bo` give identical results
-  * Must match **complete words** - `Han` won't find `Hans` (you need the full word)
-  * Matches **any** keyword - If you search multiple words, contacts with ANY of those words will appear
+* Searches are **case-insensitive** – `google`, `Google`, and `GOOGLE` all match the same results
+* Supports **partial (substring)** matches – typing `Han` will find `Hans` or `Hannah`
+* Both name and company searches can be combined (logical **AND**)
+
+    * `find n/Alice c/NUS` → finds contacts whose **name contains “Alice”** **and** whose **company contains “NUS”**
+* If only one prefix is provided, only that field is searched
+* The number of matching contacts will be displayed after searching
 
 **When to use this:**
-  * You remember part of someone's name but not their full details
-  * You want to quickly pull up one person from a large contact list
-  * You're looking for several people at once (by searching multiple names)
-  * You need to verify if someone is already in your contacts before adding them
+  * You remember only part of someone’s name or their company name
+  * You want to find all contacts working in the same organisation
+  * You want to narrow your search by both name and company
 
 **Examples:**
 
 **Example 1: Finding a specific person**
 ```
-find Sarah
+find n/Sarah
 ```
 **You'll see (depending on the number of contacts containing Sarah in their full name):**
 ```
@@ -529,14 +533,23 @@ find Sarah
   
 &rarr; Shows all contacts with "Sarah" in their name (Sarah Chen, Sarah Kumar, etc.)
 
-**Example 2: Finding multiple people for a meeting**
+**Example 2: Finding contact(s) with specified company**
 ```
-find John Mike Sarah
+find c/Google
 ```
 **You'll see:**
   * Similar to above
 
-&rarr; Shows everyone with "John" OR "Mike" OR "Sarah" in their name - useful for preparing a meeting attendee list
+&rarr; Shows everyone with "Google" OR "Google SG" etc.
+
+**Example 3: Finding contact(s) with specified name and company**
+```
+find n/Jadon c/Google
+```
+**You'll see:**
+* Similar to above
+
+&rarr; Shows everyone with name containing "Jadon" and company containing "Google"
 
 <box type="tip" seamless>
 
@@ -844,6 +857,10 @@ export f/ContactList
 ```
 **You'll see:**
 * A file named as "ContactList.csv" is now in your Desktop
+* There are some cases that the empty fields will put in the placeholders:
+  * No email: exported CSV will show the email field as `unknown@email.com`
+  * No company: exported CSV will show the company field as `N/A`
+  * No tag(s): exported CSV will leave the tag field empty
 
 **Details:**
 
