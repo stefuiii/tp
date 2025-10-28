@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.nio.file.Path;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.EndOfCommandHistoryException;
@@ -34,8 +35,11 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the Focus Person in detailed view */
+    SimpleObjectProperty<Person> getFocusedPerson();
+
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' contact book file path.
      */
     Path getAddressBookFilePath();
 

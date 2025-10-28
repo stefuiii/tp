@@ -301,22 +301,20 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                           | I want to …​                                                              | So that I can…​                                                                          |
+| Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
 |----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | not lose time during meetings and can fill in the details later when convenient         |
+| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
 | `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
 | `* * *`  | sales / procurement professional | assign category tags when I add new customers (e.g company)              | better manage different types of clients by knowing their industry                      |
-| `* * *`  | sales / procurement professional | delete a contact in my company book                                      | remove contacts that are no longer a prospect                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my company book                                     | access all contact records to manage sales and procurement activities                   |
-| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, contact number, etc)        | view relevant clients easily or rank clients easily                                     |
+| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer a prospect                                           |
+| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | access all contact records to manage sales and procurement activities                   |
+| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                       | view relevant clients easily or rank clients easily                                     |
 | `* * *`  | sales / procurement professional | filter my contacts based on each client's tags                           | quickly find relevant clients and manage my outreach more efficiently                   |
 | `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my company book                                        |
-| `* * *`  | forgetful user                   | be able to do a fuzzy search for customers                               | still find customers information even if I only remember part of the information        |
+| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my contact list                                        |
+| `* * *`  | forgetful user                   | be able to do a fuzzy search for customer information                    | find customer's information even if I only remember part of their information           |
 | `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
-| `* *`    | careless user                    | navigate through my past commands                                        | reduce time spent retyping my previous commands in case of any mistakes                 |
-
-*{More to be added}*
+| `* *`    | efficient user                   | be able to navigate through my past commands                             | save time when adding multiple person with the similar information                      |
 
 ### Use cases
 
@@ -492,7 +490,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
 * **Index**: A 1-based position of a contact within the currently displayed list.
 * **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
-* **Address Book**: The collection of contacts managed by FastCard.
+* **Contact book**: The collection of contacts managed by FastCard.
 * **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
 * **CLI (Command Line Interface)**: Text-based interaction via the command input box.
 * **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
@@ -522,6 +520,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Status bar**: The UI footer indicating summaries such as list counts and last update time.
 * **Person card**: The UI element representing a single contact in the list.
 * **Help window**: A separate window displaying usage instructions, opened via the `help` command.
+* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
 
 --------------------------------------------------------------------------------------------------------------------
 
