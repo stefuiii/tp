@@ -568,7 +568,7 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * You should only specify tags (specifying other parameters is invalid e.g., `filter t/colleague n/John`)
   * You may list the tags in any order.
   * The exact tag name must match (e.g., `client` won't find contacts tagged with `clients`)
-  * Tags specified must be alphanumeric (spaces accepted) and at most 30 characters
+  * Tags specified must be alphanumeric (spaces between words are accepted while trailing white spaces will be trimmed, e.g. Credit   Sales -> Credit Sales) and at most 30 characters
   * Leading and trailing whitespaces are trimmed
   * If no contacts contain any of the specified tags, an empty contact list will be shown
   * The global contact list shown by `list` command will be filtered, and not the currently displayed contact list
