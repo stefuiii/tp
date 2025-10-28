@@ -47,6 +47,12 @@ public class ExportCommand extends Command {
         // Get the Desktop directory of the current user
         String desktopPath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator;
 
+        // Ensure Desktop exists (important for CI environments)
+        File desktopDir = new File(desktopPath);
+        if (!desktopDir.exists()) {
+            desktopDir.mkdirs(); // create Desktop if it doesn’t exist
+        }
+
         // Extract only the filename part, in case the user includes a path
         String filename = new File(userInputName).getName();
 
