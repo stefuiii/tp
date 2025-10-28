@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_ADD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_DELETE;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -32,7 +34,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_COMPANY, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_COMPANY,
+                        PREFIX_TAG, PREFIX_TAG_ADD, PREFIX_TAG_DELETE);
 
         String preamble = argMultimap.getPreamble();
         Index index = null;
@@ -55,12 +58,23 @@ public class EditCommandParser implements Parser<EditCommand> {
                 || argMultimap.getValue(PREFIX_PHONE).isPresent()
                 || argMultimap.getValue(PREFIX_EMAIL).isPresent()
                 || argMultimap.getValue(PREFIX_COMPANY).isPresent()
-                || !argMultimap.getAllValues(PREFIX_TAG).isEmpty();
+                || !argMultimap.getAllValues(PREFIX_TAG).isEmpty()
+                || !argMultimap.getAllValues(PREFIX_TAG_ADD).isEmpty()
+                || !argMultimap.getAllValues(PREFIX_TAG_DELETE).isEmpty();
         if (trimmedPreamble.isEmpty() && !anyFieldPresent) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_COMPANY);
+
+        // Check that t/ is not used together with t+/ or t-/
+        boolean hasTagOverwrite = !argMultimap.getAllValues(PREFIX_TAG).isEmpty();
+        boolean hasTagAdd = !argMultimap.getAllValues(PREFIX_TAG_ADD).isEmpty();
+        boolean hasTagDelete = !argMultimap.getAllValues(PREFIX_TAG_DELETE).isEmpty();
+
+        if (hasTagOverwrite && (hasTagAdd || hasTagDelete)) {
+            throw new ParseException(EditCommand.MESSAGE_CONFLICTING_TAG_PREFIXES);
+        }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -77,6 +91,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setCompany(ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG_ADD)).ifPresent(editPersonDescriptor::setTagsToAdd);
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG_DELETE))
+                .ifPresent(editPersonDescriptor::setTagsToDelete);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
