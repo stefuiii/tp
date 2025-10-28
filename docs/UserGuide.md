@@ -166,7 +166,7 @@ Once you're comfortable with the basics, check out the [Features](#features) sec
     * `addbasic p/91234567 n/John Doe`
 
 **Extra Words Get Ignored**
-* For simple commands like `help`, `list`, `exit`, and `clear`, anything extra you type will be ignored.<br>
+* For simple commands like `help`, `list` and `exit`, anything extra you type will be ignored.<br>
   Example: Typing `help 123` or `help please` both just run `help`.
 
 If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
@@ -804,8 +804,6 @@ FastCard allows you to quickly repeat commands that you entered previously - sav
 
 **When to use this:**
   * You are repeating similar commands with slight modifications (e.g., adding multiple contacts)
-  * You need to correct a typo in a recent command
-  * You want to re-run a command that failed due to missing information
   * You want to save time and avoid retyping long commands with many fields
   * You want to check what commands you ran recently
 
@@ -854,14 +852,25 @@ Before using `clear`:
   * Removing specific outdated contacts - Use `delete` instead
   * Cleaning up a few contacts - Use `filter` or `find` then delete individually
 
-**Example: Starting fresh after testing**
+**Example: Starting fresh after testing. (With a filled contact list)**
 ```
 clear
 ```
 **You'll see:**
 ```
+This will delete all your contacts (action irreversible!)
+If you'd like to continue, confirm with input [clear <CONFIRM_WORD>]
+```
+The <CONFIRM_WORD> will be shown to you in the feedback screen. 
+If you accept that the list will be irreversibly cleared, simply input as guided.
+```
+clear <CONFIRM_WORD>
+```
+Finally you'll see the empty list with the response:
+```
 Contact book has been cleared!
 ```
+
 **In the contact list:**
   * All contacts disappear immediately
   * You're left with a completely empty contact list
