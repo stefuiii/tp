@@ -90,4 +90,26 @@ public class ExportCommandParserTest {
         assertEquals(expectedCommand, result,
                 "Parser should normalize multiple spaces into one and trim edges.");
     }
+
+    @Test
+    public void parse_filenameWithForwardSlash_throwsParseException() {
+        String userInput = " f/test/contacts.csv";
+        assertThrows(ParseException.class, () -> parser.parse(userInput),
+                "Parser should reject filenames containing forward slashes ('/').");
+    }
+
+    @Test
+    public void parse_filenameWithBackslash_throwsParseException() {
+        String userInput = " f\\test\\contacts.csv";
+        assertThrows(ParseException.class, () -> parser.parse(userInput),
+                "Parser should reject filenames containing backslashes ('\\').");
+    }
+
+    @Test
+    public void parse_filenameWithMixedSlashes_throwsParseException() {
+        String userInput = " f/test\\contacts.csv";
+        assertThrows(ParseException.class, () -> parser.parse(userInput),
+                "Parser should reject filenames containing mixed slashes ('/' or '\\').");
+    }
+
 }
