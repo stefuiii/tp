@@ -64,6 +64,9 @@ public class EditCommand extends Command {
             "Cannot use t/ (overwrite tags) together with t+/ (add tags) or t-/ (delete tags) in the same command.";
     public static final String MESSAGE_TAG_NOT_FOUND =
             "The following tag(s) do not exist on this person and cannot be deleted: %1$s";
+    public static final String MESSAGE_EMPTY_TAG_ADD = "Tags to add cannot be empty. Please provide at least one tag.";
+    public static final String MESSAGE_EMPTY_TAG_DELETE =
+            "Tags to delete cannot be empty. Please provide at least one tag.";
     public static final String MESSAGE_MULTIPLE_MATCHING_PERSONS =
             "There are multiple contacts’ names matched with the reference.\n"
             + "Please use 'edit INDEX' to specify the contact you want to edit "

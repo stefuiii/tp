@@ -321,4 +321,30 @@ public class EditCommandParserTest {
                 + TAG_DELETE_DESC_FRIEND;
         assertParseFailure(parser, userInput, EditCommand.MESSAGE_CONFLICTING_TAG_PREFIXES);
     }
+
+    @Test
+    public void parse_emptyTagAdd_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        // Empty tag after t+/
+        String userInput = targetIndex.getOneBased() + " t+/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_ADD);
+
+        // Multiple tags with one empty
+        userInput = targetIndex.getOneBased() + " t+/friend t+/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_ADD);
+    }
+
+    @Test
+    public void parse_emptyTagDelete_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        // Empty tag after t-/
+        String userInput = targetIndex.getOneBased() + " t-/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_DELETE);
+
+        // Multiple tags with one empty
+        userInput = targetIndex.getOneBased() + " t-/friend t-/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_DELETE);
+    }
 }

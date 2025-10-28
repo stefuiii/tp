@@ -91,9 +91,26 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setCompany(ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG_ADD)).ifPresent(editPersonDescriptor::setTagsToAdd);
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG_DELETE))
-                .ifPresent(editPersonDescriptor::setTagsToDelete);
+
+        // Validate and parse tags to add
+        Collection<String> tagsToAddValues = argMultimap.getAllValues(PREFIX_TAG_ADD);
+        if (!tagsToAddValues.isEmpty()) {
+            // Check if any value is empty or whitespace-only
+            if (tagsToAddValues.stream().anyMatch(String::isEmpty)) {
+                throw new ParseException(EditCommand.MESSAGE_EMPTY_TAG_ADD);
+            }
+            parseTagsForEdit(tagsToAddValues).ifPresent(editPersonDescriptor::setTagsToAdd);
+        }
+
+        // Validate and parse tags to delete
+        Collection<String> tagsToDeleteValues = argMultimap.getAllValues(PREFIX_TAG_DELETE);
+        if (!tagsToDeleteValues.isEmpty()) {
+            // Check if any value is empty or whitespace-only
+            if (tagsToDeleteValues.stream().anyMatch(String::isEmpty)) {
+                throw new ParseException(EditCommand.MESSAGE_EMPTY_TAG_DELETE);
+            }
+            parseTagsForEdit(tagsToDeleteValues).ifPresent(editPersonDescriptor::setTagsToDelete);
+        }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
