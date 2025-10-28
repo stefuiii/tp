@@ -62,7 +62,8 @@ public class ExportCommandTest {
     public void execute_missingExtension_autoAppendsCsv() {
         String fileName = "test_without_extension";
         ExportCommand command = new ExportCommand(fileName);
-        CommandResult expectedResult = new CommandResult(String.format(ExportCommand.MESSAGE_SUCCESS, fileName + ".csv"));
+        CommandResult expectedResult = new CommandResult(String.format(
+                ExportCommand.MESSAGE_SUCCESS, fileName + ".csv"));
 
         assertCommandSuccess(command, model, expectedResult, model);
 
