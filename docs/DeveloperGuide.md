@@ -592,7 +592,7 @@ testers are expected to do more *exploratory* testing.
     -  Test case: `sort f/name o/descending`<br>
        Expected: Same as `sort f/name o/desc`.
 
-2. Sorting contacts by tags
+2. Sorting contacts by tag
 
     -  Prerequisites: Multiple contacts in the company book with different tags.
 
