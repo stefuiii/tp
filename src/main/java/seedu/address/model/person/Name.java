@@ -38,10 +38,10 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        Boolean withinLength = test.length() <= MAX_LENGTH;
-        Boolean isMatch = test.matches(VALIDATION_REGEX);
+        Boolean bool1 = test.length() <= MAX_LENGTH;
+        Boolean bool2 = test.matches(VALIDATION_REGEX);
 
-        return withinLength && isMatch;
+        return bool1 && bool2;
     }
 
 
