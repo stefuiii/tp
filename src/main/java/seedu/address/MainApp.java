@@ -48,9 +48,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        // @codecov[ignore] start
         logger.info("=============================[ Initializing FastCard ]===========================");
-        // @codecov[ignore] end
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -82,17 +80,13 @@ public class MainApp extends Application {
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                // @codecov[ignore] start
                 logger.info("Creating a new data file " + storage.getAddressBookFilePath()
                         + " populated with a sample FastCard Contact Book.");
-                // @codecov[ignore] end
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
-            // @codecov[ignore] start
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty Fast Card Contact Book.");
-            // @codecov[ignore] end
             initialData = new AddressBook();
         }
 
