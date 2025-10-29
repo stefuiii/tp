@@ -30,6 +30,8 @@ public class AddCommandBasic extends Command {
 
     public static final String MESSAGE_SUCCESS = "You have successfully added this contact: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book";
+    private static final String PLACEHOLDER_EMAIL = "unknown@example.com";
 
     private static final Logger logger = Logger.getLogger(AddCommandBasic.class.getName());
     private final Person toAdd;
@@ -50,9 +52,23 @@ public class AddCommandBasic extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        if (isEmailDuplicated(model)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        }
+
         model.addPerson(toAdd);
         logger.info("Adding a new person with basic information: " + toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    private boolean isEmailDuplicated(Model model) {
+        String emailValue = toAdd.getEmail().value;
+        if (PLACEHOLDER_EMAIL.equals(emailValue)) {
+            return false;
+        }
+
+        return model.getAddressBook().getPersonList().stream()
+                .anyMatch(person -> person.getEmail().value.equals(emailValue));
     }
 
     @Override

@@ -56,6 +56,17 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Person existingPerson = new PersonBuilder().withEmail("duplicate@example.com").build();
+        Person newPerson = new PersonBuilder().withName("Bob").withPhone("91234567")
+                .withEmail("duplicate@example.com").build();
+        AddCommand addCommand = new AddCommand(newPerson);
+        ModelStub modelStub = new ModelStubWithPerson(existingPerson);
+
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_EMAIL, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -195,16 +206,23 @@ public class AddCommandTest {
      */
     private class ModelStubWithPerson extends ModelStub {
         private final Person person;
+        private final AddressBook addressBook = new AddressBook();
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
             this.person = person;
+            addressBook.addPerson(person);
         }
 
         @Override
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return addressBook;
         }
     }
 

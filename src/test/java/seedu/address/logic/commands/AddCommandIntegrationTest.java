@@ -45,4 +45,14 @@ public class AddCommandIntegrationTest {
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
+    @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Person personInList = model.getAddressBook().getPersonList().get(0);
+        Person duplicateEmailPerson = new PersonBuilder().withEmail(personInList.getEmail().value)
+                .withName("Different Name").withPhone("91234567").build();
+
+        assertCommandFailure(new AddCommand(duplicateEmailPerson), model,
+                AddCommand.MESSAGE_DUPLICATE_EMAIL);
+    }
+
 }
