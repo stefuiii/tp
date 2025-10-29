@@ -42,7 +42,7 @@ public class ExportCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        List<Person> contacts = model.getFilteredPersonList();
+        List<Person> contacts = model.getAddressBook().getPersonList();
 
         // Get the Desktop directory of the current user
         String desktopPath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator;
