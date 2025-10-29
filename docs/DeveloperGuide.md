@@ -219,7 +219,7 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
     * Ensures that at least one `PREFIX_TAG` token exists
     * Verifies no input exists between "filter" and the first prefix
     * Confirms no empty tags are present
-    * Validates all tag names are alphanumeric
+    * Validates all tag names are alphanumeric and at most 30 characters
 
 3. **Model update**: `FilterCommand#execute()` invokes `Model#updateFilteredPersonList(predicate)` to apply the filtering operation.
 
