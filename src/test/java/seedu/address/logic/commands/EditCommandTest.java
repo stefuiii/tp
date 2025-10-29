@@ -325,6 +325,17 @@ public class EditCommandTest {
 
         Person editedPerson = new PersonBuilder(firstPerson).withEmail(firstPerson.getEmail().value)
                 .withPhone(VALID_PHONE_BOB).build();
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_addTagsOnly_success() {
         // Get the second person (BENSON) who has "owesMoney" and "friends" tags
         Index indexSecondPerson = INDEX_SECOND_PERSON;
@@ -394,6 +405,9 @@ public class EditCommandTest {
         expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson2));
 
         assertCommandSuccess(editCommand, testModel, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_addAndDeleteTags_success() {
         // Get the second person (BENSON) who has "owesMoney" and "friends" tags
         Index indexSecondPerson = INDEX_SECOND_PERSON;
