@@ -191,7 +191,7 @@ public class MainWindow extends UiPart<Stage> {
         if (isVisible) {
             mainSplitpane.setDividerPosition(0, 1.0);
         } else {
-            mainSplitpane.setDividerPosition(0, 0.7);
+            mainSplitpane.setDividerPosition(0, 0.6);
             detailsPane.setManaged(true);
         }
     }
@@ -199,7 +199,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void showDetailPane() {
         detailsPane.setVisible(true);
-        mainSplitpane.setDividerPosition(0, 0.7);
+        mainSplitpane.setDividerPosition(0, 0.6);
         detailsPane.setManaged(true);
     }
 
