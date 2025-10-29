@@ -90,12 +90,17 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different detail -> returns false
+        editedAlice = new PersonBuilder(ALICE).withDetail("Different detail").build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", company=" + ALICE.getCompany() + ", tags=" + ALICE.getTags() + "}";
+                + ", email=" + ALICE.getEmail() + ", company=" + ALICE.getCompany() + ", detail=" + ALICE.getDetail()
+                + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
 
@@ -119,6 +124,19 @@ public class PersonTest {
                 new Company("Kent Ridge"), new HashSet<>());
 
         assertFalse(p1.isSamePerson(p2));
+    }
+
+    @Test
+    public void getDetail_validDetail_returnsDetail() {
+        Person person = new PersonBuilder().withDetail("Test detail").build();
+        assertEquals(new Detail("Test detail"), person.getDetail());
+    }
+
+    @Test
+    public void getDetail_emptyDetail_returnsEmptyDetail() {
+        Person person = new PersonBuilder().withDetail("").build();
+        assertEquals(new Detail(""), person.getDetail());
+        assertTrue(person.getDetail().isEmpty());
     }
 
 }

@@ -46,6 +46,9 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private Label focusEmail;
 
+    @FXML
+    private Label focusDetail;
+
 
     /**
      * Creates a {@code PersonDetailPanel} with the given {@code Person}.
@@ -86,6 +89,9 @@ public class PersonDetailPanel extends UiPart<Region> {
                 break;
             case "focusCompany":
                 target = focusCompany;
+                break;
+            case "focusDetail":
+                target = focusDetail;
                 break;
             default:
                 target = null;
@@ -133,6 +139,14 @@ public class PersonDetailPanel extends UiPart<Region> {
             focusPhone.setText(p.getPhone().toString());
             focusEmail.setText(p.getEmail().toString());
             focusCompany.setText(p.getCompany().toString());
+
+            // Display detail if present, otherwise show placeholder
+            String detailText = p.getDetail().toString();
+            if (detailText.isEmpty()) {
+                focusDetail.setText("(No detail)");
+            } else {
+                focusDetail.setText(detailText);
+            }
         }
     }
 }
