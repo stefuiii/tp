@@ -13,6 +13,10 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_ADD_DESC_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_ADD_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DELETE_DESC_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DELETE_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_COMPANY_AMY;
@@ -237,5 +241,110 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_addTagsOnly_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + TAG_ADD_DESC_FRIEND;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToAdd(VALID_TAG_FRIEND).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_deleteTagsOnly_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + TAG_DELETE_DESC_FRIEND;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete(VALID_TAG_FRIEND).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_addAndDeleteTags_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + TAG_ADD_DESC_HUSBAND + TAG_DELETE_DESC_FRIEND;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToAdd(VALID_TAG_HUSBAND)
+                .withTagsToDelete(VALID_TAG_FRIEND).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_multipleAddTags_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + TAG_ADD_DESC_FRIEND + TAG_ADD_DESC_HUSBAND;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToAdd(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_multipleDeleteTags_success() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + TAG_DELETE_DESC_FRIEND + TAG_DELETE_DESC_HUSBAND;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_conflictingTagPrefixes_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        // t/ with t+/
+        String userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND + TAG_ADD_DESC_HUSBAND;
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_CONFLICTING_TAG_PREFIXES);
+
+        // t/ with t-/
+        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND + TAG_DELETE_DESC_HUSBAND;
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_CONFLICTING_TAG_PREFIXES);
+
+        // t/ with both t+/ and t-/
+        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND + TAG_ADD_DESC_HUSBAND
+                + TAG_DELETE_DESC_FRIEND;
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_CONFLICTING_TAG_PREFIXES);
+    }
+
+    @Test
+    public void parse_emptyTagAdd_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        // Empty tag after t+/
+        String userInput = targetIndex.getOneBased() + " t+/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_ADD);
+
+        // Multiple tags with one empty
+        userInput = targetIndex.getOneBased() + " t+/friend t+/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_ADD);
+    }
+
+    @Test
+    public void parse_emptyTagDelete_failure() {
+        Index targetIndex = INDEX_FIRST_PERSON;
+
+        // Empty tag after t-/
+        String userInput = targetIndex.getOneBased() + " t-/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_DELETE);
+
+        // Multiple tags with one empty
+        userInput = targetIndex.getOneBased() + " t-/friend t-/";
+        assertParseFailure(parser, userInput, EditCommand.MESSAGE_EMPTY_TAG_DELETE);
     }
 }
