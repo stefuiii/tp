@@ -112,4 +112,13 @@ public class ExportCommandParserTest {
                 "Parser should reject filenames containing mixed slashes ('/' or '\\').");
     }
 
+    @Test
+    public void parse_duplicateFilePrefixes_throwsParseException() {
+        // multiple f/ prefixes are not allowed
+        String userInput = " f/myfile f/secondfile";
+        assertThrows(ParseException.class, () -> parser.parse(userInput),
+                "Expected ParseException when duplicate f/ prefixes are used.");
+    }
+
+
 }

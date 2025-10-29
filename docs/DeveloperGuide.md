@@ -21,6 +21,7 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
     - [Product Scope](#product-scope)
@@ -248,7 +249,6 @@ The Sequence diagram for a NextCommand Operation
 <puml src="diagrams/CommandHistoryDiagram.puml" width="100%" />
 
 
-[To include implementations once finalised - with PUML]
 ### Add Contact with Basic Information
 The add operation is facilitated by the `AddCommandBasic` class within the Logic and Model components.
 
@@ -269,7 +269,6 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
    The `MainWindow` then updates the UI to display the success message in the `CommandBox`.
 
 <puml src="diagrams/AddCommandBasicDiagram.puml" width="100%" />
---------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-Ops**
 

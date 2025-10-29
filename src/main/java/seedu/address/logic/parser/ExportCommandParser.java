@@ -20,6 +20,11 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     public ExportCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_FILE_PATH);
 
+        // Check the uniqueness of prefix
+        if (argMultimap.getAllValues(PREFIX_FILE_PATH).size() > 1) {
+            throw new ParseException("Duplicate prefix 'f/' detected. Only one file name prefix is allowed.");
+        }
+
         // Check presence of prefix
         if (!argMultimap.getValue(PREFIX_FILE_PATH).isPresent()) {
             throw new ParseException("File name is required. Usage: export f/<filename>");
