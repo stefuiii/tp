@@ -27,13 +27,13 @@ public class AddCommand extends Command {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_COMPANY + "COMPANY "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: \n" + COMMAND_WORD + " "
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@ms.com "
             + PREFIX_COMPANY + "Morgan Stanley "
             + PREFIX_TAG + "competitor "
-            + PREFIX_TAG + "Delta one sales";
+            + PREFIX_TAG + "sales";
 
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
