@@ -49,6 +49,15 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private Label focusDetail;
 
+    @FXML
+    private Node focusCompanyButton;
+
+    @FXML
+    private Node focusEmailButton;
+
+    @FXML
+    private Node focusDetailButton;
+
 
     /**
      * Creates a {@code PersonDetailPanel} with the given {@code Person}.
@@ -137,14 +146,49 @@ public class PersonDetailPanel extends UiPart<Region> {
 
             focusName.setText(p.getName().toString());
             focusPhone.setText(p.getPhone().toString());
-            focusEmail.setText(p.getEmail().toString());
-            focusCompany.setText(p.getCompany().toString());
 
-            // Display detail if present, otherwise show placeholder
+            // Hide email row if email is placeholder value
+            String emailText = p.getEmail().toString();
+            if ("unknown@example.com".equals(emailText)) {
+                focusEmail.setManaged(false);
+                focusEmail.setVisible(false);
+                focusEmailButton.setManaged(false);
+                focusEmailButton.setVisible(false);
+            } else {
+                focusEmail.setManaged(true);
+                focusEmail.setVisible(true);
+                focusEmailButton.setManaged(true);
+                focusEmailButton.setVisible(true);
+                focusEmail.setText(emailText);
+            }
+
+            // Hide company row if company is placeholder value
+            String companyText = p.getCompany().toString();
+            if ("N/A".equals(companyText)) {
+                focusCompany.setManaged(false);
+                focusCompany.setVisible(false);
+                focusCompanyButton.setManaged(false);
+                focusCompanyButton.setVisible(false);
+            } else {
+                focusCompany.setManaged(true);
+                focusCompany.setVisible(true);
+                focusCompanyButton.setManaged(true);
+                focusCompanyButton.setVisible(true);
+                focusCompany.setText(companyText);
+            }
+
+            // Hide detail row if detail is empty
             String detailText = p.getDetail().toString();
             if (detailText.isEmpty()) {
-                focusDetail.setText("(No detail)");
+                focusDetail.setManaged(false);
+                focusDetail.setVisible(false);
+                focusDetailButton.setManaged(false);
+                focusDetailButton.setVisible(false);
             } else {
+                focusDetail.setManaged(true);
+                focusDetail.setVisible(true);
+                focusDetailButton.setManaged(true);
+                focusDetailButton.setVisible(true);
                 focusDetail.setText(detailText);
             }
         }
