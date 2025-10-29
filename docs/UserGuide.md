@@ -419,7 +419,8 @@ Updates an existing contact's information by either their name or position numbe
   * **Edit by name** - Name matching is case-insensitive (`john doe` = `John Doe`)
   * **Full Name Required** - If editing by name, you need to provide the contact's full name (e.g., `edit Sarah` will not edit `Sarah Chen`'s contact)
   * **Multiple contacts with the same name** - FastCard will show all matches and ask you to edit by index instead
-  * **Existing values are replaced** - Your new input completely replaces the old information
+  * **Existing values are replaced** - For name, phone, email, and company fields, your new input completely replaces the old information
+  * **Tags are flexible** - You can overwrite all tags (`t/`), add to existing tags (`t+/`), or remove specific tags (`t-/`)
 
 **When to use this:**
   * You want to update outdated phone numbers or email addresses
@@ -445,6 +446,7 @@ FastCard offers three different ways to manage tags when editing:
   * Example: Contact has `[client]`
   * Run: `edit John t+/priority t+/vip`
   * Result: `[client][priority][vip]` (old tags kept, new tags added)
+  * Note: Tag matching is case-insensitive. Adding `t+/CLIENT` to a contact with `[client]` won't change anything.
 
 **3. Delete Tags (`t-/`)**
   * Removes specific tags while keeping others
@@ -452,6 +454,7 @@ FastCard offers three different ways to manage tags when editing:
   * Run: `edit John t-/priority t-/vip`
   * Result: `[client]` (specified tags removed)
   * Note: You can only delete tags that exist. FastCard will warn you if a tag doesn't exist.
+  * Note: Tag matching is case-insensitive. Using `t-/CLIENT` will remove the `[client]` tag.
 
 **Can combine add and delete:**
   * Run: `edit John t+/vendor t-/client`
@@ -545,6 +548,7 @@ edit 2 t+/partner t-/client
   * `edit 0 p/91234567` &rarr; Invalid index (index starts at 1, not 0)
   * `edit 1 t/client t+/priority` &rarr; Cannot mix `t/` with `t+/` or `t-/` (conflicting tag operations)
   * `edit 1 t-/colleague` when contact doesn't have `[colleague]` tag &rarr; FastCard will show an error listing non-existent tags
+  * `edit 1 t+/` or `edit 1 t-/` &rarr; Empty tag name (you must provide at least one tag after `t+/` or `t-/`)
 
 ### Searching for contacts by name: `find`
 
