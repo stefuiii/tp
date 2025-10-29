@@ -979,26 +979,32 @@ Advanced users are welcome to update data directly by editing that data file.
 
 ## Known issues
 
-**Issues you might encounter**
-
-**FastCard opens off-screen when using multiple screens**
+<u>**FastCard opens off-screen when using multiple screens**</u>
 
 **Problem:** If you used FastCard on a secondary monitor, then disconnected it, FastCard may open in an invisible location.
+
 **Solution:**
   1. Close FastCard completely.
   2. Find and delete the `preferences.json` file in your FastCard folder.
   3. Restart FastCard. It should open on your main screen.
 
-**Help window stays minimized**
+<u>**Help window stays minimized**</u>
 
 **Problem:** If you minimize the Help window and press `F1` (or type `help`) again, nothing appears to happen.
+
 **What's actually happening:** The Help window is already open but minimized.
+
 **Solution:** Look for the minimized Help window in your taskbar and click it to restore it.
 
-**Slight Flicker when clicking cards**
+<u>**Slight Flicker when clicking cards**</u>
 
 **Problem:** Clicking the contact card in list view may cause slight flickering
+
 **Solution:** Since there's no functionality tied to clicking of the items in the list. Simply refrain from doing so.
+
+**Ability to pull out detail pane without content**
+
+**Solution** Please use the `view` command to toggle the pane instead before adjusting its width.
 
 --------------------------------------------------------------------------------------------------------------------
 
