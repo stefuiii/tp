@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+  <padding>
+    <Insets top="20" right="30" left="10" bottom="10" />
+  </padding>
+
+  <Label fx:id="unknownLabel" styleClass="detailUnknownLabel" wrapText="true" text="Please select target with 'view [CONTACT_INDEX]'" visible="false" VBox.vgrow="ALWAYS"/>
+  <Label fx:id="copyGuideLabel" styleClass="detailCopyLabel" text="click to copy" VBox.vgrow="ALWAYS" textAlignment="CENTER"/>
+
+  <GridPane fx:id="detailGrid" hgap="10" vgap="10" VBox.vgrow="ALWAYS" minWidth="230">
+    <columnConstraints>
+      <ColumnConstraints prefWidth="100" minWidth="100" halignment="RIGHT"/>
+      <ColumnConstraints />
+    </columnConstraints>
+
+    <Button fx:id="focusNameButton" text="Name:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
+    <Label fx:id="focusName" wrapText="true" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="detailLabel"/>
+
+    <Button fx:id="focusPhoneButton" text="Phone:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
+    <Label fx:id="focusPhone" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="detailLabel"/>
+
+    <Button fx:id="focusEmailButton" text="Email:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
+    <Label fx:id="focusEmail" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="detailLabel"/>
+
+    <Button fx:id="focusCompanyButton" text="Company:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
+    <Label fx:id="focusCompany" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="detailLabel"/>
+  </GridPane>
+
+  <VBox VBox.vgrow="ALWAYS">
+    <Region VBox.vgrow="ALWAYS" />
+    <Label text="If recently edited, please select again to refresh!" wrapText="true" styleClass="detailAdviceLabel"/>
+    <Label text="Detail View" />
+    <Label text="Type [view] to toggle" />
+  </VBox>
+</VBox>

@@ -20,7 +20,7 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the contact book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -30,13 +30,15 @@ public class AddCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_COMPANY + "Google "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_EMAIL + "johnd@ms.com "
+            + PREFIX_COMPANY + "Morgan Stanley "
+            + PREFIX_TAG + "competitor "
+            + PREFIX_TAG + "sales";
 
     public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book";
+    private static final String PLACEHOLDER_EMAIL = "unknown@example.com";
 
     private final Person toAdd;
 
@@ -56,8 +58,22 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        if (isEmailDuplicated(model)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        }
+
         model.addPerson(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    private boolean isEmailDuplicated(Model model) {
+        String emailValue = toAdd.getEmail().value;
+        if (PLACEHOLDER_EMAIL.equals(emailValue)) {
+            return false;
+        }
+
+        return model.getAddressBook().getPersonList().stream()
+                .anyMatch(person -> person.getEmail().value.equals(emailValue));
     }
 
     @Override

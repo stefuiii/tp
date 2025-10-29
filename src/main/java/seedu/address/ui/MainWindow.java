@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
@@ -33,6 +35,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private PersonDetailPanel personDetailPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -46,10 +49,19 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane personDetailPanelPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private SplitPane mainSplitpane;
+
+    @FXML
+    private AnchorPane detailsPane;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -114,6 +126,9 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        personDetailPanel = new PersonDetailPanel(logic.getFocusedPerson());
+        personDetailPanelPlaceholder.getChildren().add(personDetailPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -122,6 +137,9 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand, this::navigateCommandHistory);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        // Setting Split Pane divider position after hydration
+        mainSplitpane.setDividerPosition(0, 1.0);
     }
 
     /**
@@ -164,6 +182,27 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
+    @FXML
+    private void toggleDetailsPane() {
+        boolean isVisible = detailsPane.isVisible();
+        detailsPane.setVisible(!isVisible);
+        detailsPane.setManaged(false);
+
+        if (isVisible) {
+            mainSplitpane.setDividerPosition(0, 1.0);
+        } else {
+            mainSplitpane.setDividerPosition(0, 0.6);
+            detailsPane.setManaged(true);
+        }
+    }
+
+    @FXML
+    private void showDetailPane() {
+        detailsPane.setVisible(true);
+        mainSplitpane.setDividerPosition(0, 0.6);
+        detailsPane.setManaged(true);
+    }
+
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
     }
@@ -175,13 +214,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
 
-        // Save command typed into history
-        logic.saveNewCommand(commandText);
 
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            // Save valid command typed into history
+            logic.saveNewCommand(commandText);
 
             if (commandResult.isShowHelp()) {
                 handleHelp();
@@ -189,6 +229,14 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isToggleDetail()) {
+                toggleDetailsPane();
+            }
+
+            if (commandResult.isShowDetail()) {
+                showDetailPane();
             }
 
 

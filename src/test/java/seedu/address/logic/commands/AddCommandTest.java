@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.Messages;
@@ -53,6 +54,37 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
+
+    @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Person existingPerson = new PersonBuilder().withEmail("duplicate@example.com").build();
+        Person newPerson = new PersonBuilder().withName("Bob").withPhone("91234567")
+                .withEmail("duplicate@example.com").build();
+        AddCommand addCommand = new AddCommand(newPerson);
+        ModelStub modelStub = new ModelStubWithPerson(existingPerson);
+
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_EMAIL, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_placeholderEmail_doesNotCountAsDuplicate() throws Exception {
+        Person existingPersonWithPlaceholderEmail = new PersonBuilder()
+                .withEmail("unknown@example.com")
+                .build();
+        Person newPersonWithPlaceholderEmail = new PersonBuilder()
+                .withName("Bob")
+                .withPhone("91234567")
+                .withEmail("unknown@example.com")
+                .build();
+        ModelStubWithPlaceholderEmail modelStub = new ModelStubWithPlaceholderEmail(existingPersonWithPlaceholderEmail);
+
+        CommandResult commandResult = new AddCommand(newPersonWithPlaceholderEmail).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(newPersonWithPlaceholderEmail)),
+                commandResult.getFeedbackToUser());
+        assertTrue(modelStub.getAddressBook().getPersonList().contains(newPersonWithPlaceholderEmail));
+    }
+
 
     @Test
     public void equals() {
@@ -155,7 +187,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public SimpleObjectProperty<Person> getFocusedPerson() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFocusedPerson(int index) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -184,16 +226,46 @@ public class AddCommandTest {
      */
     private class ModelStubWithPerson extends ModelStub {
         private final Person person;
+        private final AddressBook addressBook = new AddressBook();
 
         ModelStubWithPerson(Person person) {
             requireNonNull(person);
             this.person = person;
+            addressBook.addPerson(person);
         }
 
         @Override
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return addressBook;
+        }
+    }
+
+    private class ModelStubWithPlaceholderEmail extends ModelStub {
+        private final AddressBook addressBook = new AddressBook();
+
+        ModelStubWithPlaceholderEmail(Person existingPerson) {
+            addressBook.addPerson(existingPerson);
+        }
+
+        @Override
+        public boolean hasPerson(Person person) {
+            return false;
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            addressBook.addPerson(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return addressBook;
         }
     }
 

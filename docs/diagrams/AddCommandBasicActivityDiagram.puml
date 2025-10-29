@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+title AddBasic Command - Activity Diagram
+
+start
+
+:User enters command "addbasic n/Jadon p/88880000";
+:Command parsed by LogicManager;
+
+if (is command valid?) then (yes)
+    :LogicManager creates AddCommandBasic;
+    :AddCommandBasic executed;
+
+    if (is person already in list?) then (yes)
+        :Show error message "This person already exists";
+    else (no)
+        :Add person to AddressBook;
+        :Save updated AddressBook to storage;
+        :Return success message;
+    endif
+else (no)
+    :Show parse error message;
+endif
+
+stop
+@enduml

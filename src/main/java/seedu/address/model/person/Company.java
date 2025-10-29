@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's company in the address book.
+ * Represents a Person's company in the contact book.
  * Guarantees: immutable; is valid as declared in {@link #isValidCompany(String)}
  */
 public class Company {
@@ -36,10 +36,10 @@ public class Company {
      * Returns true if a given string is a valid company value.
      */
     public static boolean isValidCompany(String test) {
-        Boolean bool1 = test.length() <= MAX_LENGTH;
-        Boolean bool2 = test.matches(VALIDATION_REGEX);
+        Boolean withinLength = test.length() <= MAX_LENGTH;
+        Boolean isMatch = test.matches(VALIDATION_REGEX);
 
-        return bool1 && bool2;
+        return withinLength && isMatch;
     }
 
     @Override

@@ -73,9 +73,6 @@
     -fx-opacity: 1;
 }
 
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
-}
 
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: #000321;
@@ -86,6 +83,15 @@
     -fx-border-radius: 1;
     -fx-border-width: 1;
     -fx-background-color: #000321, 20%;
+}
+
+.main-split {
+    -fx-background-color: #000321;
+}
+
+.emptyListMessage {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
 }
 
 .list-view {
@@ -113,15 +119,6 @@
 
 .list-cell:filled:odd {
     -fx-background-color: #1A1D37
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
 }
 
 .cell_id {
@@ -271,6 +268,37 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+.detailButton {
+    -fx-padding: 0 10;
+    -fx-cursor: hand;
+    -fx-border-radius: 5;
+}
+
+.detailButton:selected, .detailButton:pressed, .detailButton:focused {
+    -fx-border-radius: 5;
+}
+
+.detailUnknownLabel {
+    -fx-text-fill: #FFC107;
+}
+
+.detailAdviceLabel {
+    -fx-font-size: 10;
+    -fx-text-fill: #FAF9F6;
+}
+
+.detailCopyLabel {
+    -fx-padding: 0 0 20 0;
+}
+
+.detailLabel {
+    -fx-text-fill: white;
+}
+
+.detailGrid {
+    -fx-padding: 10px;
 }
 
 .dialog-pane {

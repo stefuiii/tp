@@ -46,6 +46,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -67,6 +68,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -79,6 +81,7 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -96,6 +99,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -113,6 +117,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(original, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -169,7 +174,7 @@ public class EditCommandTest {
     public void execute_duplicatePersonFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        // edit person in filtered list into a duplicate in address book
+        // edit person in filtered list into a duplicate in contact book
         Person personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
@@ -188,13 +193,13 @@ public class EditCommandTest {
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
+     * but smaller than size of contact book
      */
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
+        // ensures that outOfBoundIndex is still in bounds of contact book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
@@ -292,8 +297,185 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(singleModel.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(john, editedJohn);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedJohn));
 
         assertCommandSuccess(editCommand, singleModel, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_duplicateEmail_failure() {
+        Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        // Try to edit first person to have the same email as second person
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail(secondPerson.getEmail().value).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EMAIL);
+    }
+
+    @Test
+    public void execute_sameEmail_success() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Edit person with same email (no change in email)
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail(firstPerson.getEmail().value).withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Person editedPerson = new PersonBuilder(firstPerson).withEmail(firstPerson.getEmail().value)
+                .withPhone(VALID_PHONE_BOB).build();
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addTagsOnly_success() {
+        // Get the second person (BENSON) who has "owesMoney" and "friends" tags
+        Index indexSecondPerson = INDEX_SECOND_PERSON;
+        Person secondPerson = model.getFilteredPersonList().get(indexSecondPerson.getZeroBased());
+
+        PersonBuilder personInList = new PersonBuilder(secondPerson);
+        Person editedPerson = personInList.withTags("owesMoney", "friends", "colleague").build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToAdd("colleague").build();
+        EditCommand editCommand = new EditCommand(indexSecondPerson, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(secondPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deleteTagsOnly_success() {
+        // Get the first person (ALICE) who has "friends" tag
+        Index indexFirstPerson = INDEX_FIRST_PERSON;
+        Person firstPerson = model.getFilteredPersonList().get(indexFirstPerson.getZeroBased());
+
+        PersonBuilder personInList = new PersonBuilder(firstPerson);
+        Person editedPerson = personInList.withTags().build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete("friends").build();
+        EditCommand editCommand = new EditCommand(indexFirstPerson, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_placeholderEmail_doesNotCountAsDuplicate() {
+        // Build a model with two persons with placeholder emails
+        AddressBook addressBook = new AddressBook();
+        Person person1 = new PersonBuilder().withName("John Doe").withPhone("80000001")
+                .withEmail("unknown@example.com").withCompany("Google").build();
+        Person person2 = new PersonBuilder().withName("Jane Smith").withPhone("80000002")
+                .withEmail("jane@example.com").withCompany("Microsoft").build();
+        addressBook.addPerson(person1);
+        addressBook.addPerson(person2);
+        Model testModel = new ModelManager(addressBook, new UserPrefs());
+
+        // Edit person2 to have the placeholder email (same as person1)
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail("unknown@example.com").build();
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(2), descriptor);
+
+        Person editedPerson2 = new PersonBuilder(person2).withEmail("unknown@example.com").build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedPerson2));
+
+        Model expectedModel = new ModelManager(new AddressBook(testModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(person2, editedPerson2);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson2));
+
+        assertCommandSuccess(editCommand, testModel, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addAndDeleteTags_success() {
+        // Get the second person (BENSON) who has "owesMoney" and "friends" tags
+        Index indexSecondPerson = INDEX_SECOND_PERSON;
+        Person secondPerson = model.getFilteredPersonList().get(indexSecondPerson.getZeroBased());
+
+        PersonBuilder personInList = new PersonBuilder(secondPerson);
+        Person editedPerson = personInList.withTags("owesMoney", "colleague").build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToAdd("colleague")
+                .withTagsToDelete("friends").build();
+        EditCommand editCommand = new EditCommand(indexSecondPerson, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(secondPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deleteNonExistentTag_failure() {
+        // Get the first person (ALICE) who has "friends" tag
+        Index indexFirstPerson = INDEX_FIRST_PERSON;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete("colleague").build();
+        EditCommand editCommand = new EditCommand(indexFirstPerson, descriptor);
+
+        assertCommandFailure(editCommand, model, String.format(EditCommand.MESSAGE_TAG_NOT_FOUND, "colleague"));
+    }
+
+    @Test
+    public void execute_deleteMultipleNonExistentTags_failure() {
+        // Get the first person (ALICE) who has "friends" tag
+        Index indexFirstPerson = INDEX_FIRST_PERSON;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete("colleague", "client").build();
+        EditCommand editCommand = new EditCommand(indexFirstPerson, descriptor);
+
+        // Should show both non-existent tags in the error message
+        // The order may vary, so we just check it starts with the expected prefix
+        try {
+            editCommand.execute(model);
+            throw new AssertionError("Expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            String errorMessage = ce.getMessage();
+            assertTrue(errorMessage.contains("colleague") && errorMessage.contains("client"),
+                    "Error message should contain both non-existent tags");
+            assertTrue(errorMessage.contains("do not exist"),
+                    "Error message should indicate tags don't exist");
+        }
+    }
+
+    @Test
+    public void execute_deleteMixOfExistentAndNonExistentTags_failure() {
+        // Get the second person (BENSON) who has "owesMoney" and "friends" tags
+        Index indexSecondPerson = INDEX_SECOND_PERSON;
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTagsToDelete("friends", "colleague").build();
+        EditCommand editCommand = new EditCommand(indexSecondPerson, descriptor);
+
+        // Should fail because "colleague" doesn't exist
+        assertCommandFailure(editCommand, model, String.format(EditCommand.MESSAGE_TAG_NOT_FOUND, "colleague"));
     }
 
 }

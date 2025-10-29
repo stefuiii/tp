@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
@@ -95,6 +98,8 @@ public class PersonCardTest {
                 Label company = getPrivateField(card, "company", Label.class);
                 Label email = getPrivateField(card, "email", Label.class);
                 FlowPane tagPane = getPrivateField(card, "tags", FlowPane.class);
+                ImageView phoneIcon = getPrivateField(card, "phoneIcon", ImageView.class);
+                ImageView emailIcon = getPrivateField(card, "emailIcon", ImageView.class);
 
                 // Check displayed fields
                 assertEquals("1. ", id.getText());
@@ -104,6 +109,26 @@ public class PersonCardTest {
                 assertTrue(company.isVisible());
                 assertEquals("linghui@nus.edu.sg", email.getText());
                 assertTrue(email.isVisible());
+
+                // Original icons visible
+                assertTrue(phoneIcon.isVisible());
+                assertTrue(emailIcon.isVisible());
+
+                // Clicking copy icons updates system clipboard
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+
+                // Phone copy
+                content.putString("");
+                clipboard.setContent(content);
+                phoneIcon.getOnMouseClicked().handle(null);
+                assertEquals(phone.getText(), clipboard.getString());
+
+                // Email copy
+                content.putString("");
+                clipboard.setContent(content);
+                emailIcon.getOnMouseClicked().handle(null);
+                assertEquals(email.getText(), clipboard.getString());
 
                 // Verify tag sorting (alphabetical)
                 Label firstTag = (Label) tagPane.getChildren().get(0);
@@ -136,9 +161,12 @@ public class PersonCardTest {
             try {
                 Label company = getPrivateField(card, "company", Label.class);
                 Label email = getPrivateField(card, "email", Label.class);
+                ImageView emailIcon = getPrivateField(card, "emailIcon", ImageView.class);
 
                 assertFalse(company.isVisible());
                 assertFalse(email.isVisible());
+                assertFalse(emailIcon.isVisible());
+                assertFalse(emailIcon.isManaged());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

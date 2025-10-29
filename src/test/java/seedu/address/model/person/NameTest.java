@@ -42,6 +42,13 @@ public class NameTest {
     }
 
     @Test
+    public void isValidName_validNamesWithSymbols_returnsTrue() {
+        assertTrue(Name.isValidName("Rahul s/o Kumar"));
+        assertTrue(Name.isValidName("Rahul s.o. Kumar"));
+        assertTrue(Name.isValidName("Tan-Kumar"));
+    }
+
+    @Test
     public void equals() {
         Name name = new Name("Valid Name");
 
