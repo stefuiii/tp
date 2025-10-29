@@ -871,14 +871,15 @@ export f/ContactList
 * Allowed characters for filenames follow this regular expression:
 
   ```
-  ^[a-zA-Z0-9._()\\-\\s]+$
+  ^[a-zA-Z0-9._()\-\s]+$
   ```
 
   This means filenames can contain **letters, numbers, spaces, underscores `_`, dashes `-`, dots `.`, and parentheses `()`**.
-  Slashes `/` and backslashes `\` are **not allowed**.
+  Slashes/Backslashes and dots are **not allowed**.
 * Multiple spaces will automatically be **normalized into a single space**.
   Example:
-  `export f/  my   new   list.csv` → `my new list.csv`
+  `export f/  my   new   list` → `my new list.csv`
+* If you export a contact file with the same name, it will overwrite the existing file on your Desktop**.
 
 💡 **Pro Tip:**
 * Need to share your contact list with others? Just **export it!**
