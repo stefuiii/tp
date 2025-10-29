@@ -67,6 +67,26 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_placeholderEmail_doesNotCountAsDuplicate() throws Exception {
+        Person existingPersonWithPlaceholderEmail = new PersonBuilder()
+                .withEmail("unknown@example.com")
+                .build();
+        Person newPersonWithPlaceholderEmail = new PersonBuilder()
+                .withName("Bob")
+                .withPhone("91234567")
+                .withEmail("unknown@example.com")
+                .build();
+        ModelStubWithPlaceholderEmail modelStub = new ModelStubWithPlaceholderEmail(existingPersonWithPlaceholderEmail);
+
+        CommandResult commandResult = new AddCommand(newPersonWithPlaceholderEmail).execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(newPersonWithPlaceholderEmail)),
+                commandResult.getFeedbackToUser());
+        assertTrue(modelStub.getAddressBook().getPersonList().contains(newPersonWithPlaceholderEmail));
+    }
+
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -218,6 +238,29 @@ public class AddCommandTest {
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return addressBook;
+        }
+    }
+
+    private class ModelStubWithPlaceholderEmail extends ModelStub {
+        private final AddressBook addressBook = new AddressBook();
+
+        ModelStubWithPlaceholderEmail(Person existingPerson) {
+            addressBook.addPerson(existingPerson);
+        }
+
+        @Override
+        public boolean hasPerson(Person person) {
+            return false;
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            addressBook.addPerson(person);
         }
 
         @Override
