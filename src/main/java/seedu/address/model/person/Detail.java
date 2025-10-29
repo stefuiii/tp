@@ -12,7 +12,7 @@ public class Detail {
     public static final int MAX_LENGTH = 300;
     public static final String MESSAGE_CONSTRAINTS =
             "Detail can take any values, and must be at most " + MAX_LENGTH + " characters. "
-            + "It can be empty.";
+            + "It can be empty (to delete the existing detail).";
 
     public static final String EMPTY_DETAIL = "";
 
