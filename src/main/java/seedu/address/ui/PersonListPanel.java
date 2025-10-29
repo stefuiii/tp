@@ -27,7 +27,6 @@ public class PersonListPanel extends UiPart<Region> {
     public PersonListPanel(ObservableList<Person> personList) {
         super(FXML);
         personListView.setItems(personList);
-        personListView.setMouseTransparent(true);
         personListView.setCellFactory(listView -> new PersonListViewCell());
 
         Label emptyListMessage = new Label("No Results shown currently."

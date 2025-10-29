@@ -582,7 +582,7 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * You should only specify tags (specifying other parameters is invalid e.g., `filter t/colleague n/John`)
   * You may list the tags in any order.
   * The exact tag name must match (e.g., `client` won't find contacts tagged with `clients`)
-  * Tags specified must be alphanumeric (spaces between words are accepted while trailing white spaces will be trimmed, e.g. Credit   Sales -> Credit Sales) and at most 30 characters
+  * Tags specified must be alphanumeric and at most 30 characters
   * Leading and trailing whitespaces are trimmed
   * If no contacts contain any of the specified tags, an empty contact list will be shown
   * The global contact list shown by `list` command will be filtered, and not the currently displayed contact list
@@ -786,8 +786,7 @@ Multiple persons named John Doe found. Please specify the index to delete.
 
 Toggles the Detail Pane showing specified user in detail.
 
-- Temporary holding image (To update with details pane screenshot once done)
-![FastCard UI](images/Ui_init.png)
+![FastCard UI](images/Ui_detail.png)
 
 **Format:**
   * `view INDEX`
@@ -798,10 +797,32 @@ Toggles the Detail Pane showing specified user in detail.
 view 1
 ```
 **You'll see:**
-  * (If Focus Person has not been selected yet) -> Shows Unknown.
-    - Simply run `view` with an appropriate index to populate the details pane
+  * The full information about the user (if it's too long to be shown on the main card)
+  * (If Focus Person has not been selected yet) -> Shows a guiding message.
   * Detail Pane toggle to view (if not already visible)
-  * Detail Pane shows information about current target contact
+
+**When should you use this?**
+  * When you want to view the full version of the contact info 
+  * When you want a quick reference to the information to transfer to another application
+  * Buttons corresponding to each core information is displayed 
+  * Clicking on the button will add the information to your clipboard for ease of transfer
+
+<box type="tip" seamless>
+
+💡 Pro Tips:
+  * When you edit the currently focused Contact, the information may become stale! 
+  * Simply ensure that you refresh calling `view INDEX` again!
+
+</box>
+
+<box type="info" seamless>
+<b>Why isn't this a command instead?</b>
+
+  - While our application aims to be mainly command focused for familiar users
+  - We acknowledge the efficiency and accuracy of a single click action in this case
+  - Especially since the expected use case is for extended interactions off app (which likely takes clicks!)
+
+</box>
 
 ### Recalling previous commands - Command History
 
@@ -1037,21 +1058,32 @@ Advanced users are welcome to update data directly by editing that data file.
 
 ## Known issues
 
-**Issues you might encounter**
-
-**FastCard opens off-screen when using multiple screens**
+<u>**FastCard opens off-screen when using multiple screens**</u>
 
 **Problem:** If you used FastCard on a secondary monitor, then disconnected it, FastCard may open in an invisible location.
+
 **Solution:**
   1. Close FastCard completely.
   2. Find and delete the `preferences.json` file in your FastCard folder.
   3. Restart FastCard. It should open on your main screen.
 
-**Help window stays minimized**
+<u>**Help window stays minimized**</u>
 
 **Problem:** If you minimize the Help window and press `F1` (or type `help`) again, nothing appears to happen.
+
 **What's actually happening:** The Help window is already open but minimized.
+
 **Solution:** Look for the minimized Help window in your taskbar and click it to restore it.
+
+<u>**Slight Flicker when clicking cards**</u>
+
+**Problem:** Clicking the contact card in list view may cause slight flickering
+
+**Solution:** Since there's no functionality tied to clicking of the items in the list. Simply refrain from doing so.
+
+**Ability to pull out detail pane without content**
+
+**Solution** Please use the `view` command to toggle the pane instead before adjusting its width.
 
 --------------------------------------------------------------------------------------------------------------------
 

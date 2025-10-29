@@ -3,21 +3,16 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.util.regex.Pattern;
-
 /**
- * Represents a Tag in the address book.
+ * Represents a Tag in the contact book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
 public class Tag {
 
     public static final int MAX_LENGTH = 30;
     public static final String MESSAGE_CONSTRAINTS =
-            "Tag names should only contain alphanumeric characters, spaces and must be at most "
-                    + MAX_LENGTH + " characters. Multiple spaces between words will be standardized";
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}/]+(?: [\\p{Alnum}/]+)*";
-
-    private static final Pattern MULTIPLE_SPACES_PATTERN = Pattern.compile(" +");
+            "Tags names should be alphanumeric and at most " + MAX_LENGTH + " characters";
+    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
 
@@ -28,35 +23,18 @@ public class Tag {
      */
     public Tag(String tagName) {
         requireNonNull(tagName);
-        String normalizedTagName = normalizeSpacing(tagName);
-        checkArgument(isValidTagName(normalizedTagName), MESSAGE_CONSTRAINTS);
-        this.tagName = normalizedTagName;
+        checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
+        this.tagName = tagName;
     }
 
     /**
      * Returns true if a given string is a valid tag name.
      */
     public static boolean isValidTagName(String test) {
-        requireNonNull(test);
-        String normalizedTagName = normalizeSpacing(test);
+        Boolean bool1 = test.length() <= MAX_LENGTH;
+        Boolean bool2 = test.matches(VALIDATION_REGEX);
 
-        if (normalizedTagName.isEmpty()) {
-            return false;
-        }
-
-        Boolean withinMaxLength = normalizedTagName.length() <= MAX_LENGTH;
-        Boolean matchesPattern = normalizedTagName.matches(VALIDATION_REGEX);
-
-        return withinMaxLength && matchesPattern;
-    }
-
-    /**
-     * Collapses repeated spaces between words into a single space and trims leading and trailing whitespace.
-     */
-    public static String normalizeSpacing(String tagName) {
-        requireNonNull(tagName);
-        String trimmedTagName = tagName.trim();
-        return MULTIPLE_SPACES_PATTERN.matcher(trimmedTagName).replaceAll(" ");
+        return bool1 && bool2;
     }
 
     @Override
