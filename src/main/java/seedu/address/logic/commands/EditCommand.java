@@ -52,12 +52,14 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book.";
+    public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book.";
     public static final String MESSAGE_MULTIPLE_MATCHING_PERSONS =
-            "There are multiple contacts’ names matched with the reference.\n"
+            "There are multiple contacts' names matched with the reference.\n"
             + "Please use 'edit INDEX' to specify the contact you want to edit "
             + "in the following list of matched contacts.";
     public static final String MESSAGE_PERSON_NAME_NOT_FOUND =
             "The person name provided does not match any displayed contact.";
+    private static final String PLACEHOLDER_EMAIL = "unknown@example.com";
 
     private final Index index;
     private final String nameReference;
@@ -125,6 +127,10 @@ public class EditCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        if (isEmailDuplicated(model, personToEdit, editedPerson)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EMAIL);
+        }
+
         model.setPerson(personToEdit, editedPerson);
         //model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredPersonList(p -> p.equals(editedPerson));
@@ -176,6 +182,33 @@ public class EditCommand extends Command {
     private static String normalizeName(String raw) {
         String trimmed = raw.trim();
         return trimmed.replaceAll("\\s+", " ");
+    }
+
+    /**
+     * Checks if the edited person's email is already used by another person in the contact book.
+     * Returns false if:
+     * - The email is a placeholder email
+     * - The email is the same as the original person's email (no change)
+     * - No other person has this email
+     */
+    private boolean isEmailDuplicated(Model model, Person personToEdit, Person editedPerson) {
+        String editedEmailValue = editedPerson.getEmail().value;
+        String originalEmailValue = personToEdit.getEmail().value;
+
+        // If email hasn't changed, it's not a duplicate
+        if (editedEmailValue.equals(originalEmailValue)) {
+            return false;
+        }
+
+        // If the email is a placeholder, allow it
+        if (PLACEHOLDER_EMAIL.equals(editedEmailValue)) {
+            return false;
+        }
+
+        // Check if any other person has this email
+        return model.getAddressBook().getPersonList().stream()
+                .filter(person -> !person.equals(personToEdit))
+                .anyMatch(person -> person.getEmail().value.equals(editedEmailValue));
     }
 
     /**
