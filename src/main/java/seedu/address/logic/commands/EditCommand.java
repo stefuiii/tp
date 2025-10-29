@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_ADD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_DELETE;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -42,17 +44,30 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_COMPANY + "COMPANY] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_TAG_ADD + "TAG]... "
+            + "[" + PREFIX_TAG_DELETE + "TAG]...\n"
+            + "Note: " + PREFIX_TAG + " overwrites all tags, while " + PREFIX_TAG_ADD + " and "
+            + PREFIX_TAG_DELETE + " add/remove specific tags.\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com" + "\n"
             + "Example: " + COMMAND_WORD + " John Doe "
-            + PREFIX_EMAIL + "john.doe@company.com";
+            + PREFIX_EMAIL + "john.doe@company.com" + "\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_TAG_ADD + "client " + PREFIX_TAG_DELETE + "friend";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book.";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book.";
+    public static final String MESSAGE_CONFLICTING_TAG_PREFIXES =
+            "Cannot use t/ (overwrite tags) together with t+/ (add tags) or t-/ (delete tags) in the same command.";
+    public static final String MESSAGE_TAG_NOT_FOUND =
+            "The following tag(s) do not exist on this person and cannot be deleted: %1$s";
+    public static final String MESSAGE_EMPTY_TAG_ADD = "Tags to add cannot be empty. Please provide at least one tag.";
+    public static final String MESSAGE_EMPTY_TAG_DELETE =
+            "Tags to delete cannot be empty. Please provide at least one tag.";
     public static final String MESSAGE_MULTIPLE_MATCHING_PERSONS =
             "There are multiple contacts' names matched with the reference.\n"
             + "Please use 'edit INDEX' to specify the contact you want to edit "
@@ -121,6 +136,27 @@ public class EditCommand extends Command {
 
             personToEdit = matchedPersons.get(0);
         }
+
+        // Validate that tags to delete exist on the person
+        if (editPersonDescriptor.getTagsToDelete().isPresent()) {
+            Set<Tag> tagsToDelete = editPersonDescriptor.getTagsToDelete().get();
+            Set<Tag> existingTags = personToEdit.getTags();
+            Set<Tag> nonExistentTags = new HashSet<>();
+
+            for (Tag tagToDelete : tagsToDelete) {
+                if (!existingTags.contains(tagToDelete)) {
+                    nonExistentTags.add(tagToDelete);
+                }
+            }
+
+            if (!nonExistentTags.isEmpty()) {
+                String tagNames = nonExistentTags.stream()
+                        .map(tag -> tag.tagName)
+                        .collect(java.util.stream.Collectors.joining(", "));
+                throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagNames));
+            }
+        }
+
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
@@ -148,7 +184,26 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
+        // Handle tags: if tags are set (overwrite), use them; otherwise, apply additions/deletions
+        Set<Tag> updatedTags;
+        if (editPersonDescriptor.getTags().isPresent()) {
+            // Overwrite mode: replace all tags
+            updatedTags = editPersonDescriptor.getTags().get();
+        } else {
+            // Addition/deletion mode: start with existing tags
+            updatedTags = new HashSet<>(personToEdit.getTags());
+
+            // Apply tag additions
+            if (editPersonDescriptor.getTagsToAdd().isPresent()) {
+                updatedTags.addAll(editPersonDescriptor.getTagsToAdd().get());
+            }
+
+            // Apply tag deletions
+            if (editPersonDescriptor.getTagsToDelete().isPresent()) {
+                updatedTags.removeAll(editPersonDescriptor.getTagsToDelete().get());
+            }
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedCompany, updatedTags);
     }
@@ -221,6 +276,8 @@ public class EditCommand extends Command {
         private Email email;
         private Company company;
         private Set<Tag> tags;
+        private Set<Tag> tagsToAdd;
+        private Set<Tag> tagsToDelete;
 
         public EditPersonDescriptor() {}
 
@@ -234,13 +291,15 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setCompany(toCopy.company);
             setTags(toCopy.tags);
+            setTagsToAdd(toCopy.tagsToAdd);
+            setTagsToDelete(toCopy.tagsToDelete);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, company, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, company, tags, tagsToAdd, tagsToDelete);
         }
 
         public void setName(Name name) {
@@ -292,6 +351,40 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        /**
+         * Sets {@code tagsToAdd} to this object's {@code tagsToAdd}.
+         * A defensive copy of {@code tagsToAdd} is used internally.
+         */
+        public void setTagsToAdd(Set<Tag> tagsToAdd) {
+            this.tagsToAdd = (tagsToAdd != null) ? new HashSet<>(tagsToAdd) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set of tags to add, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tagsToAdd} is null.
+         */
+        public Optional<Set<Tag>> getTagsToAdd() {
+            return (tagsToAdd != null) ? Optional.of(Collections.unmodifiableSet(tagsToAdd)) : Optional.empty();
+        }
+
+        /**
+         * Sets {@code tagsToDelete} to this object's {@code tagsToDelete}.
+         * A defensive copy of {@code tagsToDelete} is used internally.
+         */
+        public void setTagsToDelete(Set<Tag> tagsToDelete) {
+            this.tagsToDelete = (tagsToDelete != null) ? new HashSet<>(tagsToDelete) : null;
+        }
+
+        /**
+         * Returns an unmodifiable tag set of tags to delete, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tagsToDelete} is null.
+         */
+        public Optional<Set<Tag>> getTagsToDelete() {
+            return (tagsToDelete != null) ? Optional.of(Collections.unmodifiableSet(tagsToDelete)) : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -308,7 +401,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(company, otherEditPersonDescriptor.company)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(tagsToAdd, otherEditPersonDescriptor.tagsToAdd)
+                    && Objects.equals(tagsToDelete, otherEditPersonDescriptor.tagsToDelete);
         }
 
         @Override
@@ -319,6 +414,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("company", company)
                     .add("tags", tags)
+                    .add("tagsToAdd", tagsToAdd)
+                    .add("tagsToDelete", tagsToDelete)
                     .toString();
         }
     }
