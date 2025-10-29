@@ -120,24 +120,24 @@ public class NameOrCompanyPredicateTest {
     public void equals_companyKeywordVariants() {
         NameOrCompanyPredicate predicateA =
                 new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Google"));
-        NameOrCompanyPredicate predicateB_same =
+        NameOrCompanyPredicate predicateBSame =
                 new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Google"));
-        NameOrCompanyPredicate predicateC_diffCompany =
+        NameOrCompanyPredicate predicateCDiffCompany =
                 new NameOrCompanyPredicate(Optional.of("Alice"), Optional.of("Amazon"));
-        NameOrCompanyPredicate predicateD_diffName =
+        NameOrCompanyPredicate predicateDDiffName =
                 new NameOrCompanyPredicate(Optional.of("Bob"), Optional.of("Google"));
 
         // same object -> true
         assertTrue(predicateA.equals(predicateA));
 
         // same name & company -> true
-        assertTrue(predicateA.equals(predicateB_same));
+        assertTrue(predicateA.equals(predicateBSame));
 
         // different company keyword -> false
-        assertFalse(predicateA.equals(predicateC_diffCompany));
+        assertFalse(predicateA.equals(predicateCDiffCompany));
 
         // different name keyword -> false
-        assertFalse(predicateA.equals(predicateD_diffName));
+        assertFalse(predicateA.equals(predicateDDiffName));
 
         // different type -> false
         assertFalse(predicateA.equals("Some String"));
