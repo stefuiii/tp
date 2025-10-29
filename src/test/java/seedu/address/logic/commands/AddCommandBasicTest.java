@@ -24,6 +24,8 @@ import seedu.address.model.tag.Tag;
 
 public class AddCommandBasicTest {
 
+    private static final String PLACEHOLDER_EMAIL = "unknown@example.com";
+
     private Model model;
 
     @BeforeEach
@@ -36,7 +38,7 @@ public class AddCommandBasicTest {
         Person validPerson = new Person(
                 new Name("John Doe"),
                 new Phone("88880000"),
-                new Email("unknown@example.com"),
+                new Email(PLACEHOLDER_EMAIL),
                 new Company("N/A"),
                 new HashSet<Tag>());
 
@@ -52,7 +54,7 @@ public class AddCommandBasicTest {
         Person validPerson = new Person(
                 new Name("John Doe"),
                 new Phone("88880000"),
-                new Email("unknown@example.com"),
+                new Email(PLACEHOLDER_EMAIL),
                 new Company("N/A"),
                 new HashSet<Tag>());
 
@@ -67,14 +69,14 @@ public class AddCommandBasicTest {
         Person john = new Person(
                 new Name("John Doe"),
                 new Phone("88880000"),
-                new Email("unknown@example.com"),
+                new Email(PLACEHOLDER_EMAIL),
                 new Company("N/A"),
                 new HashSet<Tag>());
 
         Person amy = new Person(
                 new Name("Amy Bee"),
                 new Phone("85355255"),
-                new Email("unknown@example.com"),
+                new Email(PLACEHOLDER_EMAIL),
                 new Company("N/A"),
                 new HashSet<Tag>());
 
@@ -103,7 +105,7 @@ public class AddCommandBasicTest {
         Person john = new Person(
                 new Name("John Doe"),
                 new Phone("88880000"),
-                new Email("unknown@example.com"),
+                new Email(PLACEHOLDER_EMAIL),
                 new Company("N/A"),
                 new HashSet<Tag>());
 
@@ -114,5 +116,52 @@ public class AddCommandBasicTest {
         String actual = command.toString();
         assertTrue(actual.contains("toAdd"));
         assertTrue(actual.contains("John Doe"));
+    }
+
+    @Test
+    public void execute_duplicateEmail_throwsCommandException() {
+        Person existingPerson = new Person(
+                new Name("Alice Pauline"),
+                new Phone("94351253"),
+                new Email("duplicate@example.com"),
+                new Company("Tech Co"),
+                new HashSet<Tag>());
+        model.addPerson(existingPerson);
+
+        Person duplicateEmailPerson = new Person(
+                new Name("Bob Pauline"),
+                new Phone("94351254"),
+                new Email("duplicate@example.com"),
+                new Company("Tech Co"),
+                new HashSet<Tag>());
+
+        AddCommandBasic command = new AddCommandBasic(duplicateEmailPerson);
+
+        CommandException exception = assertThrows(CommandException.class, () -> command.execute(model));
+        assertEquals(AddCommandBasic.MESSAGE_DUPLICATE_EMAIL, exception.getMessage());
+    }
+
+    @Test
+    public void execute_duplicatePlaceholderEmail_success() throws Exception {
+        Person existingPerson = new Person(
+                new Name("Alice Pauline"),
+                new Phone("94351253"),
+                new Email(PLACEHOLDER_EMAIL),
+                new Company("Tech Co"),
+                new HashSet<Tag>());
+        model.addPerson(existingPerson);
+
+        Person newPerson = new Person(
+                new Name("Bob Pauline"),
+                new Phone("94351254"),
+                new Email(PLACEHOLDER_EMAIL),
+                new Company("Tech Co"),
+                new HashSet<Tag>());
+
+        AddCommandBasic command = new AddCommandBasic(newPerson);
+
+        CommandResult result = command.execute(model);
+        String expectedMessage = String.format(AddCommandBasic.MESSAGE_SUCCESS, Messages.format(newPerson));
+        assertEquals(expectedMessage, result.getFeedbackToUser());
     }
 }
