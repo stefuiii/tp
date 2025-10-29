@@ -303,18 +303,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
 |----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `* * *`  | new user                         | see a user guide                                              | can learn how to use the application efficiently |
 | `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
-| `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
-| `* * *`  | sales / procurement professional | assign category tags when I add new customers (e.g company)              | better manage different types of clients by knowing their industry                      |
-| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer a prospect                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | access all contact records to manage sales and procurement activities                   |
+| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email                | have multiple channels for communication                                                |
+| `* * *`  | sales / procurement professional | assign tags to my contacts              | easily categorize different types of clients        |
+| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer prospects                                           |
+| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | verify that all my important contacts have been added                   |
 | `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                       | view relevant clients easily or rank clients easily                                     |
-| `* * *`  | sales / procurement professional | filter my contacts based on each client's tags                           | quickly find relevant clients and manage my outreach more efficiently                   |
+| `* * *`  | sales / procurement professional | filter my contacts by tags                          | quickly find relevant clients and manage my outreach more efficiently                   |
 | `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my contact list                                        |
-| `* * *`  | forgetful user                   | be able to do a fuzzy search for customer information                    | find customer's information even if I only remember part of their information           |
-| `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
-| `* *`    | efficient user                   | be able to navigate through my past commands                             | save time when adding multiple person with the similar information                      |
+| `* * *`  | forgetful user                   | search for contacts with some information                    | find a specific contact even if I only remember part of their information           |
+| `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
+| `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
+| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
+| `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
+| `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
 
 ### Use Cases
 
@@ -468,7 +471,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. System displays an empty list with a count of 0 persons.
     Use case ends.
 
-*{More to be added}*
+**Use case: UC06 - List contacts**
+
+**MSS**
+1. User enters the `list` command.
+2. System displays all the contacts stored.
+
+   Use case ends.
+
+**Use case: UC07 - Get help**
+
+**MSS**
+1. User enters the `help` command.
+2. System displays a pop-up window containing a link to the user guide.
+
+   Use case ends.
 
 ### Non-Functional Requirements
 
@@ -539,17 +556,25 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   -   Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file <br>
-      Expected: Shows the GUI with a set of sample candidates. The window size may not be optimum.
+   -   Double-click the jar file <br>
+       Expected: Shows the GUI with a set of sample candidates. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   -   Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   -   Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+
+### Listing all contacts
+1.  List all contacts in FastCard.
+
+   -   Prerequisite: At least one contact exists in FastCard.
+
+   -   Test case: `list`<br>
+       Expected: All contacts are displayed.
 
 ### Deleting a Person
 
