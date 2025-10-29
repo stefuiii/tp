@@ -303,6 +303,39 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicateEmail_failure() {
+        Person secondPerson = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        // Try to edit first person to have the same email as second person
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail(secondPerson.getEmail().value).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_EMAIL);
+    }
+
+    @Test
+    public void execute_sameEmail_success() {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Edit person with same email (no change in email)
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail(firstPerson.getEmail().value).withPhone(VALID_PHONE_BOB).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        Person editedPerson = new PersonBuilder(firstPerson).withEmail(firstPerson.getEmail().value)
+                .withPhone(VALID_PHONE_BOB).build();
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_addTagsOnly_success() {
         // Get the second person (BENSON) who has "owesMoney" and "friends" tags
         Index indexSecondPerson = INDEX_SECOND_PERSON;
@@ -344,6 +377,34 @@ public class EditCommandTest {
         expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson));
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_placeholderEmail_doesNotCountAsDuplicate() {
+        // Build a model with two persons with placeholder emails
+        AddressBook addressBook = new AddressBook();
+        Person person1 = new PersonBuilder().withName("John Doe").withPhone("80000001")
+                .withEmail("unknown@example.com").withCompany("Google").build();
+        Person person2 = new PersonBuilder().withName("Jane Smith").withPhone("80000002")
+                .withEmail("jane@example.com").withCompany("Microsoft").build();
+        addressBook.addPerson(person1);
+        addressBook.addPerson(person2);
+        Model testModel = new ModelManager(addressBook, new UserPrefs());
+
+        // Edit person2 to have the placeholder email (same as person1)
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withEmail("unknown@example.com").build();
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(2), descriptor);
+
+        Person editedPerson2 = new PersonBuilder(person2).withEmail("unknown@example.com").build();
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                Messages.format(editedPerson2));
+
+        Model expectedModel = new ModelManager(new AddressBook(testModel.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(person2, editedPerson2);
+        expectedModel.updateFilteredPersonList(p -> p.equals(editedPerson2));
+
+        assertCommandSuccess(editCommand, testModel, expectedMessage, expectedModel);
     }
 
     @Test
