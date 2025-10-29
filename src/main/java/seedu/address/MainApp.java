@@ -86,7 +86,7 @@ public class MainApp extends Application {
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty Fast Card Contact Book.");
+                    + " Will be starting with an empty Fast Card Contact Book."); // @Codecov [ignore]
             initialData = new AddressBook();
         }
 
