@@ -74,6 +74,11 @@ public class ParserUtil {
     public static Company parseCompany(String company) throws ParseException {
         requireNonNull(company);
         String trimmedCompany = company.trim();
+
+        if (trimmedCompany.equalsIgnoreCase("N/A")) {
+            throw new ParseException("The company name 'N/A' is reserved and cannot be used.");
+        }
+
         if (!Company.isValidCompany(trimmedCompany)) {
             throw new ParseException(Company.MESSAGE_CONSTRAINTS);
         }
@@ -89,6 +94,11 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
+
+        if (trimmedEmail.equalsIgnoreCase("unknown@example.com")) {
+            throw new ParseException("The email 'unknown@example.com' is reserved and cannot be used.");
+        }
+
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }

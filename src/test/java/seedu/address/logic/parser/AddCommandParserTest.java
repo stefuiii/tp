@@ -30,6 +30,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
@@ -37,6 +38,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -193,4 +195,15 @@ public class AddCommandParserTest {
                 + COMPANY_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
+
+    @Test
+    public void parseEmail_reservedEmail_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEmail("unknown@example.com"));
+    }
+
+    @Test
+    public void parseCompany_reservedCompany_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCompany("N/A"));
+    }
+
 }
