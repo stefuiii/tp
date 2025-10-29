@@ -38,7 +38,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 
         // Validate filename characters (cross-platform safe)
         if (!fileName.matches("^[a-zA-Z0-9_()\\-\\s]+$")) {
-            throw new ParseException("Invalid file name: only letters, numbers, spaces, '_', '-', and '()' are allowed. '.' is not allowed.");
+            throw new ParseException("Invalid file name: only letters, numbers, "
+                    + "spaces, '_', '-', and '()' are allowed.");
         }
 
         // Disallow path separators
