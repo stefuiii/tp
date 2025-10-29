@@ -772,8 +772,7 @@ Multiple persons named John Doe found. Please specify the index to delete.
 
 Toggles the Detail Pane showing specified user in detail.
 
-- Temporary holding image (To update with details pane screenshot once done)
-![FastCard UI](images/Ui_init.png)
+![FastCard UI](images/Ui_detail.png)
 
 **Format:**
   * `view INDEX`
@@ -784,10 +783,32 @@ Toggles the Detail Pane showing specified user in detail.
 view 1
 ```
 **You'll see:**
-  * (If Focus Person has not been selected yet) -> Shows Unknown.
-    - Simply run `view` with an appropriate index to populate the details pane
+  * The full information about the user (if it's too long to be shown on the main card)
+  * (If Focus Person has not been selected yet) -> Shows a guiding message.
   * Detail Pane toggle to view (if not already visible)
-  * Detail Pane shows information about current target contact
+
+**When should you use this?**
+  * When you want to view the full version of the contact info 
+  * When you want a quick reference to the information to transfer to another application
+  * Buttons corresponding to each core information is displayed 
+  * Clicking on the button will add the information to your clipboard for ease of transfer
+
+<box type="tip" seamless>
+
+💡 Pro Tips:
+  * When you edit the currently focused Contact, the information may become stale! 
+  * Simply ensure that you refresh calling `view INDEX` again!
+
+</box>
+
+<box type="info" seamless>
+<b>Why isn't this a command instead?</b>
+
+  - While our application aims to be mainly command focused for familiar users
+  - We acknowledge the efficiency and accuracy of a single click action in this case
+  - Especially since the expected use case is for extended interactions off app (which likely takes clicks!)
+
+</box>
 
 ### Recalling previous commands - Command History
 
