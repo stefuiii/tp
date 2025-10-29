@@ -23,7 +23,7 @@ public class FilterCommand extends Command {
             + "the specified tags (case-insensitive) and displays them as a list.\n"
             + "Tags should be alphanumeric and at most " + Tag.MAX_LENGTH + " characters long.\n"
             + "Parameters: t/TAG [t/TAG]...\n"
-            + "Example: " + COMMAND_WORD + " t/ client t/ colleague";
+            + "Example: " + COMMAND_WORD + " t/client t/colleague";
 
     private static final Logger logger = LogsCenter.getLogger(FilterCommand.class);
 
