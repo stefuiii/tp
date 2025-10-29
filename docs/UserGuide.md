@@ -407,8 +407,8 @@ add n/Mike Kumar p/87654321 e/mike@company.com c/ABC Industries
 Updates an existing contact's information by either their name or position number in the list.
 
 **Format:**
-- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
-- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​`
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
 
 **What you need to provide:**
   * **Target contact** - Either the contact's `NAME` or their `INDEX` (position number in the displayed list)
@@ -420,7 +420,8 @@ Updates an existing contact's information by either their name or position numbe
   * **Edit by name** - Name matching is case-insensitive (`john doe` = `John Doe`)
   * **Full Name Required** - If editing by name, you need to provide the contact's full name (e.g., `edit Sarah` will not edit `Sarah Chen`'s contact)
   * **Multiple contacts with the same name** - FastCard will show all matches and ask you to edit by index instead
-  * **Existing values are replaced** - Your new input completely replaces the old information
+  * **Existing values are replaced** - For name, phone, email, and company fields, your new input completely replaces the old information
+  * **Tags are flexible** - You can overwrite all tags (`t/`), add to existing tags (`t+/`), or remove specific tags (`t-/`)
 
 **When to use this:**
   * You want to update outdated phone numbers or email addresses
@@ -430,18 +431,40 @@ Updates an existing contact's information by either their name or position numbe
 
 <box type="warning" seamless>
 
-**⚠️ Important: Tag Replacement Behavior**
+**⚠️ Important: Tag Management - Three Ways to Update Tags**
 
-When you edit tags, ALL existing tags are **replaced** with your new tags - they don't add to existing ones.
+FastCard offers three different ways to manage tags when editing:
 
-**Example:**
-  * Current tags: `[client][priority]`
-  * You run: `edit John t/vendor`
-  * New tags: `[vendor]` (`client` and `priority` tags are gone)
+**1. Overwrite All Tags (`t/`)**
+  * Replaces ALL existing tags with new ones
+  * Example: Contact has `[client][priority]`
+  * Run: `edit John t/vendor`
+  * Result: `[vendor]` (old tags are gone)
+  * To remove all tags: `edit John t/`
 
-**To keep existing tags:** View them first with `list` or `find`, then include all tags you want to keep in your edit command.
+**2. Add Tags (`t+/`)**
+  * Adds new tags while keeping existing ones
+  * Example: Contact has `[client]`
+  * Run: `edit John t+/priority t+/vip`
+  * Result: `[client][priority][vip]` (old tags kept, new tags added)
+  * Note: Tag matching is case-insensitive. Adding `t+/CLIENT` to a contact with `[client]` won't change anything.
 
-**To remove all tags:** Use `t/` with nothing after it: `edit John t/`
+**3. Delete Tags (`t-/`)**
+  * Removes specific tags while keeping others
+  * Example: Contact has `[client][priority][vip]`
+  * Run: `edit John t-/priority t-/vip`
+  * Result: `[client]` (specified tags removed)
+  * Note: You can only delete tags that exist. FastCard will warn you if a tag doesn't exist.
+  * Note: Tag matching is case-insensitive. Using `t-/CLIENT` will remove the `[client]` tag.
+
+**Can combine add and delete:**
+  * Run: `edit John t+/vendor t-/client`
+  * Removes `client` tag and adds `vendor` tag simultaneously
+
+**⚠️ Cannot mix overwrite with add/delete:**
+  * `t/` cannot be used together with `t+/` or `t-/` in the same command
+  * Example: `edit John t/vendor t+/client` → Error (conflicting tag operations)
+  * Choose either: overwrite all tags OR add/delete specific tags
 
 </box>
 
@@ -472,7 +495,7 @@ edit John Doe e/johndoe@company.com
 ```
 **If multiple John Doe exist, you'll see:**
 ```
-There are multiple contacts’ names matched with the reference.
+There are multiple contacts' names matched with the reference.
 Please use the edit INDEX command to specify the contact you want to edit in the following list of matched contacts.
 ```
 **In the contact list:**
@@ -482,15 +505,51 @@ Please use the edit INDEX command to specify the contact you want to edit in the
 
 &rarr; Updates information of a specific John Doe contact
 
+**Example 3: Adding tags without removing existing ones**
+```
+edit 1 t+/priority t+/vip
+```
+**You'll see:**
+```
+Edited Person:
+Name: Sarah Chen
+Phone: 98765432
+Email: sarahchen@example.com
+Company: Shopee
+Tags: [client] [priority] [vip]
+```
+**In the contact list:**
+  * Sarah Chen keeps her existing `[client]` tag
+  * New `[priority]` and `[vip]` tags are added
+
+&rarr; Adds new tags while preserving existing ones - perfect for gradually building up contact organization
+
+**Example 4: Adding and removing tags simultaneously**
+```
+edit 2 t+/partner t-/client
+```
+**You'll see:**
+  * The `[client]` tag is removed
+  * The `[partner]` tag is added
+  * All other tags remain unchanged
+
+&rarr; Useful when contact's role changes (e.g., from client to partner)
+
 <box type="tip" seamless>
 
-💡 Pro Tip: After editing, use `find` to confirm your updates were applied correctly
+💡 Pro Tips:
+  * **Use `t+/` and `t-/` for gradual tag management** - Add or remove tags without worrying about losing existing ones
+  * **View before editing** - Use `find` or `list` to see current tags before making changes
+  * **Combine add and delete** - Change contact roles in one command: `edit John t+/vendor t-/client`
 
 </box>
 
 **Common Mistakes:**
   * `edit John Doe` &rarr; No fields provided (you must include at least one field to update)
   * `edit 0 p/91234567` &rarr; Invalid index (index starts at 1, not 0)
+  * `edit 1 t/client t+/priority` &rarr; Cannot mix `t/` with `t+/` or `t-/` (conflicting tag operations)
+  * `edit 1 t-/colleague` when contact doesn't have `[colleague]` tag &rarr; FastCard will show an error listing non-existent tags
+  * `edit 1 t+/` or `edit 1 t-/` &rarr; Empty tag name (you must provide at least one tag after `t+/` or `t-/`)
 
 ### Searching for contacts by name: `find`
 Quickly finds contacts whose names or companies match the keywords you provide.
@@ -1094,7 +1153,7 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/client t/highPriority`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444`
 **Delete** | `delete NAME`<br> `delete INDEX` <br> e.g., `delete John Doe` or `delete 2`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​` <br> `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com` or `edit John Doe t/colleague`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​` <br> `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`, `edit John Doe t/colleague`, `edit 1 t+/priority t-/client`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
