@@ -35,8 +35,8 @@ public class ExportCommandParserTest {
 
     @Test
     public void parse_validFileName_success() throws Exception {
-        String userInput = " f/contacts.csv";
-        ExportCommand expectedCommand = new ExportCommand("contacts.csv");
+        String userInput = " f/contacts";
+        ExportCommand expectedCommand = new ExportCommand("contacts");
 
         ExportCommand result = parser.parse(userInput);
         assertEquals(expectedCommand, result,
@@ -56,7 +56,7 @@ public class ExportCommandParserTest {
 
     @Test
     public void parse_missingPrefix_throwsParseException() {
-        String userInput = " contacts.csv";
+        String userInput = " contacts";
         assertThrows(ParseException.class, () -> parser.parse(userInput),
                 "Parser should throw if prefix f/ is missing.");
     }
@@ -77,15 +77,15 @@ public class ExportCommandParserTest {
 
     @Test
     public void parse_filenameWithSlash_throwsParseException() {
-        String userInput = " f/test/today.csv";
+        String userInput = " f/test/today";
         assertThrows(ParseException.class, () -> parser.parse(userInput),
                 "Parser should reject filenames containing slashes.");
     }
 
     @Test
     public void parse_filenameWithMultipleSpaces_normalized() throws Exception {
-        String userInput = " f/  my   spaced   file.csv  ";
-        ExportCommand expectedCommand = new ExportCommand("my spaced file.csv");
+        String userInput = " f/  my   spaced   file";
+        ExportCommand expectedCommand = new ExportCommand("my spaced file");
         ExportCommand result = parser.parse(userInput);
         assertEquals(expectedCommand, result,
                 "Parser should normalize multiple spaces into one and trim edges.");
@@ -111,5 +111,14 @@ public class ExportCommandParserTest {
         assertThrows(ParseException.class, () -> parser.parse(userInput),
                 "Parser should reject filenames containing mixed slashes ('/' or '\\').");
     }
+
+    @Test
+    public void parse_duplicateFilePrefixes_throwsParseException() {
+        // multiple f/ prefixes are not allowed
+        String userInput = " f/myfile f/secondfile";
+        assertThrows(ParseException.class, () -> parser.parse(userInput),
+                "Expected ParseException when duplicate f/ prefixes are used.");
+    }
+
 
 }

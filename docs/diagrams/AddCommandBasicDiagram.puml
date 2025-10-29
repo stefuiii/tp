@@ -2,55 +2,40 @@
 !include style.puml
 skinparam ArrowFontStyle plain
 
-box Ui UI_COLOR_T1
-participant ":User" as User UI_COLOR
-participant ":CommandBox" as CommandBox UI_COLOR
-participant ":MainWindow" as MainWindow UI_COLOR
-end box
+Actor User as user USER_COLOR
+Participant ":UI" as ui UI_COLOR
+Participant ":Logic" as logic LOGIC_COLOR
+Participant ":Model" as model MODEL_COLOR
+Participant ":Storage" as storage STORAGE_COLOR
 
-box Logic LOGIC_COLOR_T1
-participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddCommandBasic" as AddCommandBasic LOGIC_COLOR
-end box
+user -[USER_COLOR]> ui : "addbasic n/Jadon p/88880000"
+activate ui UI_COLOR
 
-box Model MODEL_COLOR_T1
-participant ":ModelManager" as ModelManager MODEL_COLOR
-participant ":Messages" as Messages MODEL_COLOR
-end box
+ui -[UI_COLOR]> logic : execute("addbasic n/Jadon p/88880000")
+activate logic LOGIC_COLOR
 
+logic -[LOGIC_COLOR]> model : hasPerson(toAdd)
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> logic : false (person not found)
+deactivate model
 
-== User triggers AddBasic command ==
-activate User
-User -> CommandBox : enters "addbasic n/Jadon p/88880000"
-activate CommandBox
-CommandBox -> MainWindow : sendCommand("addbasic n/Jadon p/88880000")
+logic -[LOGIC_COLOR]> model : addPerson(toAdd)
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> logic
+deactivate model
 
-activate MainWindow
-MainWindow -> LogicManager : execute("addbasic n/Jadon p/88880000")
-activate LogicManager
+logic -[LOGIC_COLOR]> storage : saveAddressBook(addressBook)
+activate storage STORAGE_COLOR
+storage -[STORAGE_COLOR]> storage : Write updated contacts to file
+activate storage STORAGE_COLOR_T1
+storage --[STORAGE_COLOR]> storage
+deactivate storage
+storage --[STORAGE_COLOR]> logic
+deactivate storage
 
-LogicManager -> AddCommandBasic : new AddCommandBasic(Person)
-activate AddCommandBasic
+logic --[LOGIC_COLOR]> ui : CommandResult("New contact added: Jadon")
+deactivate logic
 
-== Command Execution ==
-AddCommandBasic -> ModelManager : hasPerson(toAdd)
-activate ModelManager
-ModelManager --> AddCommandBasic : false  (person not found)
-
-AddCommandBasic -> ModelManager : addPerson(toAdd)
-AddCommandBasic -> Messages : format(toAdd)
-activate Messages
-Messages --> AddCommandBasic : formatted string
-
-AddCommandBasic --> LogicManager : CommandResult(success message)
-deactivate AddCommandBasic
-
-LogicManager --> MainWindow : CommandResult
-deactivate LogicManager
-
-MainWindow --> CommandBox : display success message
-deactivate MainWindow
-deactivate CommandBox
-deactivate User
-
+ui --[UI_COLOR]> user
+deactivate ui
 @enduml

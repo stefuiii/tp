@@ -8,10 +8,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ExportCommand object.
  * Rules enforced:
- *  All paths are ignored — only the filename part is used.</li>
- *  Slashes ("/", "\\") are not allowed.</li>
- *  Multiple spaces are normalized into a single space.</li>
- *  Only safe filename characters are allowed (letters, digits, spaces, '_', '-', '.', '()').</li>
+ *  All paths are ignored — only the filename part is used.
+ *  Slashes ("/", "\\" and ".") are not allowed.
+ *  Multiple spaces are normalized into a single space.
+ *  Only safe filename characters are allowed (letters, digits, spaces, '_', '-', '()')
  *
  */
 public class ExportCommandParser implements Parser<ExportCommand> {
@@ -19,6 +19,11 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     @Override
     public ExportCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_FILE_PATH);
+
+        // Check the uniqueness of prefix
+        if (argMultimap.getAllValues(PREFIX_FILE_PATH).size() > 1) {
+            throw new ParseException("Duplicate prefix 'f/' detected. Only one file name prefix is allowed.");
+        }
 
         // Check presence of prefix
         if (!argMultimap.getValue(PREFIX_FILE_PATH).isPresent()) {
@@ -37,9 +42,9 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         }
 
         // Validate filename characters (cross-platform safe)
-        if (!fileName.matches("^[a-zA-Z0-9._()\\-\\s]+$")) {
-            throw new ParseException("Invalid file name: only letters, "
-                    + "numbers, spaces, '_', '-', '.', and '()' are allowed.");
+        if (!fileName.matches("^[a-zA-Z0-9_()\\-\\s]+$")) {
+            throw new ParseException("Invalid file name: only letters, numbers, "
+                    + "spaces, '_', '-', and '()' are allowed.");
         }
 
         // Disallow path separators
