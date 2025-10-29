@@ -62,7 +62,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -84,7 +84,7 @@ The *Sequence Diagram* below shows how the components interact with each other f
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -94,13 +94,13 @@ The sections below give more details of each component.
 
 ### UI Component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -111,7 +111,7 @@ The `UI` component,
 
 ### Logic Component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -143,7 +143,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model Component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -151,7 +151,7 @@ How the parsing works:
 The `Model` component,
 
 * stores the company book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' (e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes).
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * stores a `CommandHistory` object that keeps track of the commands a user inputs during runtime. This is exposed to the outside as a `ReadOnlyCommandHistory` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -167,7 +167,7 @@ The `Model` component,
 
 ### Storage Component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/company/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
@@ -203,10 +203,10 @@ Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these
 5. **Result**: A `CommandResult` is returned to display the success message to the user.
 
 The sequence diagram below shows how the sort operation works:
-![Sort Sequence Diagram](images/SortSequenceDiagram.png)
+<puml src="diagrams/SortSequenceDiagram.puml" width="100%" />
 
 The activity diagram below depicts the execution flow of the sort command:
-![Sort Activity Diagram](images/SortActivityDiagram.png)
+<puml src="diagrams/SortActivityDiagram.puml" width="100%" />
 
 
 #### Filter Feature
@@ -227,10 +227,10 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
 5. **Result**: A `CommandResult` is returned displaying the number of persons found matching the filter criteria.
 
 The sequence diagram below shows how the filter operation works:
-![Filter Sequence Diagram](images/FilterSequenceDiagram.png)
+<puml src="diagrams/FilterSequenceDiagram.puml" width="100%" />
 
 The activity diagram below depicts the execution flow of the filter command:
-![Filter Activity Diagram](images/FilterActivityDiagram.png)
+<puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
 #### Repeat Command Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
@@ -287,12 +287,13 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
 
 **Target user profile**:
 
-* regularly interact with clients or suppliers
-* has a need to manage a significant number of contacts efficiently
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+* Is a sales and procurement professional
+* Regularly interacts with clients or suppliers
+* Has a need to manage a significant number of clients efficiently
+* Prefers desktop apps over other forms of software
+* Can type fast
+* Prefers typing to mouse interactions
+* Is reasonably comfortable using CLI apps
 
 **Value proposition**: Enable sales and procurement professionals engaged in regular business communication to efficiently capture, organize, and recall contact details in real time, minimizing information loss and improving follow-up accuracy.
 
@@ -325,8 +326,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to delete a contact by name.
-2.  FastCard finds the contact with that name.
-3.  FastCard deletes the contact.
+2.  System finds the contact with that name.
+3.  System deletes the contact.
 
     Use case ends.
 
@@ -334,21 +335,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. More than one contact is found with that specific name.
 
-    * 2a1. FastCard lists the matching contacts.
+    * 2a1. System lists the matching contacts.
     * 2a2. User requests to delete one of the listed contacts by index.
-    * 2a3. FastCard deletes the contact.
+    * 2a3. System deletes the contact.
 
       Use case ends.
 
 * 2b. No contact has the provided name.
 
-    * 2b1. FastCard shows an error message.
+    * 2b1. System shows an error message.
 
       Use case resumes at step 1.
 
 * 2c. The provided index does not exist in the displayed list.
 
-    * 2c1. FastCard shows an error message.
+    * 2c1. System shows an error message.
 
       Use case resumes at step 1.
 
@@ -359,7 +360,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to add a contact with name and phone number
-2.  FastCard creates an entry of the above contact
+2.  System creates an entry of the above contact
 
     Use case ends.
 
@@ -367,14 +368,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The given number is invalid.
 
-    * 1a1. FastCard shows an error message.
+    * 1a1. System shows an error message.
 
       Use case resumes at step 1.
 
 
 * 1b. The given number already exists.
 
-   *  1b1. FastCard shows an error message.
+   *  1b1. System shows an error message.
 
       Use case resumes at step 1.
 
@@ -384,8 +385,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to edit a contact's information
-2.  FastCard looks for person with their phone number
-3.  FastCard updates the person's particulars
+2.  System looks for person with their phone number
+3.  System updates the person's particulars
 
     Use case ends.
 
@@ -393,14 +394,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The given number is invalid.
 
-    * 2a1. FastCard shows an error message.
+    * 2a1. System shows an error message.
 
       Use case resumes at step 1.
 
 
 * 3a. The new information is invalid.
 
-    * 3a1. FastCard shows an error message.
+    * 3a1. System shows an error message.
 
       Use case resumes at step 1.
 
@@ -408,64 +409,64 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 1.  User requests to sort contacts by a specific field and order.
-2.  FastCard validates the field and order parameters
-3.  FastCard sorts the contacts according to the specified criteria
-4.  FastCard displays the sorted contact list with a success message
+2.  System validates the field and order parameters
+3.  System sorts the contacts according to the specified criteria
+4.  System displays the sorted contact list with a success message
 
     Use case ends.
 
 **Extensions**
    
   * 1a. User does not provide both field and order parameters.
-    * 1a1. FastCard shows an error message.
+    * 1a1. System shows an error message.
       Use case resumes at step 1.
 
   * 1b. User provides input between "sort" and the first prefix.
-    * 1b1. FastCard shows an error message.
+    * 1b1. System shows an error message.
       Use case resumes at step 1.
 
   * 1c. User provides duplicate prefixes.
-    * 1c1. FastCard shows an error message.
+    * 1c1. System shows an error message.
       Use case resumes at step 1.
 
   * 2a. The provided field is invalid (not "name" or "tag").
-    * 2a1. FastCard shows an error message.
+    * 2a1. System shows an error message.
       Use case resumes at step 1.
 
   * 2b. The provided order is invalid (not "asc", "desc", "ascending", or "descending").
-    * 2b1. FastCard shows an error message.
+    * 2b1. System shows an error message.
     Use case resumes at step 1.
 
 **Use case UC05 - Filter contacts by tags**
 
 **MSS**
 1.  User requests to filter contacts by one or more tags
-2.  FastCard validates the tag parameters.
-3.  FastCard filters the contacts to show only those containing any of the specified tags.
-4.  FastCard displays the filtered contact list with the count of matching contacts.
+2.  System validates the tag parameters.
+3.  System filters the contacts to show only those containing any of the specified tags.
+4.  System displays the filtered contact list with the count of matching contacts.
 
     Use case ends.
 
 **Extensions**
 
   * 1a. User does not provide any tag parameters.
-    * 1a1. FastCard shows an error message.
+    * 1a1. System shows an error message.
       Use case resumes at step 1.
 
   * 1b. User provides input between "filter" and the first tag prefix.
-    * 1b1. FastCard shows an error message.
+    * 1b1. System shows an error message.
       Use case resumes at step 1.
 
   * 2a. One or more tags are empty.
-    * 2b1. FastCard shows an error message.
+    * 2b1. System shows an error message.
       Use case resumes at step 1.
   
   * 2b. One or more tags contain non-alphanumeric characters
-    * 2b1. FastCard shows an error message.
+    * 2b1. System shows an error message.
       Use case resumes at step 1.
 
   * 3a. No contacts match the specified tags.
-    * 3a1. FastCard displays an empty list with a count of 0 persons.
+    * 3a1. System displays an empty list with a count of 0 persons.
     Use case ends.
 
 *{More to be added}*
@@ -537,20 +538,19 @@ testers are expected to do more *exploratory* testing.
 
 ### Launch and Shutdown
 
-1.  Initial launch
+1. Initial launch
 
-    1.  Download the jar file and copy into an empty folder
+   1. Download the jar file and copy into an empty folder
 
-    1.  Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file <br>
+      Expected: Shows the GUI with a set of sample candidates. The window size may not be optimum.
 
-1.  Saving window preferences
+1. Saving window preferences
 
-   1.  Resize the window to an optimum size. Move the window to a different location. Close the window.
+   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1.  Re-launch the app by double-clicking the jar file.<br>
+   1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 ### Deleting a Person
 
@@ -669,7 +669,24 @@ testers are expected to do more *exploratory* testing.
 ### Saving Data
 
 1. Dealing with missing/corrupted data files
+   Precondition: `FastCard` application is closed
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Test case (Application Launch with Missing Data File):<br>
+      Steps:
+         * Navigate to the application's `data` folder
+         * Delete `addressbook.json` if the file exists
+         * Launch `FastCard` again
+      Expected: Default list of contacts shown.
+   
+   1. Test case (Corrupted data file):<br>
+      Steps:
+         * Navigate to the application's `data` folder
+         * Delete the name of any contact and save your changes
+         * Launch `FastCard` again
+      Expected: No contacts shown.
 
-1. _{ more test cases …​ }_
+--------------------------------------------------------------------------------------------------------------------
+
+### Appendix: Planned enhancements
+
+Team size: 5
