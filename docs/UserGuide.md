@@ -103,7 +103,7 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 4. Press Enter
 
 **What you should see:**
-(First Use): FastCard's window should appear within a few seconds, showing a few example contacts to get you started!
+(First Use): FastCard's window should appear within a few seconds, showing a few example contacts to get you started! <br>
 ![FastCard UI Initial](images/Ui.png)
 
 
