@@ -1,0 +1,53 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+Actor User as user USER_COLOR
+Participant ":UI" as ui UI_COLOR
+Participant ":Logic" as logic LOGIC_COLOR
+Participant ":Model" as model MODEL_COLOR
+Participant ":Storage" as storage STORAGE_COLOR
+
+user -[USER_COLOR]> ui : "add n/Alice p/88889999 e/alice@example.com c/NUS t/friend"
+activate ui UI_COLOR
+
+ui -[UI_COLOR]> logic : execute("add n/Alice p/88889999 e/alice@example.com c/NUS t/friend")
+activate logic LOGIC_COLOR
+
+' --- Check if person exists ---
+logic -[LOGIC_COLOR]> model : hasPerson(toAdd)
+alt Contact already exists
+activate model MODEL_COLOR
+model --[MODEL_COLOR]> logic : true
+    logic --[LOGIC_COLOR]> ui : CommandResult("This person already exists in the contact book")
+
+else Contact does not exist
+    model --[MODEL_COLOR]> logic : false
+    logic -[LOGIC_COLOR]> model : hasEmail(toAdd)
+    alt Email already exists
+        model --[MODEL_COLOR]> logic : true
+        logic --[LOGIC_COLOR]> ui : CommandResult("This email already exists in the contact book.")
+    else Email does not exist
+    model --[MODEL_COLOR]> logic : false
+        logic -[LOGIC_COLOR]> model : addPerson(toAdd)
+
+        model --[MODEL_COLOR]> logic
+        deactivate model
+
+        logic -[LOGIC_COLOR]> storage : saveAddressBook(addressBook)
+        activate storage STORAGE_COLOR
+        storage -[STORAGE_COLOR]> storage : Write updated contacts to file
+        activate storage STORAGE_COLOR_T1
+        storage --[STORAGE_COLOR]> storage
+        deactivate storage
+        storage --[STORAGE_COLOR]> logic
+        deactivate storage
+
+        logic --[LOGIC_COLOR]> ui : CommandResult("You have successfully added the contact: ")
+    end
+end
+
+deactivate logic
+ui --[UI_COLOR]> user
+deactivate ui
+@enduml
