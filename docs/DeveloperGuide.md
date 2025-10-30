@@ -687,20 +687,18 @@ testers are expected to do more *exploratory* testing.
     -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
 
     -  Test case: `delete Alice Pauline`<br>
-       Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+       Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message.
 
     -  Test case: `delete 1`<br>
-       Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+       Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. 
 
     -  Test case: `delete 0`<br>
-       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+       Expected: No person is deleted. Error details shown in the status message. 
 
     -  Test case: `delete Jadon Ye` when multiple Jadons exist<br>
        Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
 
     -  Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
 
 ### Sorting Contacts
 
@@ -793,6 +791,22 @@ testers are expected to do more *exploratory* testing.
 
     -  Test case: `list`
        Expected: All contacts are displayed again, removing the filter.
+
+### Command Recall
+1. Backward recall 
+
+    - Prerequisites: Started FastCard and have used a series of `n` valid commands during current instance.
+   
+    - Test case: Press &uarr; arrow (n + 1) times 
+    - Expected: Each `i`th keypress modifies the command box with the last `i`th valid command used. Up till the limit, where an error message showing End of History message, and command box is empty.
+
+2. Forward recall
+
+    - Prerequisites: Performed prior Backward recall manual test, and has the same instance running.
+   
+   - Test case: Press &darr; arrow (n + 1) times
+   - Expected: Each `i`th keypress modifies the command box with the last `n - i`th valid command used. Up till the current state in history, and the command box will just be empty
+    
 
 ### Saving Data
 
