@@ -52,6 +52,8 @@
         "storage-component": "Storage Component",
         "common-classes": "Common Classes",
         "implementation": "Implementation",
+        "sort-feature": "Sort Feature",
+        "filter-feature": "Filter Feature",
         "add-contact-with-basic-information": "Add Contact with Basic Information",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, Logging, Testing, Configuration, Dev-Ops",
         "appendix-requirements": "Appendix: Requirements",
