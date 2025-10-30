@@ -100,7 +100,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Sorts the contacts list based on the comparator provided.
+     * Sorts the contact(s) list based on the comparator provided.
      */
     void sortPersons(Comparator<Person> comparator);
 

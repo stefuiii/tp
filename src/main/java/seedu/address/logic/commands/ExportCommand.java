@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Exports all contacts from the address book to a CSV file on the user's Desktop.
+ * Exports all contact(s) from the address book to a CSV file on the user's Desktop.
  *
  * This command enforces that all exports go to the user's Desktop folder,
  * regardless of what file path the user provides. The user can only customize the filename.
@@ -22,7 +22,7 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Exports all contacts to a CSV file on your Desktop. "
+            + ": Exports all contact(s) to a CSV file on your Desktop. "
             + "Parameters: f/FILENAME.csv\n"
             + "Example: " + COMMAND_WORD + " f/contacts.csv";
 

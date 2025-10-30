@@ -13,13 +13,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a person with only name and phone to the contact book.
+ * Adds a contact with only name and phone to the contact book.
  */
 public class AddCommandBasic extends Command {
 
     public static final String COMMAND_WORD = "addbasic";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to contact book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a contact to contact book "
             + "with only name and phone. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
