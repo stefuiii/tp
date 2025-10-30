@@ -21,8 +21,8 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Command Recall Feature](#command-recall-feature)
     - [Delete Feature](#delete-feature)
-    - [Repeat Command Feature](#repeat-command-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
     - [Add Feature (with Detailed Information)](#add-contact-with-full-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
@@ -228,14 +228,13 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
 
 4. **Filtering execution**: The model updates its filtered contact list by applying the `TagsContainTagPredicate`, which matches any contact whose tags contain at least one of the specified tags (case-insensitive matching).
 
-5. **Result**: A `CommandResult` is returned displaying the number of contact found matching the filter criteria.
+5. **Result**: A `CommandResult` is returned to display the success message to the user. The success message contains the number of contacts found that match the filter criteria.
 
 The sequence diagram below shows how the filter operation works:
 <puml src="diagrams/FilterSequenceDiagram.puml" width="100%" />
 
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
-
 
 ### Delete Feature
 Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
@@ -265,7 +264,7 @@ The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
 
-### Repeat Command Feature
+### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
 The Sequence diagram for a NextCommand Operation
@@ -379,27 +378,27 @@ The **add** operation is facilitated by the `AddCommand` class within the **Logi
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
-|----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| `* * *`  | new user                         | see a user guide                                              | can learn how to use the application efficiently |
-| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
-| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email                | have multiple channels for communication                                                |
-| `* * *`  | sales / procurement professional | assign tags to my contacts              | easily categorize different types of clients        |
-| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer prospects                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | verify that all my important contacts have been added                   |
-| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                       | view relevant clients easily or rank clients easily                                     |
-| `* * *`  | sales / procurement professional | filter my contacts by tags                          | quickly find relevant clients and manage my outreach more efficiently                   |
-| `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | search for contacts with some information                    | find a specific contact even if I only remember part of their information           |
-| `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
-| `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
-| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
-| `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
-| `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
-| `* *`    | sales / procurement professional | export my contacts to a CSV file | share contact information with colleagues or import into other applications |
-| `* *`    | organized user | backup my contacts to a file | keep a local copy for safekeeping or migration purposes |
-| `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
-| `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
+| Priority | As a …​                          | I want to …​                                                                | So that I can…​                                                             |
+|----------|----------------------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| `* * *`  | new user                         | see a user guide                                                            | can learn how to use the application efficiently                            |
+| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                             | save time during meetings and fill in the details later when convenient     |
+| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email | have multiple channels for communication                                    |
+| `* * *`  | sales / procurement professional | assign tags to my contacts                                                  | easily categorize different types of clients                                |
+| `* * *`  | sales / procurement professional | delete a contact in my contact list                                         | remove contacts that are no longer prospects                                |
+| `* * *`  | sales / procurement professional | list all contacts in my contact list                                        | verify that all my important contacts have been added                       |
+| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                          | view relevant clients easily or rank clients easily                         |
+| `* * *`  | sales / procurement professional | filter my contacts by tags                                                  | quickly find relevant clients and manage my outreach more efficiently       |
+| `* * *`  | sales / procurement professional | access the application offline without internet                             | view and manage my contacts even without internet connectivity              |
+| `* * *`  | forgetful user                   | search for contacts with part of their name                                 | find a specific contact even if I only remember part of their name          |
+| `* *`    | lazy user                        | edit an existing contact                                                    | update information for a contact and not have to remove and add the contact |
+| `* *`    | efficient user                   | navigate through my past commands                                           | save time when adding multiple contacts with similar information            |
+| `* *`    | sales / procurement professional | edit a specific contact's information                                       | keep the information of my contacts up to date                              |
+| `* *`    | sales / procurement professional | add or edit notes for existing contacts                                     | keep track of important information from conversations and meetings         |
+| `* *`    | sales / procurement professional | view the full details and notes of a contact                                | quickly recall context before calling or meeting them                       |
+| `* *`    | sales / procurement professional | export my contacts to a CSV file                                            | share contact information with colleagues or import into other applications |
+| `* *`    | organized user | backup my contacts to a file                                                | keep a local copy for safekeeping or migration purposes                     |
+| `* *`    | CLI-oriented user | exit the application via a command                                          | exit the application without using my mouse                                 |
+| `* *`    | careless user     | have a safeguard when clearing my contacts                                  | prevent accidental deletion of all my contacts                              |
 
 ### Use Cases
 
@@ -724,7 +723,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **CommandResult**: The outcome of executing a command, including the feedback message shown to the user.
 * **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
 * **Contact book**: The collection of contacts managed by FastCard.
-* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
+* **Data file**: The JSON file at `data/fastcard.json` storing contacts and tags.
 * **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
 * **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
 * **FastCard**: The product name of this application.
@@ -733,7 +732,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Help window**: A separate window displaying usage instructions, opened via the `help` command.
 * **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
 * **Index**: A 1-based position of a contact within the currently displayed list.
-* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
+* **JSON**: Data format used for persistence (e.g., `data/fastcard.json`).
 * **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
@@ -800,10 +799,10 @@ testers are expected to do more *exploratory* testing.
     -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
 
     -  Test case: `delete Alice Pauline`<br>
-       Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+       Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message.
 
     -  Test case: `delete 1`<br>
-       Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+       Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. 
 
     -  Test case: `delete 0`<br>
        Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
@@ -812,8 +811,6 @@ testers are expected to do more *exploratory* testing.
        Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
 
     -  Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
 
 ### Sorting Contacts
 
@@ -907,6 +904,44 @@ testers are expected to do more *exploratory* testing.
     -  Test case: `list`
        Expected: All contacts are displayed again, removing the filter.
 
+### Command Recall
+1. Backward recall 
+
+    - Prerequisites: Started FastCard and have used a series of `n` valid commands during current instance.
+   
+    - Test case: Press &uarr; arrow (n + 1) times 
+    - Expected: Each `i`th keypress modifies the command box with the last `i`th valid command used. Up till the limit, where an error message showing End of History message, and command box is empty.
+
+2. Forward recall
+
+    - Prerequisites: Performed prior Backward recall manual test, and has the same instance running.
+   
+   - Test case: Press &darr; (n + 1) times
+   - Expected: Each `i`th keypress modifies the command box with the last `n - i`th valid command used. Up till the current state in history, and the command box will just be empty
+
+### View Contact Details
+1. Toggle View Pane
+
+    - Prerequisites: View Pane is not hidden or not populated. `view` command unused prior in current instance.
+   
+    - Test case: `view` twice.
+    - Expected: (First) View pane comes into view with a guiding message on its usage. (Second) View pane gets hidden.
+
+2. View details of a contact
+    
+    - Prerequisites: At least one contact in company book. 
+   
+    - Test case: `view 1`
+    - Expected: The first contact in the current filtered list has their details laid out fully on the detail pane. 
+
+3. Click to Copy
+
+    - Prerequisites: Performed (2) 'View details of a contact test'
+   
+    - Test case: Click on one of the buttons beside an information
+    - Expected: A 'copied' feedback is shown. Corresponding data is saved to clipboard.
+
+
 ### Saving Data
 
 1. Dealing with missing/corrupted data files
@@ -915,7 +950,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case (Application Launch with Missing Data File):<br>
       Steps:
          * Navigate to the application's `data` folder
-         * Delete `addressbook.json` if the file exists
+         * Delete `fastcard.json` if the file exists
          * Launch `FastCard` again
       Expected: Default list of contacts shown.
    

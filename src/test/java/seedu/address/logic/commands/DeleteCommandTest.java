@@ -49,7 +49,7 @@ public class DeleteCommandTest {
         Name nameNotInAddressBook = new Name("NONAME");
         DeleteCommand deleteCommand = new DeleteCommand(nameNotInAddressBook);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_NAME);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_INFO);
     }
 
     @Test

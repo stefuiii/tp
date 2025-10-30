@@ -112,7 +112,7 @@ public class DeleteCommand extends Command {
                 .collect(Collectors.toList());
 
         if (matchingPersons.isEmpty()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_NAME);
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_INFO);
         }
 
         if (matchingPersons.size() > 1) {
