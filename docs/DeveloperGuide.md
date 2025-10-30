@@ -393,13 +393,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | forgetful user                   | search for contacts with some information                    | find a specific contact even if I only remember part of their information           |
 | `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
 | `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
-| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
+| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information of my contacts up to date |
 | `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
 | `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
 | `* *`    | sales / procurement professional | export my contacts to a CSV file | share contact information with colleagues or import into other applications |
 | `* *`    | organized user | backup my contacts to a file | keep a local copy for safekeeping or migration purposes |
 | `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
-| `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
+| `* *`    | careless user     | have a safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
 
 ### Use Cases
 
