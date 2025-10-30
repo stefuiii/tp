@@ -724,7 +724,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **CommandResult**: The outcome of executing a command, including the feedback message shown to the user.
 * **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
 * **Contact book**: The collection of contacts managed by FastCard.
-* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
+* **Data file**: The JSON file at `data/fastcard.json` storing contacts and tags.
 * **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
 * **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
 * **FastCard**: The product name of this application.
@@ -733,7 +733,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Help window**: A separate window displaying usage instructions, opened via the `help` command.
 * **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
 * **Index**: A 1-based position of a contact within the currently displayed list.
-* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
+* **JSON**: Data format used for persistence (e.g., `data/fastcard.json`).
 * **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
@@ -915,7 +915,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case (Application Launch with Missing Data File):<br>
       Steps:
          * Navigate to the application's `data` folder
-         * Delete `addressbook.json` if the file exists
+         * Delete `fastcard.json` if the file exists
          * Launch `FastCard` again
       Expected: Default list of contacts shown.
    
