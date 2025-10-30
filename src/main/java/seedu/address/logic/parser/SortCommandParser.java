@@ -65,6 +65,12 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD, PREFIX_ORDER);
+        try {
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD, PREFIX_ORDER);
+        } catch (ParseException e) {
+            logger.warning("Multiple prefixes for either field, order or both detected");
+            String errorMessage = "You should only specify one field and one order";
+            throw new ParseException(errorMessage);
+        }
     }
 }
