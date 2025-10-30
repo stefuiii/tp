@@ -266,7 +266,7 @@ Quickly saves a contact with just their name and phone number - perfect when you
 * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
     * Note: The `/` character is **not supported** to accommodate official namings such as `Rahul s/o Kumar`.
     * Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
-* **Phone** (`p/`) - At least 3 digits
+* **Phone** (`p/`) - At least 3 digits, at most 20 digits
 
 **What you need to know:**
   * The combination of name **AND** phone number must be unique, you can't add two people with the same name and phone number combination
