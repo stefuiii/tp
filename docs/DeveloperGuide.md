@@ -21,6 +21,7 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Command Recall Feature](#command-recall-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
@@ -188,7 +189,7 @@ Classes used by multiple components are in the `seedu.company.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 
-#### Sort Feature
+### Sort Feature
 
 Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these steps:
 
@@ -210,7 +211,7 @@ The activity diagram below depicts the execution flow of the sort command:
 <puml src="diagrams/SortActivityDiagram.puml" width="100%" />
 
 
-#### Filter Feature
+### Filter Feature
 The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandParser`, following these steps:
 
 1. **User input parsing**: `FilterCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing tag values, then validates the tokens through `FilterCommandParser#checkValidTokens()`. The parser converts all tags to lowercase, removes duplicates, and creates a `TagsContainTagPredicate` object with the processed tags. A `FilterCommand` object is then instantiated with this predicate.
@@ -233,7 +234,7 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
-#### Repeat Command Feature
+### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
 The Sequence diagram for a NextCommand Operation
