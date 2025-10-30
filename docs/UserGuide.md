@@ -115,7 +115,7 @@ The window shows:
 __Lets Start Fresh!__
 
 - Perform the [`clear`](#removing-all-contacts-clear) operation (following guiding steps shown on result display)
-- After restarting the App , you'll be greeted with this message
+- After starting fresh with the above command , you'll be greeted with this message
 ![FastCard UI](images/Ui_init.png)
 
 **Troubleshooting:**
