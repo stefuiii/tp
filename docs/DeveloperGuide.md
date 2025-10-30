@@ -844,6 +844,92 @@ testers are expected to do more *exploratory* testing.
 
     -  Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
 
+### Editing a Contact
+
+1. Editing a contact by index
+
+    -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+
+    -  Test case: `edit 1 p/98765432`<br>
+       Expected: Phone number of the first contact is updated to "98765432". Success message shows the edited contact details.
+
+    -  Test case: `edit 1 e/newemail@example.com c/Google`<br>
+       Expected: Email and company of the first contact are updated. Success message shows the edited contact details.
+
+    -  Test case: `edit 1 n/John Tan p/91234567 e/john@example.com c/Microsoft d/Senior Manager t/client t/vip`<br>
+       Expected: Multiple fields are updated simultaneously. All tags are replaced with "client" and "vip".
+
+    -  Test case: `edit 0 p/98765432`<br>
+       Expected: No contact is edited. Error message shows invalid index.
+
+    -  Test case: `edit 999 p/98765432` (where 999 exceeds list size)<br>
+       Expected: No contact is edited. Error message shows invalid index.
+
+2. Editing a contact by name
+
+    -  Prerequisites: At least one contact named "Alice Pauline" exists in the displayed list. No duplicates of this name exist.
+
+    -  Test case: `edit Alice Pauline p/87654321`<br>
+       Expected: Phone number of Alice Pauline is updated to "87654321". Success message shows the edited contact details.
+
+    -  Test case: `edit Alice Pauline e/alice.new@example.com d/Marketing Director`<br>
+       Expected: Email and detail of Alice Pauline are updated.
+
+    -  Test case: `edit John Doe p/91234567` when multiple "John Doe" contacts exist<br>
+       Expected: No contact is edited. The filtered list updates to show all matching "John Doe" contacts. Error message asks user to edit by index instead.
+
+    -  Test case: `edit Nonexistent Person p/91234567`<br>
+       Expected: No contact is edited. Error message shows that the person name does not match any displayed contact.
+
+3. Tag operations
+
+    -  Prerequisites: Contact at index 1 exists with tags "friend" and "colleague".
+
+    -  Test case: `edit 1 t/client t/vip`<br>
+       Expected: All existing tags are replaced with "client" and "vip". Success message shows the edited contact with new tags.
+
+    -  Test case: `edit 1 t+/important`<br>
+       Expected: Tag "important" is added to existing tags. Contact now has tags "friend", "colleague", and "important".
+
+    -  Test case: `edit 1 t-/colleague`<br>
+       Expected: Tag "colleague" is removed. Contact now has only "friend" tag remaining.
+
+    -  Test case: `edit 1 t+/client t-/friend`<br>
+       Expected: Tag "client" is added and "friend" is removed. Contact has "colleague" and "client" tags.
+
+    -  Test case: `edit 1 t/`<br>
+       Expected: All tags are removed from the contact. Success message shows contact with no tags.
+
+4. Invalid edit commands
+
+    -  Test case: `edit 1`<br>
+       Expected: No contact is edited. Error message shows that at least one field to edit must be provided.
+
+    -  Test case: `edit`<br>
+       Expected: No contact is edited. Error message shows invalid command format with usage instructions.
+
+    -  Test case: `edit 1 e/invalidemail`<br>
+       Expected: No contact is edited. Error message shows invalid email format.
+
+    -  Test case: `edit 1 t/client t+/vip`<br>
+       Expected: No contact is edited. Error message shows that `t/` cannot be used together with `t+/` or `t-/`.
+
+    -  Test case: `edit 1 t-/nonexistent`<br>
+       Expected: No contact is edited. Error message shows that the tag "nonexistent" does not exist on this person and cannot be deleted.
+
+    -  Test case: `edit 1 t+/`<br>
+       Expected: No contact is edited. Error message shows that tags to add cannot be empty.
+
+5. Duplicate detection
+
+    -  Prerequisites: A contact "Alice Pauline" with phone "91234567" exists. Another contact "Bob" with email "bob@example.com" exists.
+
+    -  Test case: `edit 2 n/Alice Pauline p/91234567`<br>
+       Expected: No contact is edited. Error message shows that this person already exists in the contact book.
+
+    -  Test case: `edit 1 e/bob@example.com`<br>
+       Expected: No contact is edited. Error message shows that this email already exists in the contact book.
+
 ### Sorting Contacts
 
 1.  Sorting contacts by name
