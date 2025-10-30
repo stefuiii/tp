@@ -233,6 +233,33 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
+#### Delete Feature
+Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
+
+1. **User input parsing**: `DeleteCommandParser#parse()` trims the user input and first attempts to interpret it as an index
+   via `ParserUtil.parseIndex()`. If parsing the index fails, it falls back to `ParserUtil.parseName()` to treat the argument as
+   a name, throwing a `ParseException` if both attempts fail.
+
+2. **Target resolution**: The resulting `DeleteCommand` records whether it will operate on an index or a name and, during
+   execution, routes to the corresponding helper (`executeDeleteByIndex` or `executeDeleteByName`).
+
+3. **Model lookup**: For index-based deletes, the command retrieves the target from `Model#getFilteredPersonList()` and ensures
+   the index is within bounds. For name-based deletes, it scans `Model#getAddressBook().getPersonList()` for case-insensitive
+   matches to the provided name.
+
+4. **Disambiguation**: If multiple contacts share the same name, the command updates the filtered list through
+   `Model#updateFilteredPersonList(...)` so the UI displays only the matching entries, then prompts the user to delete the
+   intended contact by index.
+
+5. **Deletion and feedback**: Once a single target is identified, `Model#deletePerson(person)` removes it from storage, and the
+   command returns a `CommandResult` summarizing the deleted contact.
+
+The sequence diagram below shows how the filter operation works:
+<puml src="diagrams/DeleteSequenceDiagram.puml" width="100%" />
+
+The activity diagram below depicts the execution flow of the filter command:
+<puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
+
 #### Repeat Command Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
