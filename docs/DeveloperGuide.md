@@ -379,27 +379,27 @@ The **add** operation is facilitated by the `AddCommand` class within the **Logi
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
-|----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| `* * *`  | new user                         | see a user guide                                              | can learn how to use the application efficiently |
-| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
-| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email                | have multiple channels for communication                                                |
-| `* * *`  | sales / procurement professional | assign tags to my contacts              | easily categorize different types of clients        |
-| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer prospects                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | verify that all my important contacts have been added                   |
-| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                       | view relevant clients easily or rank clients easily                                     |
-| `* * *`  | sales / procurement professional | filter my contacts by tags                          | quickly find relevant clients and manage my outreach more efficiently                   |
-| `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | search for contacts with some information                    | find a specific contact even if I only remember part of their information           |
-| `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
-| `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
-| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information of my contacts up to date |
-| `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
-| `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
-| `* *`    | sales / procurement professional | export my contacts to a CSV file | share contact information with colleagues or import into other applications |
-| `* *`    | organized user | backup my contacts to a file | keep a local copy for safekeeping or migration purposes |
-| `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
-| `* *`    | careless user     | have a safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
+| Priority | As a …​                          | I want to …​                                                                | So that I can…​                                                             |
+|----------|----------------------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| `* * *`  | new user                         | see a user guide                                                            | can learn how to use the application efficiently                            |
+| `* * *`  | sales / procurement professional | add a contact with just a name and phone number                             | save time during meetings and fill in the details later when convenient     |
+| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email | have multiple channels for communication                                    |
+| `* * *`  | sales / procurement professional | assign tags to my contacts                                                  | easily categorize different types of clients                                |
+| `* * *`  | sales / procurement professional | delete a contact in my contact list                                         | remove contacts that are no longer prospects                                |
+| `* * *`  | sales / procurement professional | list all contacts in my contact list                                        | verify that all my important contacts have been added                       |
+| `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                          | view relevant clients easily or rank clients easily                         |
+| `* * *`  | sales / procurement professional | filter my contacts by tags                                                  | quickly find relevant clients and manage my outreach more efficiently       |
+| `* * *`  | sales / procurement professional | access the application offline without internet                             | view and manage my contacts even without internet connectivity              |
+| `* * *`  | forgetful user                   | search for contacts with part of their name                                 | find a specific contact even if I only remember part of their name          |
+| `* *`    | lazy user                        | edit an existing contact                                                    | update information for a contact and not have to remove and add the contact |
+| `* *`    | efficient user                   | navigate through my past commands                                           | save time when adding multiple contacts with similar information            |
+| `* *`    | sales / procurement professional | edit a specific contact's information                                       | keep the information of my contacts up to date                              |
+| `* *`    | sales / procurement professional | add or edit notes for existing contacts                                     | keep track of important information from conversations and meetings         |
+| `* *`    | sales / procurement professional | view the full details and notes of a contact                                | quickly recall context before calling or meeting them                       |
+| `* *`    | sales / procurement professional | export my contacts to a CSV file                                            | share contact information with colleagues or import into other applications |
+| `* *`    | organized user | backup my contacts to a file                                                | keep a local copy for safekeeping or migration purposes                     |
+| `* *`    | CLI-oriented user | exit the application via a command                                          | exit the application without using my mouse                                 |
+| `* *`    | careless user     | have a safeguard when clearing my contacts                                  | prevent accidental deletion of all my contacts                              |
 
 ### Use Cases
 
