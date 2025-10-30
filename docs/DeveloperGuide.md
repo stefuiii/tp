@@ -103,7 +103,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonDetailPanel`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-F11-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
@@ -157,6 +157,7 @@ The `Model` component,
 
 * stores the company book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' (e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes).
+* stores the currently 'focused' `Person` objects (e.g., target of view detail command) as a separate _focused_ person which is exposed to outsiders as an unmodifiable `SimpleObjectProperty<Person>` that can be 'observed' (e.g. the UI can be bound to this object so that the UI automatically updates when the focus person changes).
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * stores a `CommandHistory` object that keeps track of the commands a user inputs during runtime. This is exposed to the outside as a `ReadOnlyCommandHistory` object.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
@@ -299,13 +300,14 @@ The sequence diagram below shows how the edit operation works:
 ### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
-The Sequence diagram for a NextCommand Operation
+The Sequence diagram for a `getPreviousCommand` Operation:
+Sequence is similar for `getNextCommand` but in reverse.
 
 1. **Key Pressed**: `CommandBox` handles the event with a call to `navigateCommandHistory(x)` with `x` being '-1' for previous command, and `1' for next command in history.
 
 2. **Command Bubbles Down**: A series of function calls are then passed through the Logic Component and the Model Component
 
-3. **Get Last Nth Command**: `CommandHistory` gets the last nth command based on its current context of `currCommandIndex` and returns the respective string value of the command saved in history.
+3. **Get Last Nth Command**: `CommandHistory` gets the last nth command based on its current value of `currCommandIndex` and returns the respective string value of the command saved in history. Subsequently, `currCommandIndex` is incremented till `n` (where `n` is the current size of the history list)
 
 4. **Update CommandBox**: Target Command String gets returned back and `CommandBox` updates its text field to show the command, along with setting the cursor to end of line.
 
