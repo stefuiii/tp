@@ -60,7 +60,7 @@ public class EditCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_TAG_ADD + "client " + PREFIX_TAG_DELETE + "friend";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: \n%1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Contact: \n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book.";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book.";
@@ -244,11 +244,11 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Checks if the edited person's email is already used by another person in the contact book.
+     * Checks if the edited contact's email is already used by another contact in the contact book.
      * Returns false if:
      * - The email is a placeholder email
-     * - The email is the same as the original person's email (no change)
-     * - No other person has this email
+     * - The email is the same as the original contact's email (no change)
+     * - No other contact has this email
      */
     private boolean isEmailDuplicated(Model model, Person personToEdit, Person editedPerson) {
         String editedEmailValue = editedPerson.getEmail().value;

@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+skinparam activity {
+    BackgroundColor White
+    DiamondBackgroundColor #FDF6E3
+    DiamondBorderColor #B58900
+}
+
+start
+
+:User inputs "add n/Alice p/88889999 e/alice@example.com c/NUS t/friend";
+:Parse command;
+
+if (Is command format valid?) then (no)
+    :Display "Invalid command format";
+    stop
+else (yes)
+    if (Are required fields missing?) then (yes)
+        :Display "Missing required field(s): name, phone, email, or company";
+        stop
+    else (no)
+        if (Are argument values valid?) then (no)
+            :Display "Invalid field value(s): check name, phone, email, company, or tags";
+            stop
+        else (yes)
+            :Create Person object;
+            if (Contact already exists?) then (yes)
+                :Display "This person already exists in the contact book";
+                stop
+            else (no)
+                if (Email already exists?) then (yes)
+                    :Display "This email already exists in the contact book";
+                    stop
+                else (no)
+                    :Add new person to Model;
+                    :Save updated AddressBook to Storage;
+                    :Display "You have successfully added the contact";
+                endif
+            endif
+        endif
+    endif
+endif
+
+stop
+@enduml
