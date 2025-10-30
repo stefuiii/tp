@@ -1184,6 +1184,12 @@ Advanced users are welcome to update data directly by editing that data file.
 
 **Solution** Please use the `view` command to toggle the pane instead before adjusting its width.
 
+<u>**Placeholder values hide email or company fields**</u>
+
+**Problem:** When a user enters `unknown@example.com` for the email or `N/A` for the company, FastCard treats them as internal placeholders and hides those fields in the UI, making it look as though the details were lost.
+
+**Solution:** Avoid `unknown@example.com` in email and `N/A` in company. You are expected to put in meaningful values.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
