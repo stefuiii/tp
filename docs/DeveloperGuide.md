@@ -639,43 +639,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **FastCard**: The product name of this application.
-* **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
-* **Tag**: A short label attached to a contact for categorization (e.g., client, supplier, industry).
-* **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
-* **Index**: A 1-based position of a contact within the currently displayed list.
-* **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
-* **Contact book**: The collection of contacts managed by FastCard.
-* **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
+* **Actor**: The user interacting with FastCard in use cases.
 * **CLI (Command Line Interface)**: Text-based interaction via the command input box.
-* **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
-* **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
-* **Storage**: Persists and retrieves data (company book and user prefs) from JSON files.
-* **User preferences**: Settings such as window size and file paths (read-only view exposed as `ReadOnlyUserPref`).
-* **ObservableList**: A JavaFX list implementation that notifies the UI of changes.
-* **UniquePersonList**: An internal list that enforces uniqueness for contacts.
-* **Parser / XYZCommandParser**: Classes that convert user input into executable command objects.
+* **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
+* **Command box**: The text input field where users type commands.
 * **CommandResult**: The outcome of executing a command, including the feedback message shown to the user.
-* **Undo/Redo**: Feature that reverts or reapplies recent changes to the company book using stored history.
+* **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
+* **Contact book**: The collection of contacts managed by FastCard.
+* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
+* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
+* **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
+* **FastCard**: The product name of this application.
+* **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
+* **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
+* **Help window**: A separate window displaying usage instructions, opened via the `help` command.
+* **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
+* **Index**: A 1-based position of a contact within the currently displayed list.
+* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
+* **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
+* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
 * **MSS (Main Success Scenario)**: The primary, exception-free flow of a use case.
 * **NFR (Non-Functional Requirement)**: A quality constraint on the system (e.g., performance, portability).
-* **Actor**: The user interacting with FastCard in use cases.
-* **System**: The application under discussion in use cases (i.e., FastCard).
-* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
-* **Sample data**: Default contacts provided on first launch to demonstrate core features.
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
-* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
-* **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
-* **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
-* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `/`, `t/`).
-* **Command box**: The text input field where users type commands.
-* **Result display**: The UI area showing the outcome messages of executed commands.
-* **Status bar**: The UI footer indicating summaries such as list counts and last update time.
+* **ObservableList**: A JavaFX list implementation that notifies the UI of changes.
+* **Parser / XYZCommandParser**: Classes that convert user input into executable command objects.
 * **Person card**: The UI element representing a single contact in the list.
-* **Help window**: A separate window displaying usage instructions, opened via the `help` command.
-* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
+* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `/`, `t/`).
+* **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
+* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Result display**: The UI area showing the outcome messages of executed commands.
+* **Sample data**: Default contacts provided on first launch to demonstrate core features.
+* **Status bar**: The UI footer indicating summaries such as list counts and last update time.
+* **Storage**: Persists and retrieves data (company book and user prefs) from JSON files.
+* **System**: The application under discussion in use cases (i.e., FastCard).
+* **Tag**: A short label attached to a contact for categorization (e.g., client, supplier, industry).
+* **Undo/Redo**: Feature that reverts or reapplies recent changes to the company book using stored history.
+* **UniquePersonList**: An internal list that enforces uniqueness for contacts.
+* **User preferences**: Settings such as window size and file paths (read-only view exposed as `ReadOnlyUserPref`).
+
 
 --------------------------------------------------------------------------------------------------------------------
 
