@@ -61,7 +61,7 @@ public class EditCommand extends Command {
             + PREFIX_TAG_ADD + "client " + PREFIX_TAG_DELETE + "friend";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Contact: \n%1$s";
-    public static final String MESSAGE_NOT_EDITED = 
+    public static final String MESSAGE_NOT_EDITED =
             "At least one valid field to edit must be provided.\n"
             + "Valid prefixes for edit command are:\n"
             + PREFIX_NAME + " (name), "
