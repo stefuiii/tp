@@ -1,27 +1,37 @@
 @startuml
-!include style.puml
-skinparam ArrowFontStyle plain
-
-title AddBasic Command - Activity Diagram
+title AddBasic Command Activity Diagram
 
 start
 
-:User enters command "addbasic n/Jadon p/88880000";
-:Command parsed by LogicManager;
+:User enters addbasic command;
+:Trim and tokenize arguments;
 
-if (is command valid?) then (yes)
-    :LogicManager creates AddCommandBasic;
-    :AddCommandBasic executed;
-
-    if (is person already in list?) then (yes)
-        :Show error message "This person already exists";
-    else (no)
-        :Add person to AddressBook;
-        :Save updated AddressBook to storage;
-        :Return success message;
+if () then ([invalid format])
+  :Display "Invalid command format: only n/ and p/ are allowed";
+  stop
+else ([format ok])
+  if () then ([required fields missing])
+    :Display "Missing required field(s): name or phone";
+    stop
+  else ([all required present])
+    :Validate field values (name, phone);
+    if () then ([invalid values])
+      :Display "Invalid field value(s): check name or phone";
+      stop
+    else ([values valid])
+      :Create Person object (name, phone);
+      :Check duplicate by name + phone;
+      if () then ([duplicate person])
+        :Display "This person already exists in the contact book";
+        stop
+      else ([unique person])
+        :Add new person to Model;
+        :Save updated AddressBook to Storage;
+        :Display "You have successfully added the contact";
+        stop
+      endif
     endif
-else (no)
-    :Show parse error message;
+  endif
 endif
 
 stop
