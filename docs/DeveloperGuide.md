@@ -228,7 +228,7 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
 
 4. **Filtering execution**: The model updates its filtered contact list by applying the `TagsContainTagPredicate`, which matches any contact whose tags contain at least one of the specified tags (case-insensitive matching).
 
-5. **Result**: A `CommandResult` is returned displaying the number of contact found matching the filter criteria.
+5. **Result**: A `CommandResult` is returned to display the success message to the user. The success message contains the number of contacts found that match the filter criteria.
 
 The sequence diagram below shows how the filter operation works:
 <puml src="diagrams/FilterSequenceDiagram.puml" width="100%" />
