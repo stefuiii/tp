@@ -316,6 +316,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
 | `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
 | `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
+| `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
+| `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
 | `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
 | `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
 
@@ -386,24 +388,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to edit a contact's information
-2.  System looks for person with their phone number
-3.  System updates the person's particulars
+1.  User requests to edit a contact's information by providing an index or name, along with the fields to update.
+2.  System finds the contact in the displayed list.
+3.  System validates the new information.
+4.  System updates the contact's particulars with the new information.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The given number is invalid.
+* 1a. User provides an invalid index (non-numeric, zero, negative, or exceeds list size).
+
+    * 1a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. User does not provide any fields to edit.
+
+    * 1b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 2a. The provided name does not match any contact in the displayed list.
 
     * 2a1. System shows an error message.
 
       Use case resumes at step 1.
 
+* 2b. Multiple contacts match the provided name.
 
-* 3a. The new information is invalid.
+    * 2b1. System filters and displays the matching contacts.
+    * 2b2. System shows an error message asking user to use index instead.
 
-    * 3a1. System shows an error message.
+      Use case resumes at step 1.
+
+* 3a. The new information is invalid (e.g., invalid phone number format, invalid email format).
+
+    * 3a1. System shows an error message with validation details.
+
+      Use case resumes at step 1.
+
+* 3b. The new information would create a duplicate contact.
+
+    * 3b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3c. The new email already exists in another contact.
+
+    * 3c1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3d. User attempts to delete tags that don't exist on the contact.
+
+    * 3d1. System shows an error message listing the non-existent tags.
 
       Use case resumes at step 1.
 
@@ -486,6 +525,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. System displays a pop-up window containing a link to the user guide.
 
    Use case ends.
+
+**Use case: UC08 - View contact details**
+
+**MSS**
+1. User requests to view detailed information of a contact by providing an index.
+2. System displays the detail panel showing full contact information including notes for the contact at the specified index.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User provides an invalid index (non-numeric, zero, negative, or exceeds list size).
+    * 1a1. System shows an error message.
+    
+      Use case resumes at step 1.
+
+* 1b. User provides more than one argument.
+    * 1b1. System shows an error message with usage instructions.
+    
+      Use case resumes at step 1.
+
+* 1c. User enters `view` without any parameters.
+    * 1c1. System toggles the detail panel visibility.
+    
+      Use case ends.
 
 ### Non-Functional Requirements
 
