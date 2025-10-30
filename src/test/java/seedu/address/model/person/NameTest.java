@@ -29,6 +29,7 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName(generateString(Name.MAX_LENGTH + 1))); // too long
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
@@ -36,6 +37,15 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName(generateString(Name.MAX_LENGTH))); // boundary length
+
+    }
+
+    @Test
+    public void isValidName_validNamesWithSymbols_returnsTrue() {
+        assertTrue(Name.isValidName("Rahul s/o Kumar"));
+        assertTrue(Name.isValidName("Rahul s.o. Kumar"));
+        assertTrue(Name.isValidName("Tan-Kumar"));
     }
 
     @Test
@@ -58,4 +68,7 @@ public class NameTest {
         assertFalse(name.equals(new Name("Other Valid Name")));
     }
 
+    private String generateString(int length) {
+        return "a".repeat(length);
+    }
 }

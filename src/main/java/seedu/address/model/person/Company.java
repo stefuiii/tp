@@ -4,34 +4,42 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's company in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidCompany(String)}.
+ * Represents a Person's company in the contact book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidCompany(String)}
  */
 public class Company {
 
+    public static final int MAX_LENGTH = 100;
     public static final String MESSAGE_CONSTRAINTS =
-            "Company names should only contain alphanumeric characters and spaces, and it should not be blank.";
+            "Company can take any values, should not be blank, and must be at most " + MAX_LENGTH + " characters";
 
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    /*
+     * The first character of the company must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "[^\\s].*";
 
     public final String value;
 
     /**
      * Constructs a {@code Company}.
      *
-     * @param company A valid company name.
+     * @param company A valid company.
      */
     public Company(String company) {
         requireNonNull(company);
         checkArgument(isValidCompany(company), MESSAGE_CONSTRAINTS);
-        this.value = company;
+        value = company;
     }
 
     /**
-     * Returns true if a given string is a valid company name.
+     * Returns true if a given string is a valid company value.
      */
     public static boolean isValidCompany(String test) {
-        return test.matches(VALIDATION_REGEX);
+        Boolean withinLength = test.length() <= MAX_LENGTH;
+        Boolean isMatch = test.matches(VALIDATION_REGEX);
+
+        return withinLength && isMatch;
     }
 
     @Override
@@ -41,13 +49,22 @@ public class Company {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Company
-                && value.equals(((Company) other).value));
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof Company)) {
+            return false;
+        }
+
+        Company otherCompany = (Company) other;
+        return value.equals(otherCompany.value);
     }
 
     @Override
     public int hashCode() {
         return value.hashCode();
     }
+
 }

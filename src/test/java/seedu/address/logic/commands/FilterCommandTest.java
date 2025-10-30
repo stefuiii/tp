@@ -9,6 +9,8 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,10 +27,8 @@ public class FilterCommandTest {
 
     @Test
     public void equals() {
-        TagsContainTagPredicate firstPredicate =
-                new TagsContainTagPredicate(Arrays.asList(new Tag("friend")));
-        TagsContainTagPredicate secondPredicate =
-                new TagsContainTagPredicate(Arrays.asList(new Tag("colleague")));
+        TagsContainTagPredicate firstPredicate = createPredicate("friend");
+        TagsContainTagPredicate secondPredicate = createPredicate("colleague");
 
         FilterCommand filterFirstCommand = new FilterCommand(firstPredicate);
         FilterCommand filterSecondCommand = new FilterCommand(secondPredicate);
@@ -51,39 +51,65 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void execute_emptyTagList_showsNoPersons() {
+        // EP: Empty tag list (boundary case)
+        TagsContainTagPredicate predicate = new TagsContainTagPredicate(Collections.emptyList());
+        assertFilterResult(predicate, 0);
+    }
+
+    @Test
     public void execute_notPresentTag_noPersonDisplayed() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        TagsContainTagPredicate predicate =
-                new TagsContainTagPredicate(Arrays.asList(new Tag("a")));
-        FilterCommand command = new FilterCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        TagsContainTagPredicate predicate = createPredicate("a");
+        assertFilterResult(predicate, 0);
+        assertEquals(Collections.emptyList(), model.getFilteredPersonList());
+    }
+
+    @Test
+    public void execute_noPresentTags_noPersonDisplayed() {
+        TagsContainTagPredicate predicate = createPredicate("nonexistent1", "nonexistent2");
+        assertFilterResult(predicate, 0);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_onePresentTag_somePersonsDisplayed() {
-        TagsContainTagPredicate predicate =
-                new TagsContainTagPredicate(Arrays.asList(new Tag("oWEsmoney")));
+        TagsContainTagPredicate predicate = createPredicate("oWEsmoney");
 
         // Expected number of people are found manually in TypicalPersons.
         // Please update this value accordingly if TypicalPersons is updated.
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FilterCommand command = new FilterCommand(predicate);
-        expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertFilterResult(predicate, 1);
     }
 
     @Test
     public void execute_allPresentTags_morePersonsDisplayed() {
-        TagsContainTagPredicate predicate =
-                new TagsContainTagPredicate(Arrays.asList(new Tag("owesMoney"), new Tag("FRIENDS")));
+        TagsContainTagPredicate predicate = createPredicate("owesMoney", "FRIENDS");
 
         // Expected number of people are found manually in TypicalPersons.
         // Please update this value accordingly if TypicalPersons is updated.
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        assertFilterResult(predicate, 3);
+    }
+
+    /**
+     * Creates a TagsContainTagPredicate from tag names.
+     * @param tagNames One or more tag names to be used to create tags
+     * @return TagsContainTagPredicate object
+     */
+    private TagsContainTagPredicate createPredicate(String... tagNames) {
+        List<Tag> tags = Arrays.stream(tagNames)
+                .map(Tag::new)
+                .collect(Collectors.toList());
+        return new TagsContainTagPredicate(tags);
+    }
+
+    /**
+     * Executes filter command and asserts expected count.
+     */
+    private void assertFilterResult(TagsContainTagPredicate predicate, int expectedCount) {
         FilterCommand command = new FilterCommand(predicate);
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, expectedCount);
+
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(expectedCount, model.getFilteredPersonList().size());
     }
 }

@@ -53,6 +53,9 @@ public class CommandHistory implements ReadOnlyCommandHistory {
      * @return target Command String
      */
     public String getLastCommand(int n) {
+        assert n >= 0 : "Index n must be non-negative";
+        assert this.commandHistoryList != null : "Command History List should not be null";
+
         int targetIndex = this.commandHistoryList.size() - 1 - n;
 
         // Out of Bounds ? Return Empty String

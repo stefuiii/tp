@@ -2,32 +2,42 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
+import java.util.Optional;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.NameOrCompanyPredicate;
 
 /**
- * Parses input arguments and creates a new FindCommand object
+ * Parses input arguments and creates a new FindCommand object.
+ * Supports prefixes n/ for name, c/ for company.
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns a FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
+    @Override
     public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_COMPANY);
+
+        Optional<String> name = argMultimap.getValue(CliSyntax.PREFIX_NAME);
+        Optional<String> company = argMultimap.getValue(CliSyntax.PREFIX_COMPANY);
+
+        if (name.isEmpty() && company.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        if (name.isPresent() && name.get().trim().isEmpty()
+                || company.isPresent() && company.get().trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        // Omit the searching keyword of the placeholder
+        if (company.isPresent() && company.get().trim().equalsIgnoreCase("N/A")) {
+            // Pass empty Optional so predicate always returns false
+            return new FindCommand(new NameOrCompanyPredicate(
+                    Optional.empty(), Optional.empty()));
+        }
+
+        return new FindCommand(new NameOrCompanyPredicate(name, company));
     }
-
 }

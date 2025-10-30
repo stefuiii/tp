@@ -45,8 +45,12 @@ public class Messages {
             builder.append("\nEmail: ").append(person.getEmail());
         }
 
-        if (!person.getAddress().value.equals("N/A")) {
-            builder.append("\nAddress: ").append(person.getAddress());
+        if (!person.getCompany().value.equals("N/A")) {
+            builder.append("\nCompany: ").append(person.getCompany());
+        }
+
+        if (!person.getDetail().isEmpty()) {
+            builder.append("\nDetail: ").append(person.getDetail());
         }
 
         if (!person.getTags().isEmpty()) {

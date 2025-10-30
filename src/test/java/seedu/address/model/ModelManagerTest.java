@@ -187,6 +187,24 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void focusPersonTests() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook differentAddressBook = new AddressBook();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+
+        // Initial Focus Person is null
+        Person focusPerson = modelManager.getFocusedPerson().get();
+        assertEquals(null, focusPerson);
+
+        // Successful update of focus Person
+        modelManager.updateFocusedPerson(0);
+        Person actualPerson = modelManager.getFilteredPersonList().get(0);
+        focusPerson = modelManager.getFocusedPerson().get();
+        assertEquals(actualPerson, focusPerson);
+    }
+
+    @Test
     public void saveAndRetrieveCommandsFromHistory() {
         // Save commands
         modelManager.saveNewCommand("test3");
@@ -223,7 +241,7 @@ public class ModelManagerTest {
             addressBookField.setAccessible(true);
             addressBookField.set(manager, replacement);
         } catch (ReflectiveOperationException e) {
-            throw new AssertionError("Unable to configure address book for test", e);
+            throw new AssertionError("Unable to configure contact book for test", e);
         }
     }
 

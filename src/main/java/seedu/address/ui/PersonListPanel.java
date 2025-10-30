@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -27,6 +28,13 @@ public class PersonListPanel extends UiPart<Region> {
         super(FXML);
         personListView.setItems(personList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+
+        Label emptyListMessage = new Label("No Results shown currently."
+                + "\n\nAdd new contacts or list all with [list]"
+                + "\nEnter [help] for more information!"
+        );
+        emptyListMessage.getStyleClass().add("emptyListMessage");
+        personListView.setPlaceholder(emptyListMessage);
     }
 
     /**
