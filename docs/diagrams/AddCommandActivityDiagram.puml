@@ -1,45 +1,43 @@
 @startuml
-!include style.puml
-skinparam ArrowFontStyle plain
-skinparam activity {
-    BackgroundColor White
-    DiamondBackgroundColor #FDF6E3
-    DiamondBorderColor #B58900
-}
+title Add Command Activity Diagram
 
 start
 
-:User inputs "add n/Alice p/88889999 e/alice@example.com c/NUS t/friend";
-:Parse command;
+:User enters add command;
+:Trim and tokenize arguments;
 
-if (Is command format valid?) then (no)
-    :Display "Invalid command format";
+if () then ([invalid format])
+  :Display "Invalid command format";
+  stop
+else ([format ok])
+  if () then ([required fields missing])
+    :Display "Missing required field(s): name, phone, email, or company";
     stop
-else (yes)
-    if (Are required fields missing?) then (yes)
-        :Display "Missing required field(s): name, phone, email, or company";
+  else ([all required present])
+    :Validate field values (name, phone, email, company, tags);
+    if () then ([invalid values])
+      :Display "Invalid field value(s): check name, phone, email, company, or tags";
+      stop
+    else ([values valid])
+      :Create Person object;
+      :Check duplicate by name + phone;
+      if () then ([duplicate person])
+        :Display "This person already exists in the contact book";
         stop
-    else (no)
-        if (Are argument values valid?) then (no)
-            :Display "Invalid field value(s): check name, phone, email, company, or tags";
-            stop
-        else (yes)
-            :Create Person object;
-            if (Contact already exists?) then (yes)
-                :Display "This person already exists in the contact book";
-                stop
-            else (no)
-                if (Email already exists?) then (yes)
-                    :Display "This email already exists in the contact book";
-                    stop
-                else (no)
-                    :Add new person to Model;
-                    :Save updated AddressBook to Storage;
-                    :Display "You have successfully added the contact";
-                endif
-            endif
+      else ([unique person])
+        :Check duplicate email;
+        if () then ([duplicate email])
+          :Display "This email already exists in the contact book";
+          stop
+        else ([unique email])
+          :Add new person to Model;
+          :Save updated AddressBook to Storage;
+          :Display "You have successfully added the contact";
+          stop
         endif
+      endif
     endif
+  endif
 endif
 
 stop
