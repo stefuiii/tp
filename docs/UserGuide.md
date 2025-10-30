@@ -683,7 +683,6 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * Leading and trailing whitespaces are trimmed
   * If no contacts contain any of the specified tags, an empty contact list will be shown
   * The global contact list shown by `list` command will be filtered, and not the currently displayed contact list
-  * If no contacts match the specified tags, an empty contact list is shown
 
 **When to use this:**
   * You want to view all contacts in a specific category (all clients, all vendors, etc.)

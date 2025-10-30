@@ -16,6 +16,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
+    public static final String MESSAGE_DUPLICATE_PREFIX = "You should only specify one field and one order";
+
     private static final Logger logger = LogsCenter.getLogger(SortCommandParser.class);
 
     /**
@@ -65,6 +67,11 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD, PREFIX_ORDER);
+        try {
+            argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD, PREFIX_ORDER);
+        } catch (ParseException e) {
+            logger.warning("Multiple prefixes for either field, order or both detected");
+            throw new ParseException(MESSAGE_DUPLICATE_PREFIX);
+        }
     }
 }
