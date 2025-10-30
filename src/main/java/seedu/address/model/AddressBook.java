@@ -69,7 +69,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a person to the contact book.
+     * Adds a contact to the contact book.
      * The person must not already exist in the contact book.
      */
     public void addPerson(Person p) {

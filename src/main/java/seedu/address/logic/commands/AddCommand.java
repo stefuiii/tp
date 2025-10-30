@@ -14,13 +14,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Adds a person to the FastCard contact book.
+ * Adds a contact to the FastCard contact book.
  */
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the contact book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a contact to the contact book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
