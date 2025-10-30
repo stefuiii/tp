@@ -403,7 +403,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use Cases
 
-(For all use cases below, the **System** is the `FastCard` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `FastCard` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: UC01 - Delete a contact**
 
@@ -669,47 +669,39 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
       Use case ends.
 
-**Use case: UC10 - Add a contact with full information**
+**Use case: UC10 - Recall previous nth command but overshoots**
 
 **MSS**
+1. User starts a new session of FastCard.
+2. User enters a series of `k` valid commands (e.g. `add`).
+3. User inputs keystroke mapped to 'recall previous Command' function `n` times.
+4. System fills in the `(k - n)`th valid command stored in history.
+5. User inputs keystroke mapped to 'recall next Command' function `i` times.
+6. System fills in the `(k - n + i)`th valid command stored in history.
+7. User continue normal usage.
 
-1.  User requests to add a contact with name, phone number, email, company  and optionally tag.
-2.  System creates an entry of the above contact
-
-    Use case ends.
+   Use case ends.
 
 **Extensions**
-
-* 1a. The given number is invalid.
-
-    * 1a1. System shows an error message.
-
-      Use case resumes at step 1.
-
-
-* 1b. The given number and given name combination already exists.
-
-    *  1b1. System shows an error message.
-
-       Use case resumes at step 1.
+* 1a. User does not provide a valid command.
+    * 1a1. System shows an error message indicating filename is required.
+    * 1a2. System does not save that command to history
   
-* 1c. The given email is invalid
-
-    *  1c1. System shows an error message
+      Use case resumes at step 2.
   
-       Use case resumes at step 1.
+* 2a. Number keystrokes `n` > `k` previous valid commands.
+    * 2a1. System shows an error message indicating end of command history reached.
+    * 2a2. System empties the command input field
+  
+      Use case resumes at step 5.
 
-* 1d. The given email already exists.
+* 5a. Number of recall forward keystrokes `i` > `n` recall previous keystrokes.
+    * 5a1. System empties the command input field
+    * 5a2. subsequent forward keystroke(s) does nothing
+  
+      Use case resumes at step 7.
 
-    *  1d1. System shows an error message
 
-       Use case resumes at step 1.
-
-* 1e. The given tag is invalid
-
-    *  1c1. System shows an error message
-
-       Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
@@ -725,43 +717,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **FastCard**: The product name of this application.
-* **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
-* **Tag**: A short label attached to a contact for categorization (e.g., client, supplier, industry).
-* **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
-* **Index**: A 1-based position of a contact within the currently displayed list.
-* **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
-* **Contact book**: The collection of contacts managed by FastCard.
-* **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
+* **Actor**: The user interacting with FastCard in use cases.
 * **CLI (Command Line Interface)**: Text-based interaction via the command input box.
-* **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
-* **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
-* **Storage**: Persists and retrieves data (company book and user prefs) from JSON files.
-* **User preferences**: Settings such as window size and file paths (read-only view exposed as `ReadOnlyUserPref`).
-* **ObservableList**: A JavaFX list implementation that notifies the UI of changes.
-* **UniquePersonList**: An internal list that enforces uniqueness for contacts.
-* **Parser / XYZCommandParser**: Classes that convert user input into executable command objects.
+* **Command**: A text instruction entered by the user in the command box (e.g., `add`, `edit`, `find`, `list`, `delete`, `clear`, `help`, `exit`).
+* **Command box**: The text input field where users type commands.
 * **CommandResult**: The outcome of executing a command, including the feedback message shown to the user.
-* **Undo/Redo**: Feature that reverts or reapplies recent changes to the company book using stored history.
+* **Contact (Person)**: An entity representing a business contact with name, phone, email, company, and tags.
+* **Contact book**: The collection of contacts managed by FastCard.
+* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
+* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
+* **Duplicate contact**: A contact that conflicts with an existing one based on identity fields (e.g., same phone number).
+* **FastCard**: The product name of this application.
+* **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
+* **GUI (Graphical User Interface)**: The JavaFX-based visual interface (e.g., `MainWindow`, `PersonListPanel`).
+* **Help window**: A separate window displaying usage instructions, opened via the `help` command.
+* **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
+* **Index**: A 1-based position of a contact within the currently displayed list.
+* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
+* **Logic**: Parses commands and executes them against the `Model`, returning a `CommandResult`.
+* **Mainstream OS**: Windows, Linux, Unix, MacOS
+* **Model**: Holds in-memory application data and preferences; exposes a filtered, observable list of contacts.
 * **MSS (Main Success Scenario)**: The primary, exception-free flow of a use case.
 * **NFR (Non-Functional Requirement)**: A quality constraint on the system (e.g., performance, portability).
-* **Actor**: The user interacting with FastCard in use cases.
-* **System**: The application under discussion in use cases (i.e., FastCard).
-* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
-* **Sample data**: Default contacts provided on first launch to demonstrate core features.
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
-* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
-* **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
-* **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
-* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `t/`).
-* **Command box**: The text input field where users type commands.
-* **Result display**: The UI area showing the outcome messages of executed commands.
-* **Status bar**: The UI footer indicating summaries such as list counts and last update time.
+* **ObservableList**: A JavaFX list implementation that notifies the UI of changes.
+* **Parser / XYZCommandParser**: Classes that convert user input into executable command objects.
 * **Person card**: The UI element representing a single contact in the list.
-* **Help window**: A separate window displaying usage instructions, opened via the `help` command.
-* **Detail Pane**: A Split Pane on the main content area, toggled via the `view` command.
+* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `/`, `t/`).
+* **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
+* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Result display**: The UI area showing the outcome messages of executed commands.
+* **Sample data**: Default contacts provided on first launch to demonstrate core features.
+* **Status bar**: The UI footer indicating summaries such as list counts and last update time.
+* **Storage**: Persists and retrieves data (company book and user prefs) from JSON files.
+* **System**: The application under discussion in use cases (i.e., FastCard).
+* **Tag**: A short label attached to a contact for categorization (e.g., client, supplier, industry).
+* **Undo/Redo**: Feature that reverts or reapplies recent changes to the company book using stored history.
+* **UniquePersonList**: An internal list that enforces uniqueness for contacts.
+* **User preferences**: Settings such as window size and file paths (read-only view exposed as `ReadOnlyUserPref`).
+
 
 --------------------------------------------------------------------------------------------------------------------
 
