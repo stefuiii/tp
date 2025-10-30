@@ -10,7 +10,7 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 **Key Benefits:**
 - 🎯 Find anyone instantly with keyword search
 - 🏷️ Organize with tags for quick filtering
-- 💾 Auto-saves every change - never lose data
+- 💾 Auto-save every change - never lose data
 - 🔒 100% offline - your data stays on your computer
 
 ## Who Should Use FastCard?
@@ -115,7 +115,7 @@ The window shows:
 __Lets Start Fresh!__
 
 - Perform the [`clear`](#removing-all-contacts-clear) operation (following guiding steps shown on result display)
-- After starting fresh with , you'll be greeted with this message
+- After restarting the App , you'll be greeted with this message
 ![FastCard UI](images/Ui_init.png)
 
 **Troubleshooting:**
