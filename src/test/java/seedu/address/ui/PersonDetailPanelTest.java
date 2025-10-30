@@ -20,8 +20,11 @@ import org.junit.jupiter.api.Test;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
@@ -375,6 +378,342 @@ public class PersonDetailPanelTest {
                 // Unknown label should be visible when person is null
                 assertTrue(unknownLabel.isVisible());
                 assertTrue(unknownLabel.isManaged());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_copyName_copiesNameToClipboard() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with the correct ID
+                Button mockButton = new Button();
+                mockButton.setId("focusNameButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Verify clipboard contains the name
+                assertEquals("Test Name", Clipboard.getSystemClipboard().getString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_copyPhone_copiesPhoneToClipboard() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with the correct ID
+                Button mockButton = new Button();
+                mockButton.setId("focusPhoneButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Verify clipboard contains the phone
+                assertEquals("12345678", Clipboard.getSystemClipboard().getString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_copyEmail_copiesEmailToClipboard() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with the correct ID
+                Button mockButton = new Button();
+                mockButton.setId("focusEmailButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Verify clipboard contains the email
+                assertEquals("test@example.com", Clipboard.getSystemClipboard().getString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_copyCompany_copiesCompanyToClipboard() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with the correct ID
+                Button mockButton = new Button();
+                mockButton.setId("focusCompanyButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Verify clipboard contains the company
+                assertEquals("Test Company", Clipboard.getSystemClipboard().getString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_copyDetail_copiesDetailToClipboard() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with the correct ID
+                Button mockButton = new Button();
+                mockButton.setId("focusDetailButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Verify clipboard contains the detail
+                assertEquals("Test Detail", Clipboard.getSystemClipboard().getString());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_unknownButton_doesNotCrash() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create a mock button with an unknown ID to test default case
+                Button mockButton = new Button();
+                mockButton.setId("unknownButton");
+                ActionEvent event = new ActionEvent(mockButton, null);
+
+                // Invoke handleDetailClick via reflection - should not crash
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Test passes if no exception is thrown
+                assertTrue(true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void handleDetailClick_nonNodeSource_doesNotCrash() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Name"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new Detail("Test Detail"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                // Create an event with a non-Node source
+                ActionEvent event = new ActionEvent(new Object(), null);
+
+                // Invoke handleDetailClick via reflection - should not crash
+                java.lang.reflect.Method method = panel.getClass()
+                        .getDeclaredMethod("handleDetailClick", ActionEvent.class);
+                method.setAccessible(true);
+                method.invoke(panel, event);
+
+                // Test passes if no exception is thrown
+                assertTrue(true);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void personObservableChange_updatesPanel() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person1 = new Person(
+                new Name("Person One"),
+                new Phone("11111111"),
+                new Email("person1@example.com"),
+                new Company("Company One"),
+                new Detail("Detail One"),
+                new HashSet<>()
+        );
+
+        Person person2 = new Person(
+                new Name("Person Two"),
+                new Phone("22222222"),
+                new Email("person2@example.com"),
+                new Company("Company Two"),
+                new Detail("Detail Two"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                SimpleObjectProperty<Person> personProperty = new SimpleObjectProperty<>(person1);
+                PersonDetailPanel panel = new PersonDetailPanel(personProperty);
+
+                Label focusName = getPrivateField(panel, "focusName", Label.class);
+                Label focusPhone = getPrivateField(panel, "focusPhone", Label.class);
+                Label focusEmail = getPrivateField(panel, "focusEmail", Label.class);
+                Label focusCompany = getPrivateField(panel, "focusCompany", Label.class);
+                Label focusDetail = getPrivateField(panel, "focusDetail", Label.class);
+
+                // Check initial person
+                assertEquals("Person One", focusName.getText());
+                assertEquals("11111111", focusPhone.getText());
+                assertEquals("person1@example.com", focusEmail.getText());
+                assertEquals("Company One", focusCompany.getText());
+                assertEquals("Detail One", focusDetail.getText());
+
+                // Change the person
+                personProperty.set(person2);
+
+                // Check updated person
+                assertEquals("Person Two", focusName.getText());
+                assertEquals("22222222", focusPhone.getText());
+                assertEquals("person2@example.com", focusEmail.getText());
+                assertEquals("Company Two", focusCompany.getText());
+                assertEquals("Detail Two", focusDetail.getText());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
