@@ -2,7 +2,7 @@ package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_NAME;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_INFO;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.COMPANY_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -63,7 +63,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete NONAME";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_NAME);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_INFO);
     }
 
     @Test
