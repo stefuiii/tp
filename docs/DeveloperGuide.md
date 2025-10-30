@@ -804,9 +804,31 @@ testers are expected to do more *exploratory* testing.
 
     - Prerequisites: Performed prior Backward recall manual test, and has the same instance running.
    
-   - Test case: Press &darr; arrow (n + 1) times
+   - Test case: Press &darr; (n + 1) times
    - Expected: Each `i`th keypress modifies the command box with the last `n - i`th valid command used. Up till the current state in history, and the command box will just be empty
+
+### View Contact Details
+1. Toggle View Pane
+
+    - Prerequisites: View Pane is not hidden or not populated. `view` command unused prior in current instance.
+   
+    - Test case: `view` twice.
+    - Expected: (First) View pane comes into view with a guiding message on its usage. (Second) View pane gets hidden.
+
+2. View details of a contact
     
+    - Prerequisites: At least one contact in company book. 
+   
+    - Test case: `view 1`
+    - Expected: The first contact in the current filtered list has their details laid out fully on the detail pane. 
+
+3. Click to Copy
+
+    - Prerequisites: Performed (2) 'View details of a contact test'
+   
+    - Test case: Click on one of the buttons beside an information
+    - Expected: A 'copied' feedback is shown. Corresponding data is saved to clipboard.
+
 
 ### Saving Data
 
