@@ -139,4 +139,29 @@ public class PersonTest {
         assertTrue(person.getDetail().isEmpty());
     }
 
+    @Test
+    public void hashCode_samePersons_returnsSameHashCode() {
+        // same object -> same hash code
+        assertEquals(ALICE.hashCode(), ALICE.hashCode());
+
+        // same values -> same hash code
+        Person aliceCopy = new PersonBuilder(ALICE).build();
+        assertEquals(ALICE.hashCode(), aliceCopy.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentPersons_returnsDifferentHashCode() {
+        // different persons -> different hash codes (in practice, though not strictly required)
+        Person differentPerson = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        assertFalse(ALICE.hashCode() == differentPerson.hashCode());
+
+        // different detail -> different hash code
+        Person differentDetail = new PersonBuilder(ALICE).withDetail("Different detail").build();
+        assertFalse(ALICE.hashCode() == differentDetail.hashCode());
+
+        // different tags -> different hash code
+        Person differentTags = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(ALICE.hashCode() == differentTags.hashCode());
+    }
+
 }
