@@ -48,6 +48,7 @@ public class NameTest {
         assertTrue(Name.isValidName("Tan-Kumar"));
     }
 
+
     @Test
     public void equals() {
         Name name = new Name("Valid Name");
