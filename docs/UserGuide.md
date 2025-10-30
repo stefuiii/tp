@@ -8,7 +8,6 @@
 FastCard is a speed-focused contact manager for sales and procurement professionals who type faster than they click. Instead of navigating through menus, you type simple commands to add, find and manage your network in seconds. Pure Speed!
 
 **Key Benefits:**
-- ⚡ 3x faster than traditional contact managers
 - 🎯 Find anyone instantly with keyword search
 - 🏷️ Organize with tags for quick filtering
 - 💾 Auto-saves every change - never lose data
@@ -40,18 +39,18 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 
 **📚 Core Features**
 - [Features](#features)
-  - [Help Command](#getting-help--help)
-  - [List Command](#viewing-all-contacts--list)
+  - [Help Command](#getting-help-help)
+  - [List Command](#viewing-all-contacts-list)
   - [AddBasic Command](#adding-a-contact-quickly-addbasic)
   - [Add Command](#adding-a-contact-with-complete-details-add)
   - [Edit Command](#updating-contact-information-edit)
   - [Find Command](#searching-for-contacts-by-name-find)
   - [Filter Command](#filtering-contacts-filter)
   - [Sort Command](#organizing-contacts-alphabetically-sort)
-  - [Delete Command](#removing-a-contact--delete)
-  - [View Command](#view-details-view)
+  - [Delete Command](#removing-a-contact-delete)
+  - [View Command](#viewing-details-view)
   - [Command Recall](#recalling-previous-commands-command-history)
-  - [Export Contact](#export-the-contact-list--export)
+  - [Export Contact](#exporting-the-contact-list-export)
   - [Clear Command](#removing-all-contacts-clear)
   - [Exit Command](#closing-fastcard-exit)
 
@@ -60,7 +59,7 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 
 **❓ Help**
 - [Frequently Asked Questions](#faq)
-- [Known Issues](#known-Issues)
+- [Known Issues](#known-issues)
 - [Command Summary](#command-summary)
 
 <page-nav-print />
@@ -104,7 +103,7 @@ FastCard requires **Java 17 or newer** to run. Java is free software that lets y
 4. Press Enter
 
 **What you should see:**
-(First Use): FastCard's window should appear within a few seconds, showing a guiding message to get you get started.
+(First Use): FastCard's window should appear within a few seconds, showing a few example contacts to get you started!
 ![FastCard UI Initial](images/Ui.png)
 
 
@@ -115,7 +114,8 @@ The window shows:
 
 __Lets Start Fresh!__
 
-(Subsequent - if empty): After starting fresh with [`clear`](#removing-all-contacts-clear), you'll be greeted with this message
+- Perform the [`clear`](#removing-all-contacts-clear) operation (following guiding steps shown on result display)
+- After starting fresh with , you'll be greeted with this message
 ![FastCard UI](images/Ui_init.png)
 
 **Troubleshooting:**
@@ -123,17 +123,17 @@ __Lets Start Fresh!__
   * If you see "file not found" &rarr; You're not in the right folder. Check Step 4 Point 2.
 
 **Step 5: Try your first commands**
-Type a command in the command box and press **Enter** to execute it.
+- Type a command in the command box and press **Enter** to execute it.
 
 **Try these example commands:**
 1. See all contacts: `list`
 2. Add a new contact: `add n/John Doe p/98765432 e/johnd@example.com c/Shopee`
-3. Search for a contact: `find John`
+3. Search for a contact: `find n/John`
 4. Delete a contact: `delete John Doe`
 5. Get help: `help`
 
 **Step 6: Learn more commands**
-Once you're comfortable with the basics, check out the [Features](#features) section below for the complete list of what FastCard can do.
+- Once you're comfortable with the basics, check out the [Features](#features) section below for the complete list of what FastCard can do.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -170,8 +170,8 @@ Once you're comfortable with the basics, check out the [Features](#features) sec
 * For simple commands like `help`, `list` and `exit`, anything extra you type will be ignored.<br>
   Example: Typing `help 123` or `help please` both just run `help`.
 
-
-If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
+**⚠Reading from PDF? (some issues)⚠**
+- If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
 
 **Solution:** After pasting, check that spaces are still there, especially around line breaks.
 </box>
@@ -199,7 +199,6 @@ help
 ```
 **You'll see:**
   * A popup window appears with the help message
-  * The window displays "Refer to the user guide:..."
   * You can click `Browse` or `Copy URL` to access the complete user guide or to copy the URL respectively.
 
 **In the main window:**
@@ -267,11 +266,11 @@ Quickly saves a contact with just their name and phone number - perfect when you
 * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
     * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
       Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
-* **Phone** (`p/`) - At least 3 digits
+* **Phone** (`p/`) - At least 3 digits, and at most 20 digits.
 
 **What you need to know:**
   * The combination of name **AND** phone number must be unique, you can't add two people with the same name and phone number combination
-  * You can add more details later using the `edit` command
+  * You can add more details later using the [`edit`](#updating-contact-information-edit) command
 
 **When to use this:**
   * Quick entry during networking events or meetings
@@ -279,7 +278,7 @@ Quickly saves a contact with just their name and phone number - perfect when you
   * Need to capture name and number fast, will add details later
   * Building a contact list from business cards
 
-**Use `add` instead if:** You have complete information (email, company, tags) ready to enter.
+**Use [`add`](#adding-a-contact-with-complete-details-add) instead if:** You have complete information (email, company, tags) ready to enter.
 
 **Examples:**
 
@@ -309,7 +308,7 @@ addbasic n/Rahul s/o Kumar p/91112222
 
 <box type="tip" seamless>
 
-💡 Pro Tip: Use `addbasic` during conversations or events to capture contacts immediately. Update with full details later using the `edit` command when you're back at your desk.
+💡 Pro Tip: Use [`addbasic`](#adding-a-contact-quickly-addbasic) during conversations or events to capture contacts immediately. Update with full details later using the `edit` command when you're back at your desk.
 
 </box>
 
@@ -317,7 +316,7 @@ addbasic n/Rahul s/o Kumar p/91112222
   * `addbasic n/Alice Tan` &rarr; Missing phone number (both name AND phone are required)
   * `addbasic Alice Tan 91234567` &rarr; Missing prefixes (need `n/` and `p/`)
   * Including reserved prefixes inside a name
-    - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
+    - **Symptom:** Commands like `addbasic n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
     - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `c/`, `d/`, `t/`) as a new field, even if it appears inside a value.
     - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
         - `Alice p.o. Bob`
@@ -652,9 +651,9 @@ find n/Jadon c/Google
 <box type="tip" seamless>
 
 💡 Pro Tips:
-  * **Return to full list** - Use `list` after searching to see all contacts again
+  * **Return to full list** - Use [`list`](#viewing-all-contacts-list) after searching to see all contacts again
   * **Narrow your search** - Use fewer, more specific keywords for better results
-  * **Search by tags instead** - If you're looking by tags, use `filter` instead
+  * **Search by tags instead** - If you're looking by tags, use [`filter`](#filtering-contacts-filter) instead
 
 </box>
 
@@ -812,7 +811,7 @@ Permanently removes a contact from FastCard - use with caution as this cannot be
 
 Deleted contacts are **permanently removed** and cannot be recovered. Double-check you're deleting the correct contact before pressing Enter.
 
-**Best practice:** Use `find` first to verify contact details before deleting.
+**Best practice:** Use [`find`](#searching-for-contacts-by-name-find) first to verify contact details before deleting.
 
 </box>
 
@@ -871,9 +870,9 @@ Multiple contacts named John Doe found. Please specify the index to delete.
 <box type="tip" seamless>
 
 💡 Pro Tips:
-  * **Always verify first** - Use `find` to check contact details before deleting
+  * **Always verify first** - Use [`find`](#searching-for-contacts-by-name-find) to check contact details before deleting
   * **Note the index carefully** - After each deletion, indexes shift down (what was 3. becomes 2.)
-  * **Consider editing instead** - If information is outdated, use `edit` to update rather than deleting and re-adding
+  * **Consider editing instead** - If information is outdated, use [`edit`](#updating-contact-information-edit) to update rather than deleting and re-adding
 
 </box>
 
@@ -908,9 +907,9 @@ view 1
   * Buttons corresponding to each core information is displayed 
   * Clicking on the button will add the information to your clipboard for ease of transfer
 
-<box type="tip" seamless>
+<box type="warning" seamless>
 
-💡 Pro Tips:
+**⚠️ WARNING: Potential Stale Information**
   * When you edit the currently focused Contact, the information may become stale! 
   * Simply ensure that you refresh calling `view INDEX` again!
 
@@ -969,6 +968,22 @@ The command appears in your command box, ready to be edited or executed again.
 ### Exporting the contact list : `export`
 Exports all contacts in the address book into a **CSV** file on your **Desktop**.
 This allows users to back up or view their contact list in spreadsheet applications such as Excel or Numbers.
+<box type="info" seamless>
+
+**Want to migrate to another computer?** 
+- Simply copy the `addressbook.json` file from your FastCard data folder!
+- [How?](#faq)
+- The CSV file is to share the data generally.
+
+</box>
+
+<box type="warning" seamless>
+
+**⚠️ WARNING: Potential Overwrite!**
+* If a file with the same name already exists on your Desktop,
+  it will be **overwritten without confirmation**.
+
+</box>
 
 **Format:**
 * `export f/FILENAME`
@@ -987,8 +1002,7 @@ export f/ContactList
 
 **Details:**
 
-* If a file with the same name already exists on your Desktop,
-  it will be **overwritten without confirmation**.
+
 * File names are **case-sensitive** —
   `export f/Contacts` and `export f/contacts` will create two different files.
 * Allowed characters for filenames follow this regular expression:
@@ -1002,12 +1016,14 @@ export f/ContactList
 * Multiple spaces will automatically be **normalized into a single space**.
   Example:
   `export f/  my   new   list` → `my new list.csv`
-* If you export a contact file with the same name, it will overwrite the existing file on your Desktop**.
+
+<box type="tip" seamless>
 
 💡 **Pro Tip:**
 * Need to share your contact list with others? Just **export it!**
 * Use the `export` command to instantly create a sharable CSV file on your Desktop.
 * Send the exported file via email or upload it to your team drive — everyone can open it easily in Excel or Numbers to view your contact list.
+</box>
 
 
 
@@ -1030,8 +1046,8 @@ Before using `clear`:
 **Format:** `clear`
 
 **When NOT to use this:**
-  * Removing specific outdated contacts - Use `delete` instead
-  * Cleaning up a few contacts - Use `filter` or `find` then delete individually
+  * Removing specific outdated contacts - Use [`delete`](#removing-a-contact-delete) instead
+  * Cleaning up a few contacts - Use [`filter`](#filtering-contacts-filter) or [`find`](#searching-for-contacts-by-name-find) then delete individually
 
 **Example: Starting fresh after testing. (With a filled contact list)**
 ```
@@ -1059,7 +1075,6 @@ Contact book has been cleared!
 &rarr; Removes all sample contacts you added while learning FastCard
 
 **Common mistakes:**
-  * Assuming there's a confirmation &rarr; There isn't - it deletes immediately
   * Thinking you can undo &rarr; You can't - deletion is permanent
 
 ### Closing FastCard : `exit`
@@ -1183,7 +1198,7 @@ Advanced users are welcome to update data directly by editing that data file.
 
 **Solution:** Since there's no functionality tied to clicking of the items in the list. Simply refrain from doing so.
 
-**Ability to pull out detail pane without content**
+<u><u><u><u><u><u><u><u><u>**Ability to pull out detail pane without content**</u>
 
 **Solution** Please use the `view` command to toggle the pane instead before adjusting its width.
 
@@ -1206,7 +1221,7 @@ Action     | Format, Examples
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Clear**  | `clear`
+**Clear**  | `clear` / `clear <CONFIRM_WORD>`
 **List**   | `list`
 **Help**   | `help`
 **View**   | `view INDEX` <br> e.g., `view 1`

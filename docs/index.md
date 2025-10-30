@@ -48,4 +48,5 @@ By streamlining the process of capturing and managing contact details, our produ
 ---
 
 ### Additional Information
-The full project documentation is accessible via [this link](https://docs.google.com/document/d/1PL5ROosZ31RnMzyO5RIzXduRayh0XTNKa8umx3QxE6o/edit?tab=t.uh6501x77o69#heading=h.4fjhq3bt0q05)
+We are a small team of 5 developers working on this project fork under the module CS2103T in the National University of Singapore, AY25/26 Semester 1.
+Our project direction is accessible via [this link](https://docs.google.com/document/d/1PL5ROosZ31RnMzyO5RIzXduRayh0XTNKa8umx3QxE6o/edit?tab=t.uh6501x77o69#heading=h.4fjhq3bt0q05)

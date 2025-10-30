@@ -21,8 +21,8 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Command Recall Feature](#command-recall-feature)
     - [Delete Feature](#delete-feature)
-    - [Repeat Command Feature](#repeat-command-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
     - [Add Feature (with Detailed Information)](#add-contact-with-full-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
@@ -236,7 +236,6 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
-
 ### Delete Feature
 Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
 
@@ -265,7 +264,7 @@ The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
 
-### Repeat Command Feature
+### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
 The Sequence diagram for a NextCommand Operation
