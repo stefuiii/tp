@@ -8,7 +8,11 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,12 +41,33 @@ public class PersonCardTest {
 
     @BeforeAll
     static void initJavaFx() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Boolean> future = executor.submit(() -> {
+            try {
+                new JFXPanel(); // initializes JavaFX toolkit
+                Platform.setImplicitExit(false);
+                return true;
+            } catch (Throwable e) {
+                return false;
+            }
+        });
+
         try {
-            new JFXPanel(); // initializes JavaFX toolkit
-            Platform.setImplicitExit(false);
-        } catch (Throwable e) {
+            // Wait max 3 seconds for JavaFX initialization
+            javafxAvailable = future.get(3, TimeUnit.SECONDS);
+            if (!javafxAvailable) {
+                System.err.println("[WARN] JavaFX initialization failed: skipping UI thread tests");
+            }
+        } catch (TimeoutException e) {
             javafxAvailable = false;
-            System.err.println("[WARN] JavaFX not available: skipping UI thread tests");
+            System.err.println("[WARN] JavaFX initialization timed out (headless environment?): "
+                    + "skipping UI thread tests");
+            future.cancel(true);
+        } catch (Exception e) {
+            javafxAvailable = false;
+            System.err.println("[WARN] JavaFX not available: skipping UI thread tests - " + e.getMessage());
+        } finally {
+            executor.shutdownNow();
         }
     }
 
@@ -67,7 +92,9 @@ public class PersonCardTest {
                 latch.countDown();
             }
         });
-        latch.await(1, TimeUnit.SECONDS);
+        if (!latch.await(2, TimeUnit.SECONDS)) {
+            throw new RuntimeException("JavaFX operation timed out");
+        }
     }
 
     @Test
@@ -167,6 +194,144 @@ public class PersonCardTest {
                 assertFalse(email.isVisible());
                 assertFalse(emailIcon.isVisible());
                 assertFalse(emailIcon.isManaged());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void createPersonCard_validPersonNoTags_tagsEmpty() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("John Doe"),
+                new Phone("91234567"),
+                new Email("john@example.com"),
+                new Company("Tech Corp"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            PersonCard card = new PersonCard(person, 3);
+            try {
+                FlowPane tagPane = getPrivateField(card, "tags", FlowPane.class);
+                assertEquals(0, tagPane.getChildren().size());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void createPersonCard_companyIconVisibility_boundToCompanyVisibility() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person validPerson = new Person(
+                new Name("Jane Doe"),
+                new Phone("98765432"),
+                new Email("jane@example.com"),
+                new Company("Valid Company"),
+                new HashSet<>()
+        );
+
+        Person placeholderPerson = new Person(
+                new Name("Bob Smith"),
+                new Phone("81234567"),
+                new Email("bob@example.com"),
+                new Company("N/A"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                // Test with valid company
+                PersonCard validCard = new PersonCard(validPerson, 1);
+                Label validCompany = getPrivateField(validCard, "company", Label.class);
+                assertTrue(validCompany.isVisible());
+
+                // Test with placeholder company
+                PersonCard placeholderCard = new PersonCard(placeholderPerson, 2);
+                Label placeholderCompany = getPrivateField(placeholderCard, "company", Label.class);
+                assertFalse(placeholderCompany.isVisible());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void createPersonCard_emailIconManaged_boundToEmailVisibility() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person validPerson = new Person(
+                new Name("Alice"),
+                new Phone("91234567"),
+                new Email("alice@valid.com"),
+                new Company("Company"),
+                new HashSet<>()
+        );
+
+        Person placeholderPerson = new Person(
+                new Name("Charlie"),
+                new Phone("81234567"),
+                new Email("unknown@example.com"),
+                new Company("Company"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            try {
+                // Test with valid email
+                PersonCard validCard = new PersonCard(validPerson, 1);
+                Label validEmail = getPrivateField(validCard, "email", Label.class);
+                ImageView validEmailIcon = getPrivateField(validCard, "emailIcon", ImageView.class);
+                assertTrue(validEmail.isVisible());
+                assertTrue(validEmailIcon.isManaged());
+
+                // Test with placeholder email
+                PersonCard placeholderCard = new PersonCard(placeholderPerson, 2);
+                Label placeholderEmail = getPrivateField(placeholderCard, "email", Label.class);
+                ImageView placeholderEmailIcon = getPrivateField(placeholderCard, "emailIcon", ImageView.class);
+                assertFalse(placeholderEmail.isVisible());
+                assertFalse(placeholderEmailIcon.isManaged());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @Test
+    public void createPersonCard_phoneIconAlwaysVisible_whenPhonePresent() throws Exception {
+        if (!javafxAvailable) {
+            assertTrue(true);
+            return;
+        }
+
+        Person person = new Person(
+                new Name("Test Person"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Company("Test Company"),
+                new HashSet<>()
+        );
+
+        runOnFxThread(() -> {
+            PersonCard card = new PersonCard(person, 1);
+            try {
+                Label phone = getPrivateField(card, "phone", Label.class);
+                ImageView phoneIcon = getPrivateField(card, "phoneIcon", ImageView.class);
+                assertEquals("12345678", phone.getText());
+                assertTrue(phoneIcon.isVisible());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

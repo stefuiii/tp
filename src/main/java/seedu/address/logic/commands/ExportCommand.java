@@ -66,7 +66,7 @@ public class ExportCommand extends Command {
 
         try (FileWriter writer = new FileWriter(fullPath)) {
             // Write the CSV header row
-            writer.append("Name,Phone,Email,Company,Tags\n");
+            writer.append("Name,Phone,Email,Company,Detail,Tags\n");
 
             // Write one line per contact
             for (Person p : contacts) {
@@ -74,11 +74,12 @@ public class ExportCommand extends Command {
                         .map(tag -> tag.tagName)
                         .collect(Collectors.joining(";"));
 
-                writer.append(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
+                writer.append(String.format("\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n",
                         escapeCsv(p.getName().fullName),
                         escapeCsv(p.getPhone().value),
                         escapeCsv(p.getEmail().value),
                         escapeCsv(p.getCompany().value),
+                        escapeCsv(p.getDetail().value),
                         escapeCsv(tags)
                 ));
             }

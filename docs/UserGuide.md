@@ -317,11 +317,12 @@ addbasic n/Rahul s/o Kumar p/91112222
   * `addbasic Alice Tan 91234567` &rarr; Missing prefixes (need `n/` and `p/`)
   * Including reserved prefixes inside a name
     - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
-    - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `a/`, `t/`) as a new field, even if it appears inside a value.
+    - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `c/`, `d/`, `t/`) as a new field, even if it appears inside a value.
     - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
         - `Alice p.o. Bob`
         - `Alice p-o Bob`
-    - **Note:** Common official patterns like `s/o` (son of) and `d/o` (daughter of) are **allowed** and safe, because `s/` and `d/` are not reserved prefixes.
+        - For "daughter of": Use `d.o.` or `d-o` instead of `d/o`
+    - **Note:** Common official patterns like `s/o` (son of) is **allowed** and safe, because `s/` is not a reserved prefix.
 
 
 ### Adding a contact with complete details: `add`
@@ -402,23 +403,24 @@ add n/Mike Kumar p/87654321 e/mike@company.com c/ABC Industries
   * `add n/John Doe p/91234567 e/existing@email.com c/Shopee` &rarr; Trying to add a contact with an email that already exists (you'll see "This email already exists in the contact book")
   * Including reserved prefixes inside a name
       - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
-      - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `a/`, `t/`) as a new field, even if it appears inside a value.
+      - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `c/`, `d/`, `t/`) as a new field, even if it appears inside a value.
       - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
           - `Alice p.o. Bob`
           - `Alice p-o Bob`
-      - **Note:** Common official patterns like `s/o` (son of) and `d/o` (daughter of) are **allowed** and safe, because `s/` and `d/` are not reserved prefixes.
+          - For "daughter of": Use `d.o.` or `d-o` instead of `d/o`
+      - **Note:** Common official patterns like `s/o` (son of) is **allowed** and safe, because `s/` is not a reserved prefix.
 
 ### Updating contact information: `edit`
 
 Updates an existing contact's information by either their name or position number in the list.
 
 **Format:**
-- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
-- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
+- `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [d/DETAIL] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
+- `edit NAME  [n/NAME] [p/PHONE] [e/EMAIL] [c/COMPANY] [d/DETAIL] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`
 
 **What you need to provide:**
   * **Target contact** - Either the contact's `NAME` or their `INDEX` (position number in the displayed list)
-  * **At least one field to update** - Any combination of name, phone, email, company, or tags
+  * **At least one field to update** - Any combination of name, phone, email, company, detail, or tags
   * All fields are optional, but you must provide at least one
 
 **What you need to know:**
@@ -427,13 +429,15 @@ Updates an existing contact's information by either their name or position numbe
   * **Full Name Required** - If editing by name, you need to provide the contact's full name (e.g., `edit Sarah` will not edit `Sarah Chen`'s contact)
   * **Multiple contacts with the same name** - FastCard will show all matches and ask you to edit by index instead
   * **Email uniqueness** - Each email address must be unique across all contacts (except for placeholder emails like `unknown@example.com`). You cannot change a contact's email to one that's already used by another contact
-  * **Existing values are replaced** - For name, phone, email, and company fields, your new input completely replaces the old information
+  * **Existing values are replaced** - For name, phone, email, company, and detail fields, your new input completely replaces the old information
+  * **Detail field** (`d/`) - A note field with a maximum of 300 characters. Can be left empty to clear existing detail
   * **Tags are flexible** - You can overwrite all tags (`t/`), add to existing tags (`t+/`), or remove specific tags (`t-/`)
 
 **When to use this:**
   * You want to update outdated phone numbers or email addresses
   * You want to add company information to contacts added with `addbasic`
   * You need to correct typos in contact details
+  * You want to add or update notes/details about a contact (e.g., meeting notes, preferences, important information)
   * You want to add or change tags for better organization
 
 <box type="warning" seamless>
@@ -479,7 +483,7 @@ FastCard offers three different ways to manage tags when editing:
 
 **Example 1: Adding details to a basic contact (unique match)**
 ```
-edit Alice Tan e/alice@example.com c/Shopee t/client
+edit Alice Tan e/alice@example.com c/Shopee d/Prefers morning meetings t/client
 ```
 **You'll see:**
 ```
@@ -488,13 +492,14 @@ Name: Alice Tan
 Phone: 91234567
 Email: alice@example.com
 Company: Shopee
+Detail: Prefers morning meetings
 Tags: [client]
 ```
 **In the contact list:**
-  * Alice Tan's email, company and tags are updated
+  * Alice Tan's email, company, detail, and tags are updated
   * Other fields (name, phone) remain unchanged
  
-&rarr; Adds email, company, and tags to Alice who was previously added with just name and phone
+&rarr; Adds email, company, a note, and tags to Alice who was previously added with just name and phone
 
 **Example 2: Edit by name (multiple matches)**
 ```
@@ -531,7 +536,28 @@ Tags: [client] [priority] [vip]
 
 &rarr; Adds new tags while preserving existing ones - perfect for gradually building up contact organization
 
-**Example 4: Adding and removing tags simultaneously**
+**Example 4: Adding a note with important information**
+```
+edit 2 d/Key decision maker for Q4 procurement. Prefers email communication.
+```
+**You'll see:**
+```
+Edited Person:
+Name: John Doe
+Phone: 98765432
+Email: johndoe@example.com
+Company: Tech Corp
+Detail: Key decision maker for Q4 procurement. Prefers email communication.
+Tags: [client]
+```
+**In the contact list:**
+  * Detail field is updated with the note
+  * All other fields remain unchanged
+  * Note is visible in the Detail Panel when viewing this contact
+
+&rarr; Adds important context about the contact that helps with future interactions
+
+**Example 5: Adding and removing tags simultaneously**
 ```
 edit 2 t+/partner t-/client
 ```
@@ -548,6 +574,8 @@ edit 2 t+/partner t-/client
   * **Use `t+/` and `t-/` for gradual tag management** - Add or remove tags without worrying about losing existing ones
   * **View before editing** - Use `find` or `list` to see current tags before making changes
   * **Combine add and delete** - Change contact roles in one command: `edit John t+/vendor t-/client`
+  * **Use detail field for context** - Add meeting notes, preferences, or important reminders about contacts (max 300 characters)
+  * **Clear detail field** - Use `edit INDEX d/` with nothing after `d/` to remove existing detail
 
 </box>
 
@@ -558,6 +586,7 @@ edit 2 t+/partner t-/client
   * `edit 1 t/client t+/priority` &rarr; Cannot mix `t/` with `t+/` or `t-/` (conflicting tag operations)
   * `edit 1 t-/colleague` when contact doesn't have `[colleague]` tag &rarr; FastCard will show an error listing non-existent tags
   * `edit 1 t+/` or `edit 1 t-/` &rarr; Empty tag name (you must provide at least one tag after `t+/` or `t-/`)
+  * `edit 1 d/[very long text over 300 characters]` &rarr; Detail field exceeds maximum length of 300 characters
 
 ### Searching for contacts by name: `find`
 Quickly finds contacts whose names or companies match the keywords you provide.
@@ -852,7 +881,7 @@ Multiple persons named John Doe found. Please specify the index to delete.
 
 ### Viewing details: `view`
 
-Toggles the Detail Pane showing specified user in detail.
+Toggles the Detail Pane showing specified user in detail, including any notes stored in the detail field.
 
 ![FastCard UI](images/Ui_detail.png)
 
@@ -866,11 +895,13 @@ view 1
 ```
 **You'll see:**
   * The full information about the user (if it's too long to be shown on the main card)
+  * Any notes or details added using the `d/` field in the edit command
   * (If Focus Person has not been selected yet) -> Shows a guiding message.
   * Detail Pane toggle to view (if not already visible)
 
 **When should you use this?**
-  * When you want to view the full version of the contact info 
+  * When you want to view the full version of the contact info including detail notes
+  * When you want to review meeting notes or preferences you've saved for a contact
   * When you want a quick reference to the information to transfer to another application
   * Buttons corresponding to each core information is displayed 
   * Clicking on the button will add the information to your clipboard for ease of transfer
@@ -949,6 +980,7 @@ export f/ContactList
 * There are some cases that the empty fields will put in the placeholders:
   * No email: exported CSV will show the email field as `unknown@email.com`
   * No company: exported CSV will show the company field as `N/A`
+  * No detail: exported CSV will leave the detail field empty
   * No tag(s): exported CSV will leave the tag field empty
 
 **Details:**
@@ -1162,11 +1194,13 @@ Action     | Format, Examples
 **Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL c/COMPANY [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com c/Shopee t/client t/highPriority`
 **AddBasic** | `addbasic n/NAME p/PHONE_NUMBER` <br> e.g., `addbasic n/James Ho p/22224444`
 **Delete** | `delete NAME`<br> `delete INDEX` <br> e.g., `delete John Doe` or `delete 2`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​` <br> `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`, `edit John Doe t/colleague`, `edit 1 t+/priority t-/client`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [d/DETAIL] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​` <br> `edit NAME [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [c/COMPANY] [d/DETAIL] [t/TAG]…​ [t+/TAG]…​ [t-/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`, `edit John Doe d/Key contact for procurement`, `edit 1 t+/priority t-/client`
 **Sort** | `sort f/FIELD o/ORDER` <br> e.g., `sort f/name o/asc`
 **Filter** | `filter t/TAG [t/TAG]…` <br> e.g., `filter t/friend t/colleague`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Clear**  | `clear`
 **List**   | `list`
 **Help**   | `help`
+**View**   | `view INDEX` <br> e.g., `view 1`
+**Export** | `export f/FILENAME` <br> e.g., `export f/ContactList`
 **Repeat Commands** | &uarr; (Up Arrow Key) &darr; (Down Arrow Key)
