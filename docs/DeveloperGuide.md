@@ -696,12 +696,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **NFR (Non-Functional Requirement)**: A quality constraint on the system (e.g., performance, portability).
 * **Actor**: The user interacting with FastCard in use cases.
 * **System**: The application under discussion in use cases (i.e., FastCard).
-* **JSON**: Data format used for persistence (e.g., `data/addressbook.json`).
+* **JSON**: Data format used for persistence (e.g., `data/fastcard.json`).
 * **Sample data**: Default contacts provided on first launch to demonstrate core features.
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
 * **Home folder**: The directory where the FastCard `.jar` resides; used as the base for `data/` and `preferences.json`.
-* **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
+* **Data file**: The JSON file at `data/fastcard.json` storing contacts and tags.
 * **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
 * **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
 * **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `t/`).
@@ -871,7 +871,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case (Application Launch with Missing Data File):<br>
       Steps:
          * Navigate to the application's `data` folder
-         * Delete `addressbook.json` if the file exists
+         * Delete `fastcard.json` if the file exists
          * Launch `FastCard` again
       Expected: Default list of contacts shown.
    

@@ -1017,7 +1017,7 @@ Permanently deletes every contact from FastCard - use only when starting complet
 **⚠️ WARNING: This permanently deletes ALL contacts from FastCard. This cannot be undone.**
 
 Before using `clear`:
-  * **Backup your data** - Copy the `addressbook.json` file from your FastCard data folder
+  * **Backup your data** - Copy the `fastcard.json` file from your FastCard data folder
   * **Triple-check** - Make absolutely sure you want to erase everything
 
 **Use this command ONLY when:** You're certain you want to start with a completely empty contact list.
@@ -1108,7 +1108,7 @@ FastCard saves your contacts automatically every time you make a change.
 
 <box type="info" seamless>
 
-Your contact data is stored in a file called `addressbook.json` located in `[JAR file location]/data/`.
+Your contact data is stored in a file called `fastcard.json` located in `[JAR file location]/data/`.
 Advanced users are welcome to update data directly by editing that data file.
 
 **⚠️ WARNING: Manual editing is risky**
@@ -1133,10 +1133,10 @@ Advanced users are welcome to update data directly by editing that data file.
 
 **Q: How do I transfer my client contacts to another Computer?** <br>
 **A**:
-  1. On your old computer, locate the `addressbook.json` file in `[JAR file location]/data/`.
+  1. On your old computer, locate the `fastcard.json` file in `[JAR file location]/data/`.
   2. Copy this file to the other computer.
   3. Install FastCard on your other computer.
-  4. Replace the new `addressbook.json` file with your copied file.
+  4. Replace the new `fastcard.json` file with your copied file.
   5. Restart FastCard. All your contacts should appear.
 
 **Q: Can I undo a command I just entered?** <br>
@@ -1146,7 +1146,7 @@ Advanced users are welcome to update data directly by editing that data file.
 **A:** Your data is safe. Since FastCard saves automatically after every change, you'll only lose any command you were typing when it crashed (not the data itself).
 
 **Q: I accidentally deleted a client contact. Can I recover it?** <br>
-**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your `addressbook.json` file regularly.
+**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your `fastcard.json` file regularly.
 
 **Q: Why isn't my command working?** <br>
 **A:** Common reasons include:
