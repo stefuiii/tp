@@ -263,9 +263,9 @@ Quickly saves a contact with just their name and phone number - perfect when you
 **Format:** `addbasic n/NAME p/PHONE`
 
 **What you need to provide:**
-* **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
+* **Name** (`n/`) - Full name (letters, numbers, spaces, `.`, and `-` allowed)
     * Note: The `/` character is **not supported** to accommodate official namings such as `Rahul s/o Kumar`.
-    * Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
+    * Instead, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
 * **Phone** (`p/`) - At least 3 digits, at most 20 digits
 
 **What you need to know:**
@@ -315,13 +315,6 @@ addbasic n/Rahul s.o Kumar p/91112222
 **Common mistakes:**
   * `addbasic n/Alice Tan` &rarr; Missing phone number (both name AND phone are required)
   * `addbasic Alice Tan 91234567` &rarr; Missing prefixes (need `n/` and `p/`)
-  * Including reserved prefixes inside a name
-    - **Symptom:** Commands like `addbasic n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
-    - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `c/`, `d/`, `t/`) as a new field, even if it appears inside a value.
-    - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
-        - `Alice p.o. Bob`
-        - `Alice p-o Bob`
-        - For "daughter of": Use `d.o.` or `d-o` instead of `d/o`
 
 
 ### Adding a contact with complete details: `add`
@@ -331,10 +324,10 @@ Adds a contact with full information including name, phone, email, company, and 
 **Format:** `add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]…`
 
 **What you need to provide:**
-  * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
-    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
-      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
-  * **Phone** (`p/`) - At least 3 digits
+  * **Name** (`n/`) - Full name (letters, numbers, spaces, `.`, and `-` allowed)
+    * Note: The `/` character is **not supported** to accommodate official namings such as `Rahul s/o Kumar`.
+    * Instead, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
+  * **Phone** (`p/`) - At least 3 digits, at most 20 digits
   * **Email** (`e/`) - Valid email address (e.g., name@company.com)
     * * We *do not recommend* entering `unknown@example.com`, as it is used internally as an `invisible` placeholder when you do not specify an email for your contact.
     * * If you enter that specific value, you will not see the field in your FastCard interface.
@@ -400,14 +393,7 @@ add n/Mike Kumar p/87654321 e/mike@company.com c/ABC Industries
   * `add John Doe 91234567 john@email.com Shopee` &rarr; Missing prefixes (need `n/`, `p/`, `e/`, `c/`)
   * `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend, colleague` &rarr; Don't use commas between tags (repeat `t/` instead)
   * `add n/John Doe p/91234567 e/existing@email.com c/Shopee` &rarr; Trying to add a contact with an email that already exists (you'll see "This email already exists in the contact book")
-  * Including reserved prefixes inside a name
-      - **Symptom:** Commands like `add n/Alice p/o Bob p/91234567` fail or parse incorrectly (e.g., `p/` is treated as the start of the phone field, so the name becomes `Alice` and phone becomes `o Bob` → error).
-      - **Reason:** The parser treats any reserved prefix followed by `/` (e.g., `n/`, `p/`, `e/`, `c/`, `d/`, `t/`) as a new field, even if it appears inside a value.
-      - **Fix:** Do **not** include reserved prefixes with `/` inside names. If you must indicate relationships, use alternatives such as:
-          - `Alice p.o. Bob`
-          - `Alice p-o Bob`
-          - For "daughter of": Use `d.o.` or `d-o` instead of `d/o`
-      - **Note:** Common official patterns like `s/o` (son of) is **allowed** and safe, because `s/` is not a reserved prefix.
+
 
 ### Updating contact information: `edit`
 
