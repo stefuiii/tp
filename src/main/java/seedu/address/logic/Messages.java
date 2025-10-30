@@ -49,6 +49,10 @@ public class Messages {
             builder.append("\nCompany: ").append(person.getCompany());
         }
 
+        if (!person.getDetail().isEmpty()) {
+            builder.append("\nDetail: ").append(person.getDetail());
+        }
+
         if (!person.getTags().isEmpty()) {
             builder.append("\nTags: ");
             person.getTags().forEach(tag -> builder.append(tag).append(" "));
