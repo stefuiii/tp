@@ -394,7 +394,7 @@ add n/Mike Kumar p/87654321 e/mike@company.com c/ABC Industries
   * `add John Doe 91234567 john@email.com Shopee` &rarr; Missing prefixes (need `n/`, `p/`, `e/`, `c/`)
   * `add n/John Doe p/91234567 e/john@example.com c/Shopee t/friend, colleague` &rarr; Don't use commas between tags (repeat `t/` instead)
   * `add n/John Doe p/91234567 e/existing@email.com c/Shopee` &rarr; Trying to add a contact with an email that already exists (you'll see "This email already exists in the contact book")
-  * * `add n/David D/O Tan p/12345678 c/Shopee e/12345678@gmail.com` &rarr; Using banned sign `/` in the name field
+  * `add n/David D/O Tan p/12345678 c/Shopee e/12345678@gmail.com` &rarr; Using banned sign `/` in the name field
 
 
 ### Updating contact information: `edit`
