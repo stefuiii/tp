@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -23,6 +24,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Company;
+import seedu.address.model.person.Detail;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -44,6 +46,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_COMPANY + "COMPANY] "
+            + "[" + PREFIX_DETAIL + "DETAIL] "
             + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_TAG_ADD + "TAG]... "
             + "[" + PREFIX_TAG_DELETE + "TAG]...\n"
@@ -184,6 +187,7 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
+        Detail updatedDetail = editPersonDescriptor.getDetail().orElse(personToEdit.getDetail());
 
         // Handle tags: if tags are set (overwrite), use them; otherwise, apply additions/deletions
         Set<Tag> updatedTags;
@@ -205,7 +209,7 @@ public class EditCommand extends Command {
             }
         }
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedCompany, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedCompany, updatedDetail, updatedTags);
     }
 
     @Override
@@ -275,6 +279,7 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Company company;
+        private Detail detail;
         private Set<Tag> tags;
         private Set<Tag> tagsToAdd;
         private Set<Tag> tagsToDelete;
@@ -290,6 +295,7 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setCompany(toCopy.company);
+            setDetail(toCopy.detail);
             setTags(toCopy.tags);
             setTagsToAdd(toCopy.tagsToAdd);
             setTagsToDelete(toCopy.tagsToDelete);
@@ -299,7 +305,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, company, tags, tagsToAdd, tagsToDelete);
+            return CollectionUtil.isAnyNonNull(name, phone, email, company, detail, tags, tagsToAdd, tagsToDelete);
         }
 
         public void setName(Name name) {
@@ -332,6 +338,14 @@ public class EditCommand extends Command {
 
         public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
+        }
+
+        public void setDetail(Detail detail) {
+            this.detail = detail;
+        }
+
+        public Optional<Detail> getDetail() {
+            return Optional.ofNullable(detail);
         }
 
         /**
@@ -401,6 +415,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(company, otherEditPersonDescriptor.company)
+                    && Objects.equals(detail, otherEditPersonDescriptor.detail)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(tagsToAdd, otherEditPersonDescriptor.tagsToAdd)
                     && Objects.equals(tagsToDelete, otherEditPersonDescriptor.tagsToDelete);
@@ -413,6 +428,7 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("company", company)
+                    .add("detail", detail)
                     .add("tags", tags)
                     .add("tagsToAdd", tagsToAdd)
                     .add("tagsToDelete", tagsToDelete)

@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.SortCommand;
 
 public class SortCommandParserTest {
@@ -49,13 +48,13 @@ public class SortCommandParserTest {
 
         // Duplicate PREFIX
         assertParseFailure(parser, " " + PREFIX_FIELD + " names " + PREFIX_FIELD + " tags " + PREFIX_ORDER + " asc ",
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_FIELD));
+                SortCommandParser.MESSAGE_DUPLICATE_PREFIX);
 
         assertParseFailure(parser, " " + PREFIX_FIELD + " names " + PREFIX_ORDER + " asc " + PREFIX_ORDER + " desc ",
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ORDER));
+                SortCommandParser.MESSAGE_DUPLICATE_PREFIX);
 
         assertParseFailure(parser, " " + PREFIX_FIELD + " names " + PREFIX_FIELD + " tags " + PREFIX_ORDER + " asc "
-                + PREFIX_ORDER + " desc ", Messages.getErrorMessageForDuplicatePrefixes(PREFIX_FIELD, PREFIX_ORDER));
+                + PREFIX_ORDER + " desc ", SortCommandParser.MESSAGE_DUPLICATE_PREFIX);
 
         assertParseFailure(parser, " " + PREFIX_FIELD + " names " + PREFIX_FIELD + " tags ", expectedResult);
         assertParseFailure(parser, " " + PREFIX_ORDER + " asc " + PREFIX_ORDER + " desc ", expectedResult);

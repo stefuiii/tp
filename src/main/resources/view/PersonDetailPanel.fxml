@@ -36,6 +36,9 @@
 
     <Button fx:id="focusCompanyButton" text="Company:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
     <Label fx:id="focusCompany" wrapText="true" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="detailLabel"/>
+
+    <Button fx:id="focusDetailButton" text="Detail:" styleClass="detailButton" wrapText="true" GridPane.rowIndex="4" GridPane.columnIndex="0" onAction="#handleDetailClick"/>
+    <Label fx:id="focusDetail" wrapText="true" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="detailLabel"/>
   </GridPane>
 
   <VBox VBox.vgrow="ALWAYS">

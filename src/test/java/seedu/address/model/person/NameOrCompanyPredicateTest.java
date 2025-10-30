@@ -68,20 +68,26 @@ public class NameOrCompanyPredicateTest {
     }
 
     @Test
-    public void test_companyMatches_success() {
-        // Exact match
-        NameOrCompanyPredicate predicate =
-                new NameOrCompanyPredicate(Optional.empty(), Optional.of("Google"));
-        assertTrue(predicate.test(new PersonBuilder().withCompany("Google").build()));
+    public void test_companyKeywordMatches_success() {
+        Person person = new PersonBuilder().withCompany("Google SG").build();
 
-        // Partial match
-        predicate = new NameOrCompanyPredicate(Optional.empty(), Optional.of("oog"));
-        assertTrue(predicate.test(new PersonBuilder().withCompany("Google").build()));
+        // Case insensitive
+        NameOrCompanyPredicate predicate1 = new NameOrCompanyPredicate(Optional.empty(), Optional.of("google"));
+        assertTrue(predicate1.test(person));
 
-        // Case-insensitive
-        predicate = new NameOrCompanyPredicate(Optional.empty(), Optional.of("gOOgle"));
-        assertTrue(predicate.test(new PersonBuilder().withCompany("Google").build()));
+        // Different word
+        NameOrCompanyPredicate predicate2 = new NameOrCompanyPredicate(Optional.empty(), Optional.of("SG"));
+        assertTrue(predicate2.test(person));
+
+        // Wrong word
+        NameOrCompanyPredicate predicate3 = new NameOrCompanyPredicate(Optional.empty(), Optional.of("Amazon"));
+        assertFalse(predicate3.test(person));
+
+        // Partial token
+        NameOrCompanyPredicate predicate4 = new NameOrCompanyPredicate(Optional.empty(), Optional.of("oog"));
+        assertFalse(predicate4.test(person));
     }
+
 
     @Test
     public void test_companyDoesNotMatch_returnsFalse() {

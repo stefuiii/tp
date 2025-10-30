@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -54,6 +55,7 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, " c/Google n/Alice", expectedCommand); // order shouldn't matter
     }
 
+
     @Test
     public void parse_missingPrefix_failure() {
         // no prefix at all -> invalid
@@ -87,4 +89,15 @@ public class FindCommandParserTest {
         String expected = FindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertParseSuccess(parser, " n/Alice", findCommand);
     }
+
+    @Test
+    public void parse_companyPlaceholder_returnsEmptyPredicate() throws Exception {
+        FindCommandParser parser = new FindCommandParser();
+        FindCommand command = parser.parse(" c/N/A");
+
+        // Verify that the predicate does not match any real person
+        NameOrCompanyPredicate predicate = new NameOrCompanyPredicate(Optional.empty(), Optional.empty());
+        assertEquals(new FindCommand(predicate), command);
+    }
+
 }

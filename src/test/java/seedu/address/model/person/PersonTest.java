@@ -90,12 +90,17 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different detail -> returns false
+        editedAlice = new PersonBuilder(ALICE).withDetail("Different detail").build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", company=" + ALICE.getCompany() + ", tags=" + ALICE.getTags() + "}";
+                + ", email=" + ALICE.getEmail() + ", company=" + ALICE.getCompany() + ", detail=" + ALICE.getDetail()
+                + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
 
@@ -119,6 +124,44 @@ public class PersonTest {
                 new Company("Kent Ridge"), new HashSet<>());
 
         assertFalse(p1.isSamePerson(p2));
+    }
+
+    @Test
+    public void getDetail_validDetail_returnsDetail() {
+        Person person = new PersonBuilder().withDetail("Test detail").build();
+        assertEquals(new Detail("Test detail"), person.getDetail());
+    }
+
+    @Test
+    public void getDetail_emptyDetail_returnsEmptyDetail() {
+        Person person = new PersonBuilder().withDetail("").build();
+        assertEquals(new Detail(""), person.getDetail());
+        assertTrue(person.getDetail().isEmpty());
+    }
+
+    @Test
+    public void hashCode_samePersons_returnsSameHashCode() {
+        // same object -> same hash code
+        assertEquals(ALICE.hashCode(), ALICE.hashCode());
+
+        // same values -> same hash code
+        Person aliceCopy = new PersonBuilder(ALICE).build();
+        assertEquals(ALICE.hashCode(), aliceCopy.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentPersons_returnsDifferentHashCode() {
+        // different persons -> different hash codes (in practice, though not strictly required)
+        Person differentPerson = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        assertFalse(ALICE.hashCode() == differentPerson.hashCode());
+
+        // different detail -> different hash code
+        Person differentDetail = new PersonBuilder(ALICE).withDetail("Different detail").build();
+        assertFalse(ALICE.hashCode() == differentDetail.hashCode());
+
+        // different tags -> different hash code
+        Person differentTags = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(ALICE.hashCode() == differentTags.hashCode());
     }
 
 }
