@@ -60,7 +60,7 @@ FastCard is a speed-focused contact manager for sales and procurement profession
 
 **❓ Help**
 - [Frequently Asked Questions](#faq)
-- [Known Issues](#known-issues)
+- [Known Issues](#known-Issues)
 - [Command Summary](#command-summary)
 
 <page-nav-print />
@@ -630,7 +630,7 @@ find n/Jadon c/Google
 **Common mistakes:**
   * `find Han` expecting to find "Hans" &rarr; Partial words don't match (must be complete: `find Hans`)
 
-### Filtering Contacts: `filter`
+### Filtering contacts: `filter`
 
 Shows only contacts that have specific tags - perfect for viewing contacts by category like "client", "vendor", or "priority".
 
@@ -849,7 +849,7 @@ Multiple persons named John Doe found. Please specify the index to delete.
   * `delete 0` &rarr; Invalid index (index starts at 1, not 0)
   * `delete 5` when only 3 contacts shown &rarr; Index out of range (must be within displayed list)
 
-### View Details: `view`
+### Viewing details: `view`
 
 Toggles the Detail Pane showing specified user in detail.
 
@@ -932,7 +932,7 @@ The command appears in your command box, ready to be edited or executed again.
   * Pressing &uarr; then immediately pressing Enter &rarr; Accidentally re-executes the previous command (review it first!)
   * Expecting history after restart &rarr; History clears when you close FastCard (only lasts current session)
 
-### Export the Contact List : `export`
+### Exporting the contact list : `export`
 Exports all contacts in the address book into a **CSV** file on your **Desktop**.
 This allows users to back up or view their contact list in spreadsheet applications such as Excel or Numbers.
 
@@ -1123,7 +1123,7 @@ Advanced users are welcome to update data directly by editing that data file.
   * Typos in the command
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## Known Issues
 
 <u>**FastCard opens off-screen when using multiple screens**</u>
 

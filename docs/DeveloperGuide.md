@@ -10,7 +10,7 @@
 ## **Table of Contents**
 
 - [Acknowledgements](#acknowledgements)
-- [Setting up, Getting started](#setting-up-getting-started)
+- [Setting Up, Getting Started](#setting-up-getting-started)
 - [Design](#design)
     - [Architecture](#architecture)
     - [UI Component](#ui-component)
@@ -45,7 +45,7 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
+## **Setting Up, Getting Started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
@@ -568,7 +568,7 @@ testers are expected to do more *exploratory* testing.
    -   Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-### Listing all contacts
+### Listing all Contacts
 1.  List all contacts in FastCard.
 
    -   Prerequisite: At least one contact exists in FastCard.
@@ -576,11 +576,11 @@ testers are expected to do more *exploratory* testing.
    -   Test case: `list`<br>
        Expected: All contacts are displayed.
 
-### Deleting a Person
+### Deleting a Contact
 
-1.  Deleting a person while all persons are being shown
+1.  Deleting a contact while all contacts are being shown
 
-    -  Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
 
     -  Test case: `delete Alice Pauline`<br>
        Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -711,6 +711,6 @@ testers are expected to do more *exploratory* testing.
 
 --------------------------------------------------------------------------------------------------------------------
 
-### Appendix: Planned enhancements
+### Appendix: Planned Enhancements
 
 Team size: 5
