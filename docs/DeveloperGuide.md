@@ -23,6 +23,7 @@
     - [Filter Feature](#filter-feature)
     - [Command Recall Feature](#command-recall-feature)
     - [Delete Feature](#delete-feature)
+    - [Edit Feature](#edit-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
     - [Add Feature (with Detailed Information)](#add-contact-with-full-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
@@ -263,6 +264,37 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
+### Edit Feature
+Editing contacts is facilitated by `EditCommand` and `EditCommandParser`, following these steps:
+
+1. **User input parsing**: `EditCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing the target identifier (index or name) and field values to update. The parser first attempts to interpret the preamble as an index via `ParserUtil.parseIndex()`. If parsing fails, it treats the preamble as a name reference.
+
+2. **Validation checks**: The parser performs several validations:
+   * Ensures that at least one field to edit is provided
+   * Verifies no duplicate prefixes for singular fields (name, phone, email, company, detail)
+   * Checks that `PREFIX_TAG` (overwrite) is not used together with `PREFIX_TAG_ADD` or `PREFIX_TAG_DELETE`
+   * Validates that tags to add or delete are not empty
+
+3. **Target resolution**: During execution, `EditCommand#execute()` determines whether to operate on an index or a name:
+   * For index-based edits, the command retrieves the target from `Model#getFilteredPersonList()` and ensures the index is within bounds.
+   * For name-based edits, it normalizes the name (case-insensitive, multiple spaces collapsed) and scans the filtered list for matches.
+
+4. **Disambiguation**: If multiple contacts share the same name, the command updates the filtered list through `Model#updateFilteredPersonList(...)` to display only matching entries, then prompts the user to edit by index instead.
+
+5. **Tag handling**: The edit command supports three tag modification modes:
+   * **Overwrite mode** (`t/`): Replaces all existing tags with the specified tags
+   * **Addition mode** (`t+/`): Adds specified tags to existing tags
+   * **Deletion mode** (`t-/`): Removes specified tags from existing tags (validates that tags exist before deletion)
+
+6. **Person creation and validation**: The command creates an edited person through `createEditedPerson()`, which applies all field updates including tag modifications. It then validates:
+   * The edited person is not a duplicate of another existing contact
+   * The edited email (if changed) is not used by another contact
+   * All tags to be deleted actually exist on the person
+
+7. **Model update and feedback**: Once validation passes, `Model#setPerson(personToEdit, editedPerson)` replaces the original person with the edited version. The filtered list is updated to show only the edited contact, and a `CommandResult` is returned with the success message displaying the updated contact details.
+
+The sequence diagram below shows how the edit operation works:
+<puml src="diagrams/EditSequenceDiagram.puml" width="100%" />
 
 ### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
