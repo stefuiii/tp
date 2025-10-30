@@ -35,8 +35,8 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "competitor "
             + PREFIX_TAG + "sales";
 
-    public static final String MESSAGE_SUCCESS = "New person added: \n%1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book";
+    public static final String MESSAGE_SUCCESS = "New contact added: \n%1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This contact already exists in the contact book";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book";
     private static final String PLACEHOLDER_EMAIL = "unknown@example.com";
 

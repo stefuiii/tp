@@ -96,7 +96,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts the contacts in the contact book based on the given comparator.
+     * Sorts the contact(s) in the contact book based on the given comparator.
      * @param comparator Comparator to sort the contact book.
      */
     public void sort(Comparator<Person> comparator) {

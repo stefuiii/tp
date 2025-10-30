@@ -14,7 +14,7 @@ public class ClearCommand extends Command {
     public static final String COMMAND_CONFIRMATION_WORD = "CONFIRM";
     public static final String MESSAGE_SUCCESS = "Contact book has been cleared!";
     public static final String MESSAGE_EMPTY_ADDRESS_BOOK = "Contact book is already empty.";
-    public static final String MESSAGE_UNCONFIRMED = "This will delete all your contacts (action irreversible!)"
+    public static final String MESSAGE_UNCONFIRMED = "This will delete all your contact(s) (action irreversible!)"
             + "\nIf you'd like to continue, confirm with input [clear " + COMMAND_CONFIRMATION_WORD + "]";
     public static final String MESSAGE_CLEAR_CANCELLED = "Improper Confirmation. Unchanged.";
     private boolean isConfirmed;
