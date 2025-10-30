@@ -50,7 +50,7 @@ public class PersonDetailPanelTest {
                 return false;
             }
         });
-        
+
         try {
             // Wait max 3 seconds for JavaFX initialization
             javafxAvailable = future.get(3, TimeUnit.SECONDS);
@@ -59,7 +59,8 @@ public class PersonDetailPanelTest {
             }
         } catch (TimeoutException e) {
             javafxAvailable = false;
-            System.err.println("[WARN] JavaFX initialization timed out (headless environment?): skipping UI thread tests");
+            System.err.println("[WARN] JavaFX initialization timed out (headless environment?): "
+                    + "skipping UI thread tests");
             future.cancel(true);
         } catch (Exception e) {
             javafxAvailable = false;
