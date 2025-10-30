@@ -31,6 +31,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
+        // Omit the searching keyword of the placeholder
+        if (company.isPresent() && company.get().trim().equalsIgnoreCase("N/A")) {
+            // Pass empty Optional so predicate always returns false
+            return new FindCommand(new NameOrCompanyPredicate(
+                    Optional.empty(), Optional.empty()));
+        }
+
         return new FindCommand(new NameOrCompanyPredicate(name, company));
     }
 }

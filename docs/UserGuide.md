@@ -573,7 +573,8 @@ You can search by name, company, or both at the same time.
 
 **What you need to know:**
 * Searches are **case-insensitive** – `google`, `Google`, and `GOOGLE` all match the same results
-* Supports **partial (substring)** matches – typing `Han` will find `Hans` or `Hannah`
+* Supports **partial (substring)** matches of **name** – typing `Han` will find `Hans` or `Hannah`
+* Supports **keyword** matches of **company** - typing `Google` will find `Google` and `Google SG`
 * Both name and company searches can be combined (logical **AND**)
 
     * `find n/Alice c/NUS` → finds contacts whose **name contains “Alice”** **and** whose **company contains “NUS”**
@@ -581,7 +582,7 @@ You can search by name, company, or both at the same time.
 * The number of matching contacts will be displayed after searching
 
 **When to use this:**
-  * You remember only part of someone’s name or their company name
+  * You remember only part of someone’s name or some keywords of their company name
   * You want to find all contacts working in the same organisation
   * You want to narrow your search by both name and company
 

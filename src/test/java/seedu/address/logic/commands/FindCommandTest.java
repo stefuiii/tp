@@ -103,7 +103,7 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW,
                 expectedModel.getFilteredPersonList().size());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertTrue(model.getFilteredPersonList().contains(BENSON));
+        assertFalse(model.getFilteredPersonList().contains(BENSON));
     }
 
     @Test
