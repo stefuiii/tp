@@ -170,6 +170,15 @@ Once you're comfortable with the basics, check out the [Features](#features) sec
 * For simple commands like `help`, `list` and `exit`, anything extra you type will be ignored.<br>
   Example: Typing `help 123` or `help please` both just run `help`.
 
+**Constraints of fields**
+* Case-insensitive
+  * All text-based fields: `NAME` `COMPANY` `EMAIL` `TAG` are **case-insensitive**
+    * 涉及到的功能：addbasic，add，edit，delete，find，sort
+* Normalization
+  * Extra spaces in fields will be automatically removed
+  '''
+  '''
+
 If you're reading this as a PDF and copying commands, be aware that spaces may get removed when you paste them into FastCard. This can cause commands to fail.
 
 **Solution:** After pasting, check that spaces are still there, especially around line breaks.
