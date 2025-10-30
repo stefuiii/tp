@@ -684,6 +684,7 @@ Shows only contacts that have specific tags - perfect for viewing contacts by ca
   * Leading and trailing whitespaces are trimmed
   * If no contacts contain any of the specified tags, an empty contact list will be shown
   * The global contact list shown by `list` command will be filtered, and not the currently displayed contact list
+  * Filtering an empty contact list will still result in an empty contact list
 
 **When to use this:**
   * You want to view all contacts in a specific category (all clients, all vendors, etc.)
@@ -751,7 +752,8 @@ Arranges your contacts in alphabetical order based on the field you choose - use
   * Contacts without the sorted field appear at the start (for ascending order) or end (for descending order)
   * Leading and trailing whitespaces are trimmed
   * Sorting permanently reorders your contacts (Reloading FastCard will preserve the ordering of the contacts you sorted)
-  * If multiple contacts contain the same field to be sorted by (ignoring case-sensitivity), the relative ordering of these contacts will be the same as the relative ordering before sorting.
+  * If multiple contacts contain the same field to be sorted by (ignoring case-sensitivity), the relative ordering of these contacts will be the same as the relative ordering before sorting
+  * Sorting an empty contact list will still result in an empty contact list
 
 <box type="warning" seamless>
 
