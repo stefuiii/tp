@@ -43,7 +43,7 @@ public class NameTest {
 
     @Test
     public void isValidName_validNamesWithSymbols_returnsTrue() {
-        assertTrue(Name.isValidName("Rahul s/o Kumar"));
+        assertFalse(Name.isValidName("Rahul s/o Kumar"));
         assertTrue(Name.isValidName("Rahul s.o. Kumar"));
         assertTrue(Name.isValidName("Tan-Kumar"));
     }

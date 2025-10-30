@@ -44,7 +44,7 @@ FastCard is a speed-focused contact manager for sales and procurement profession
   - [AddBasic Command](#adding-a-contact-quickly-addbasic)
   - [Add Command](#adding-a-contact-with-complete-details-add)
   - [Edit Command](#updating-contact-information-edit)
-  - [Find Command](#searching-for-contacts-by-name-find)
+  - [Find Command](#searching-for-contacts-find)
   - [Filter Command](#filtering-contacts-filter)
   - [Sort Command](#organizing-contacts-alphabetically-sort)
   - [Delete Command](#removing-a-contact-delete)
@@ -264,9 +264,9 @@ Quickly saves a contact with just their name and phone number - perfect when you
 
 **What you need to provide:**
 * **Name** (`n/`) - Full name (letters, numbers, spaces, `/`, `.`, and `-` allowed)
-    * Note: The `/` character is supported to accommodate official namings such as `Rahul s/o Kumar`.  
-      Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
-* **Phone** (`p/`) - At least 3 digits, and at most 20 digits.
+    * Note: The `/` character is **not supported** to accommodate official namings such as `Rahul s/o Kumar`.
+    * Similarly, you may use `.` or `-` in names if needed (e.g. `Rahul s.o. Kumar`, `Tan-Kumar`).
+* **Phone** (`p/`) - At least 3 digits
 
 **What you need to know:**
   * The combination of name **AND** phone number must be unique, you can't add two people with the same name and phone number combination
@@ -300,7 +300,7 @@ Phone: 98765432
 
 **Example 2: Adding a contact with allowed special sign in the name**
 ```
-addbasic n/Rahul s/o Kumar p/91112222
+addbasic n/Rahul s.o Kumar p/91112222
 ```
 **You'll see:**
   * Similar to above
@@ -322,7 +322,6 @@ addbasic n/Rahul s/o Kumar p/91112222
         - `Alice p.o. Bob`
         - `Alice p-o Bob`
         - For "daughter of": Use `d.o.` or `d-o` instead of `d/o`
-    - **Note:** Common official patterns like `s/o` (son of) is **allowed** and safe, because `s/` is not a reserved prefix.
 
 
 ### Adding a contact with complete details: `add`
@@ -588,7 +587,7 @@ edit 2 t+/partner t-/client
   * `edit 1 t+/` or `edit 1 t-/` &rarr; Empty tag name (you must provide at least one tag after `t+/` or `t-/`)
   * `edit 1 d/[very long text over 300 characters]` &rarr; Detail field exceeds maximum length of 300 characters
 
-### Searching for contacts by name: `find`
+### Searching for contacts: `find`
 Quickly finds contacts whose names or companies match the keywords you provide.
 You can search by name, company, or both at the same time.
 
@@ -605,7 +604,6 @@ You can search by name, company, or both at the same time.
 * Supports **partial (substring)** matches of **name** – typing `Han` will find `Hans` or `Hannah`
 * Supports **keyword** matches of **company** - typing `Google` will find `Google` and `Google SG`
 * Both name and company searches can be combined (logical **AND**)
-
     * `find n/Alice c/NUS` → finds contacts whose **name contains “Alice”** **and** whose **company contains “NUS”**
 * If only one prefix is provided, only that field is searched
 * The number of matching contacts will be displayed after searching
