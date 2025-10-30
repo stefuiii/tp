@@ -19,8 +19,8 @@ public class AddCommandBasic extends Command {
 
     public static final String COMMAND_WORD = "addbasic";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a contact to contact book "
-            + "with only name and phone. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a contact to contact book "
+            + "with only name and phone. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE\n"
