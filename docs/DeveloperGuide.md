@@ -21,6 +21,8 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Delete Feature](#delete-feature)
+    - [Repeat Command Feature](#repeat-command-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
@@ -233,7 +235,8 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
-#### Delete Feature
+
+### Delete Feature
 Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
 
 1. **User input parsing**: `DeleteCommandParser#parse()` trims the user input and first attempts to interpret it as an index
@@ -260,7 +263,8 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
-#### Repeat Command Feature
+
+### Repeat Command Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
 The Sequence diagram for a NextCommand Operation
@@ -296,6 +300,7 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
    The `MainWindow` then updates the UI to display the success message in the `CommandBox`.
 
 <puml src="diagrams/AddCommandBasicDiagram.puml" width="100%" />
+<puml src="diagrams/AddCommandBasicActivityDiagram.puml" width="100%" />
 
 ## **Documentation, Logging, Testing, Configuration, Dev-Ops**
 
