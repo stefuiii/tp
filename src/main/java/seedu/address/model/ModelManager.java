@@ -123,7 +123,7 @@ public class ModelManager implements Model {
             throw new AssertionError("Person should be removed from the contact book after deletion");
         }
 
-        logger.fine(() -> "Successfully deleted person: " + target);
+        logger.fine(() -> "Successfully deleted contact: " + target);
     }
 
     @Override

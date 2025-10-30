@@ -38,7 +38,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Adds a person to the list.
+     * Adds a contact to the list.
      * The person must not already exist in the list.
      */
     public void add(Person toAdd) {
