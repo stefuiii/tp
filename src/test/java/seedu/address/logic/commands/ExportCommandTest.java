@@ -54,7 +54,7 @@ public class ExportCommandTest {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(exportedFile))) {
             String header = reader.readLine();
-            assertEquals("Name,Phone,Email,Company,Tags", header, "CSV header should match");
+            assertEquals("Name,Phone,Email,Company,Detail,Tags", header, "CSV header should match");
         }
     }
 
@@ -86,7 +86,7 @@ public class ExportCommandTest {
         try (BufferedReader reader = new BufferedReader(new FileReader(exportedFile))) {
             String header = reader.readLine();
             String nextLine = reader.readLine();
-            assertEquals("Name,Phone,Email,Company,Tags", header);
+            assertEquals("Name,Phone,Email,Company,Detail,Tags", header);
             assertEquals(null, nextLine, "There should be no contact lines.");
         }
     }

@@ -10,7 +10,7 @@
 ## **Table of Contents**
 
 - [Acknowledgements](#acknowledgements)
-- [Setting up, Getting started](#setting-up-getting-started)
+- [Setting Up, Getting Started](#setting-up-getting-started)
 - [Design](#design)
     - [Architecture](#architecture)
     - [UI Component](#ui-component)
@@ -45,7 +45,7 @@
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
+## **Setting Up, Getting Started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
@@ -188,7 +188,7 @@ Classes used by multiple components are in the `seedu.company.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 
-#### Sort Feature
+### Sort Feature
 
 Sorting is facilitated by `SortCommand` and `SortCommandParser`, following these steps:
 
@@ -210,7 +210,7 @@ The activity diagram below depicts the execution flow of the sort command:
 <puml src="diagrams/SortActivityDiagram.puml" width="100%" />
 
 
-#### Filter Feature
+### Filter Feature
 The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandParser`, following these steps:
 
 1. **User input parsing**: `FilterCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing tag values, then validates the tokens through `FilterCommandParser#checkValidTokens()`. The parser converts all tags to lowercase, removes duplicates, and creates a `TagsContainTagPredicate` object with the processed tags. A `FilterCommand` object is then instantiated with this predicate.
@@ -219,7 +219,7 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
     * Ensures that at least one `PREFIX_TAG` token exists
     * Verifies no input exists between "filter" and the first prefix
     * Confirms no empty tags are present
-    * Validates all tag names are alphanumeric
+    * Validates all tag names are alphanumeric and at most 30 characters
 
 3. **Model update**: `FilterCommand#execute()` invokes `Model#updateFilteredPersonList(predicate)` to apply the filtering operation.
 
@@ -232,6 +232,33 @@ The sequence diagram below shows how the filter operation works:
 
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
+
+#### Delete Feature
+Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
+
+1. **User input parsing**: `DeleteCommandParser#parse()` trims the user input and first attempts to interpret it as an index
+   via `ParserUtil.parseIndex()`. If parsing the index fails, it falls back to `ParserUtil.parseName()` to treat the argument as
+   a name, throwing a `ParseException` if both attempts fail.
+
+2. **Target resolution**: The resulting `DeleteCommand` records whether it will operate on an index or a name and, during
+   execution, routes to the corresponding helper (`executeDeleteByIndex` or `executeDeleteByName`).
+
+3. **Model lookup**: For index-based deletes, the command retrieves the target from `Model#getFilteredPersonList()` and ensures
+   the index is within bounds. For name-based deletes, it scans `Model#getAddressBook().getPersonList()` for case-insensitive
+   matches to the provided name.
+
+4. **Disambiguation**: If multiple contacts share the same name, the command updates the filtered list through
+   `Model#updateFilteredPersonList(...)` so the UI displays only the matching entries, then prompts the user to delete the
+   intended contact by index.
+
+5. **Deletion and feedback**: Once a single target is identified, `Model#deletePerson(person)` removes it from storage, and the
+   command returns a `CommandResult` summarizing the deleted contact.
+
+The sequence diagram below shows how the filter operation works:
+<puml src="diagrams/DeleteSequenceDiagram.puml" width="100%" />
+
+The activity diagram below depicts the execution flow of the filter command:
+<puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
 #### Repeat Command Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
@@ -303,18 +330,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 | Priority | As a …​                          | I want to …​                                                              | So that I can…​                                                                         |
 |----------|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `* * *`  | new user                         | see a user guide                                              | can learn how to use the application efficiently |
 | `* * *`  | sales / procurement professional | add a contact with just a name and phone number                          | save time during meetings and fill in the details later when convenient                 |
-| `* * *`  | sales / procurement professional | record multiple contact methods when adding a new contact                | have multiple channels for communication                                                |
-| `* * *`  | sales / procurement professional | assign category tags when I add new customers (e.g company)              | better manage different types of clients by knowing their industry                      |
-| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer a prospect                                           |
-| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | access all contact records to manage sales and procurement activities                   |
+| `* * *`  | sales / procurement professional | record multiple contact methods for a contact such as phone number or email                | have multiple channels for communication                                                |
+| `* * *`  | sales / procurement professional | assign tags to my contacts              | easily categorize different types of clients        |
+| `* * *`  | sales / procurement professional | delete a contact in my contact list                                      | remove contacts that are no longer prospects                                           |
+| `* * *`  | sales / procurement professional | list all contacts in my contact list                                     | verify that all my important contacts have been added                   |
 | `* * *`  | sales / procurement professional | sort my contacts based on a field (e.g name, tags)                       | view relevant clients easily or rank clients easily                                     |
-| `* * *`  | sales / procurement professional | filter my contacts based on each client's tags                           | quickly find relevant clients and manage my outreach more efficiently                   |
+| `* * *`  | sales / procurement professional | filter my contacts by tags                          | quickly find relevant clients and manage my outreach more efficiently                   |
 | `* * *`  | sales / procurement professional | access the application offline without internet                          | view and manage my contacts even without internet connectivity                          |
-| `* * *`  | forgetful user                   | know if there is any contact with the same information or contact number | prevent any duplicate entries in my contact list                                        |
-| `* * *`  | forgetful user                   | be able to do a fuzzy search for customer information                    | find customer's information even if I only remember part of their information           |
-| `* *`    | lazy user                        | be able to edit an existing contact                                      | edit existing contact information directly, without removing and recreating the contact |
-| `* *`    | efficient user                   | be able to navigate through my past commands                             | save time when adding multiple person with the similar information                      |
+| `* * *`  | forgetful user                   | search for contacts with some information                    | find a specific contact even if I only remember part of their information           |
+| `* *`    | lazy user                        | edit an existing contact                                      | update information for a contact and not have to remove and add the contact |
+| `* *`    | efficient user                   | navigate through my past commands                             | save time when adding multiple contacts with similar information                      |
+| `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
+| `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
+| `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
+| `* *`    | sales / procurement professional | export my contacts to a CSV file | share contact information with colleagues or import into other applications |
+| `* *`    | organized user | backup my contacts to a file | keep a local copy for safekeeping or migration purposes |
+| `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
+| `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
 
 ### Use Cases
 
@@ -383,24 +417,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to edit a contact's information
-2.  System looks for person with their phone number
-3.  System updates the person's particulars
+1.  User requests to edit a contact's information by providing an index or name, along with the fields to update.
+2.  System finds the contact in the displayed list.
+3.  System validates the new information.
+4.  System updates the contact's particulars with the new information.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The given number is invalid.
+* 1a. User provides an invalid index (non-numeric, zero, negative, or exceeds list size).
+
+    * 1a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. User does not provide any fields to edit.
+
+    * 1b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 2a. The provided name does not match any contact in the displayed list.
 
     * 2a1. System shows an error message.
 
       Use case resumes at step 1.
 
+* 2b. Multiple contacts match the provided name.
 
-* 3a. The new information is invalid.
+    * 2b1. System filters and displays the matching contacts.
+    * 2b2. System shows an error message asking user to use index instead.
 
-    * 3a1. System shows an error message.
+      Use case resumes at step 1.
+
+* 3a. The new information is invalid (e.g., invalid phone number format, invalid email format).
+
+    * 3a1. System shows an error message with validation details.
+
+      Use case resumes at step 1.
+
+* 3b. The new information would create a duplicate contact.
+
+    * 3b1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3c. The new email already exists in another contact.
+
+    * 3c1. System shows an error message.
+
+      Use case resumes at step 1.
+
+* 3d. User attempts to delete tags that don't exist on the contact.
+
+    * 3d1. System shows an error message listing the non-existent tags.
 
       Use case resumes at step 1.
 
@@ -468,7 +539,84 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3a1. System displays an empty list with a count of 0 persons.
     Use case ends.
 
-*{More to be added}*
+**Use case: UC06 - List contacts**
+
+**MSS**
+1. User enters the `list` command.
+2. System displays all the contacts stored.
+
+   Use case ends.
+
+**Use case: UC07 - Get help**
+
+**MSS**
+1. User enters the `help` command.
+2. System displays a pop-up window containing a link to the user guide.
+
+   Use case ends.
+
+**Use case: UC08 - View contact details**
+
+**MSS**
+1. User requests to view detailed information of a contact by providing an index.
+2. System displays the detail panel showing full contact information including notes for the contact at the specified index.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User provides an invalid index (non-numeric, zero, negative, or exceeds list size).
+    * 1a1. System shows an error message.
+    
+      Use case resumes at step 1.
+
+* 1b. User provides more than one argument.
+    * 1b1. System shows an error message with usage instructions.
+    
+      Use case resumes at step 1.
+
+* 1c. User enters `view` without any parameters.
+    * 1c1. System toggles the detail panel visibility.
+    
+      Use case ends.
+
+**Use case: UC09 - Export contacts to CSV file**
+
+**MSS**
+1. User requests to export all contacts to a CSV file by providing a filename.
+2. System validates the filename.
+3. System creates a CSV file on the user's Desktop with the specified filename.
+4. System writes all contact information (name, phone, email, company, tags) to the CSV file.
+5. System displays a success message with the filename.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User does not provide a filename prefix.
+    * 1a1. System shows an error message indicating filename is required.
+    
+      Use case resumes at step 1.
+
+* 1b. User provides duplicate filename prefixes.
+    * 1b1. System shows an error message indicating only one filename is allowed.
+    
+      Use case resumes at step 1.
+
+* 2a. The filename is empty or contains only whitespace.
+    * 2a1. System shows an error message.
+    
+      Use case resumes at step 1.
+
+* 2b. The filename contains invalid characters (path separators, special characters).
+    * 2b1. System shows an error message listing allowed characters.
+    
+      Use case resumes at step 1.
+
+* 4a. System fails to write to the Desktop directory (e.g., permission issues).
+    * 4a1. System shows an error message with failure details.
+    
+      Use case ends.
 
 ### Non-Functional Requirements
 
@@ -539,23 +687,31 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   -   Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file <br>
-      Expected: Shows the GUI with a set of sample candidates. The window size may not be optimum.
+   -   Double-click the jar file <br>
+       Expected: Shows the GUI with a set of sample candidates. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+   -   Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   -   Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-### Deleting a Person
+### Listing all Contacts
+1.  List all contacts in FastCard.
 
-1.  Deleting a person while all persons are being shown
+   -   Prerequisite: At least one contact exists in FastCard.
 
-    -  Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   -   Test case: `list`<br>
+       Expected: All contacts are displayed.
+
+### Deleting a Contact
+
+1.  Deleting a contact while all contacts are being shown
+
+    -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
 
     -  Test case: `delete Alice Pauline`<br>
        Expected: The contact named `Alice Pauline` is deleted when she is the only contact with that name. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
@@ -686,6 +842,6 @@ testers are expected to do more *exploratory* testing.
 
 --------------------------------------------------------------------------------------------------------------------
 
-### Appendix: Planned enhancements
+### Appendix: Planned Enhancements
 
 Team size: 5

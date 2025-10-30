@@ -3,6 +3,12 @@
 skinparam ArrowFontStyle plain
 skinparam boxPadding 10
 
+Actor User as user USER_COLOR
+
+box UI UI_COLOR_T1
+participant ":UiManager" as UiManager UI_COLOR
+end box
+
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
@@ -14,83 +20,61 @@ box Model MODEL_COLOR_T1
 participant "m:Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("delete KEY")
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR
+end box
+
+user -> UiManager : "delete <arg>"
+activate UiManager
+
+UiManager -> LogicManager : execute("delete <arg>")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("delete KEY")
+LogicManager -> AddressBookParser : parseCommand("delete <arg>")
 activate AddressBookParser
 
-create DeleteCommandParser
-AddressBookParser -> DeleteCommandParser
+AddressBookParser -> DeleteCommandParser : parse("<arg>")
 activate DeleteCommandParser
 
-DeleteCommandParser --> AddressBookParser
+create DeleteCommand
+DeleteCommandParser -> DeleteCommand : new DeleteCommand(<arg>)
+activate DeleteCommand
+DeleteCommand --> DeleteCommandParser : command
+deactivate DeleteCommand
+
+DeleteCommandParser --> AddressBookParser : DeleteCommand
 deactivate DeleteCommandParser
 
-AddressBookParser -> DeleteCommandParser : parse("KEY")
-activate DeleteCommandParser
+AddressBookParser --> LogicManager : DeleteCommand
+deactivate AddressBookParser
 
-DeleteCommandParser -> DeleteCommandParser : trimmedArgs = args.trim()
+LogicManager -> DeleteCommand : execute(model)
+activate DeleteCommand
 
-alt trimmedArgs is empty
-    DeleteCommandParser --> AddressBookParser : ParseException
-else trimmedArgs not empty
-    DeleteCommandParser -> DeleteCommandParser : index = ParserUtil.parseIndex(trimmedArgs)
-
-    alt index parsed
-        create DeleteCommand
-        DeleteCommandParser -> DeleteCommand : new DeleteCommand(index)
-        activate DeleteCommand
-        DeleteCommand --> DeleteCommandParser : command
-        deactivate DeleteCommand
-        DeleteCommandParser --> AddressBookParser : command
-    else ParseException from index
-        DeleteCommandParser -> DeleteCommandParser : name = ParserUtil.parseName(args)
-
-        alt name parsed
-            create DeleteCommand
-            DeleteCommandParser -> DeleteCommand : new DeleteCommand(name)
-            activate DeleteCommand
-            DeleteCommand --> DeleteCommandParser : command
-            deactivate DeleteCommand
-            DeleteCommandParser --> AddressBookParser : command
-        else name parsing fails
-            DeleteCommandParser --> AddressBookParser : ParseException
-        end
-    end
+alt <arg> uniquely identifies a person
+    DeleteCommand -> Model : deletePerson(target)
+else <arg> is an index from the displayed list
+    DeleteCommand -> Model : deletePerson(index)
 end
+activate Model
+Model --> DeleteCommand : success
+deactivate Model
 
-deactivate DeleteCommandParser
+DeleteCommand --> LogicManager : CommandResult
+deactivate DeleteCommand
 
-alt command parsed successfully
-    AddressBookParser --> LogicManager : command
-    deactivate AddressBookParser
+LogicManager -> Storage : saveAddressBook(model.getAddressBook())
+activate Storage
+Storage -> Storage : write to file
+activate Storage STORAGE_COLOR_T2
+Storage --> Storage
+deactivate Storage
+Storage --> LogicManager : success
+deactivate Storage
 
-    LogicManager -> DeleteCommand : execute(model)
-    activate DeleteCommand
+LogicManager --> UiManager : CommandResult
+deactivate LogicManager
 
-    DeleteCommand -> DeleteCommand : identify target (index or name)
-
-    alt target resolved
-        DeleteCommand -> Model : deletePerson(target)
-        activate Model
-        Model --> DeleteCommand
-        deactivate Model
-
-        DeleteCommand --> LogicManager : CommandResult(success message)
-    else target unresolved
-        DeleteCommand --> LogicManager : CommandException
-    end
-
-    deactivate DeleteCommand
-
-    [<-- LogicManager
-    deactivate LogicManager
-else invalid delete arguments
-    AddressBookParser --> LogicManager : ParseException
-    deactivate AddressBookParser
-
-    [<-- LogicManager
-    deactivate LogicManager
-end
+UiManager --> user : CommandResult.feedbackToUser
+deactivate UiManager
 @enduml

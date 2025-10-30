@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -40,7 +42,18 @@ public class NameOrCompanyPredicate implements Predicate<Person> {
         String company = person.getCompany().value.toLowerCase();
 
         boolean nameMatch = nameKeyword.map(k -> StringUtil.containsIgnoreCase(name, k)).orElse(false);
-        boolean companyMatch = companyKeyword.map(k -> StringUtil.containsIgnoreCase(company, k)).orElse(false);
+        // Company keyword search — exact word matching (case-insensitive)
+        boolean companyMatch = companyKeyword.map(keyword -> {
+            // Split user input into words
+            String[] keywords = keyword.toLowerCase().split("\\s+");
+
+            // Split the person's company field into words
+            List<String> companyWords = Arrays.asList(company.toLowerCase().split("\\s+"));
+
+            // Check if any user keyword matches any company word
+            return Arrays.stream(keywords)
+                    .anyMatch(k -> companyWords.stream().anyMatch(w -> w.equals(k)));
+        }).orElse(false);
 
         // if both prefix exist, both must match
         if (nameKeyword.isPresent() && companyKeyword.isPresent()) {

@@ -23,18 +23,27 @@ public class Person {
 
     // Data fields
     private final Company company;
+    private final Detail detail;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Company company, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, company, tags);
+    public Person(Name name, Phone phone, Email email, Company company, Detail detail, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, company, detail, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.company = company;
+        this.detail = detail;
         this.tags.addAll(tags);
+    }
+
+    /**
+     * Constructor with empty detail field for backward compatibility.
+     */
+    public Person(Name name, Phone phone, Email email, Company company, Set<Tag> tags) {
+        this(name, phone, email, company, new Detail(""), tags);
     }
 
     public Name getName() {
@@ -51,6 +60,10 @@ public class Person {
 
     public Company getCompany() {
         return company;
+    }
+
+    public Detail getDetail() {
+        return detail;
     }
 
     /**
@@ -107,13 +120,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && company.equals(otherPerson.company)
+                && detail.equals(otherPerson.detail)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, company, tags);
+        return Objects.hash(name, phone, email, company, detail, tags);
     }
 
     @Override
@@ -123,6 +137,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("company", company)
+                .add("detail", detail)
                 .add("tags", tags)
                 .toString();
     }
