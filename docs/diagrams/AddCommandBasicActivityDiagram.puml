@@ -1,27 +1,39 @@
 @startuml
 !include style.puml
 skinparam ArrowFontStyle plain
-
-title AddBasic Command - Activity Diagram
+skinparam activity {
+    BackgroundColor White
+    DiamondBackgroundColor #FDF6E3
+    DiamondBorderColor #B58900
+}
 
 start
 
-:User enters command "addbasic n/Jadon p/88880000";
-:Command parsed by LogicManager;
+:User inputs "addbasic n/Jadon p/88880000";
+:Parse command;
 
-if (is command valid?) then (yes)
-    :LogicManager creates AddCommandBasic;
-    :AddCommandBasic executed;
-
-    if (is person already in list?) then (yes)
-        :Show error message "This person already exists";
+if (Are prefixes valid?) then (no)
+    :Display "Invalid command format: only n/ and p/ are allowed";
+    stop
+else (yes)
+    if (Are required fields missing?) then (yes)
+        :Display "Missing required field(s): name or phone";
+        stop
     else (no)
-        :Add person to AddressBook;
-        :Save updated AddressBook to storage;
-        :Return success message;
+        if (Are argument values valid?) then (no)
+            :Display "Invalid field value(s): check name or phone";
+            stop
+        else (yes)
+            if (Contact already exists?) then (yes)
+                :Display "This person already exists in the contact book";
+                stop
+            else (no)
+                :Add new person to Model;
+                :Save updated AddressBook to Storage;
+                :Display "You have successfully added the contact";
+            endif
+        endif
     endif
-else (no)
-    :Show parse error message;
 endif
 
 stop
