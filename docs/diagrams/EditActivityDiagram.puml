@@ -1,0 +1,102 @@
+@startuml
+title Edit Command Activity Diagram
+
+start
+
+:User enters edit command;
+:Tokenize command arguments;
+
+if () then ([arguments empty])
+  :Display invalid command format message;
+  stop
+else ([arguments present])
+  :Parse preamble;
+
+  if () then ([preamble is "0"])
+    :Display invalid index error;
+    stop
+  endif
+
+  :Attempt to parse as index;
+
+  if () then ([index parsed])
+    :Retrieve filtered person list;
+
+    if () then ([index within bounds])
+      :Select person at index;
+    else ([else])
+      :Display invalid person index error;
+      stop
+    endif
+  else ([else])
+    :Use preamble as name reference;
+    :Normalize name (trim and collapse spaces);
+    :Find persons with matching name (case-insensitive);
+
+    if () then ([no matches])
+      :Display person name not found error;
+      stop
+    else ([one or more matches])
+      if () then ([multiple matches])
+        :Update filtered list with matching persons;
+        :Prompt user to choose index for edit;
+        stop
+      else ([exactly one match])
+        :Select the matching person;
+      endif
+    endif
+  endif
+
+  :Check for conflicting tag prefixes;
+
+  if () then ([t/ used with t+/ or t-/])
+    :Display conflicting tag prefixes error;
+    stop
+  endif
+
+  :Parse edit fields (name, phone, email, company, detail, tags);
+
+  if () then ([no fields to edit])
+    :Display not edited message;
+    stop
+  endif
+
+  :Validate tags to delete exist on person;
+
+  if () then ([non-existent tags to delete])
+    :Display tag not found error;
+    stop
+  endif
+
+  :Create edited person with updated fields;
+
+  if () then ([tag overwrite mode])
+    :Replace all tags with new tags;
+  else ([tag add/delete mode])
+    :Start with existing tags;
+    :Add tags from t+/;
+    :Remove tags from t-/;
+  endif
+
+  :Check for duplicate person;
+
+  if () then ([duplicate person exists])
+    :Display duplicate person error;
+    stop
+  endif
+
+  :Check for duplicate email;
+
+  if () then ([email already used by another person])
+    :Display duplicate email error;
+    stop
+  endif
+
+  :Replace old person with edited person in model;
+  :Update filtered list to show edited person;
+  :Save address book to storage;
+  :Display edit success message;
+  stop
+endif
+
+@enduml

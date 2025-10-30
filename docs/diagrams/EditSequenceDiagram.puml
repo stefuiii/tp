@@ -1,0 +1,113 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+skinparam boxPadding 10
+
+Actor User as user USER_COLOR
+
+box UI UI_COLOR_T1
+participant ":UiManager" as UiManager UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant "e:EditCommand" as EditCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR
+end box
+
+user -> UiManager : "edit <arg>"
+activate UiManager
+
+UiManager -> LogicManager : execute("edit <arg>")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("edit <arg>")
+activate AddressBookParser
+
+AddressBookParser -> EditCommandParser : parse("<arg>")
+activate EditCommandParser
+
+create EditCommand
+EditCommandParser -> EditCommand : new EditCommand(<identifier>, <descriptor>)
+activate EditCommand
+EditCommand --> EditCommandParser : command
+deactivate EditCommand
+
+EditCommandParser --> AddressBookParser : EditCommand
+deactivate EditCommandParser
+
+AddressBookParser --> LogicManager : EditCommand
+deactivate AddressBookParser
+
+LogicManager -> EditCommand : execute(model)
+activate EditCommand
+
+EditCommand -> Model : getFilteredPersonList()
+activate Model
+Model --> EditCommand : personList
+deactivate Model
+
+alt <arg> is an index
+    EditCommand -> EditCommand : get person at index
+    activate EditCommand LOGIC_COLOR_T2
+    EditCommand --> EditCommand : personToEdit
+    deactivate EditCommand
+else <arg> is a name reference
+    EditCommand -> EditCommand : find matching person by name
+    activate EditCommand LOGIC_COLOR_T2
+    EditCommand --> EditCommand : personToEdit
+    deactivate EditCommand
+end
+
+EditCommand -> EditCommand : validate tags to delete exist
+activate EditCommand LOGIC_COLOR_T2
+EditCommand --> EditCommand : validation result
+deactivate EditCommand
+
+EditCommand -> EditCommand : createEditedPerson(personToEdit, descriptor)
+activate EditCommand LOGIC_COLOR_T2
+EditCommand --> EditCommand : editedPerson
+deactivate EditCommand
+
+EditCommand -> EditCommand : validate no duplicate person and email
+activate EditCommand LOGIC_COLOR_T2
+EditCommand --> EditCommand
+deactivate EditCommand
+
+EditCommand -> Model : setPerson(personToEdit, editedPerson)
+activate Model
+Model --> EditCommand : success
+deactivate Model
+
+EditCommand -> Model : updateFilteredPersonList(predicate)
+activate Model
+Model --> EditCommand : success
+deactivate Model
+
+EditCommand --> LogicManager : CommandResult
+deactivate EditCommand
+
+LogicManager -> Storage : saveAddressBook(model.getAddressBook())
+activate Storage
+Storage -> Storage : write to file
+activate Storage STORAGE_COLOR_T2
+Storage --> Storage
+deactivate Storage
+Storage --> LogicManager : success
+deactivate Storage
+
+LogicManager --> UiManager : CommandResult
+deactivate LogicManager
+
+UiManager --> user : CommandResult.feedbackToUser
+deactivate UiManager
+@enduml

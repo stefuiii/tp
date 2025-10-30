@@ -23,6 +23,7 @@
     - [Filter Feature](#filter-feature)
     - [Command Recall Feature](#command-recall-feature)
     - [Delete Feature](#delete-feature)
+    - [Edit Feature](#edit-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
     - [Add Feature (with Detailed Information)](#add-contact-with-full-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
@@ -263,6 +264,37 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
+### Edit Feature
+Editing contacts is facilitated by `EditCommand` and `EditCommandParser`, following these steps:
+
+1. **User input parsing**: `EditCommandParser#parse()` tokenizes the user input into an `ArgumentMultimap` containing the target identifier (index or name) and field values to update. The parser first attempts to interpret the preamble as an index via `ParserUtil.parseIndex()`. If parsing fails, it treats the preamble as a name reference.
+
+2. **Validation checks**: The parser performs several validations:
+   * Ensures that at least one field to edit is provided
+   * Verifies no duplicate prefixes for singular fields (name, phone, email, company, detail)
+   * Checks that `PREFIX_TAG` (overwrite) is not used together with `PREFIX_TAG_ADD` or `PREFIX_TAG_DELETE`
+   * Validates that tags to add or delete are not empty
+
+3. **Target resolution**: During execution, `EditCommand#execute()` determines whether to operate on an index or a name:
+   * For index-based edits, the command retrieves the target from `Model#getFilteredPersonList()` and ensures the index is within bounds.
+   * For name-based edits, it normalizes the name (case-insensitive, multiple spaces collapsed) and scans the filtered list for matches.
+
+4. **Disambiguation**: If multiple contacts share the same name, the command updates the filtered list through `Model#updateFilteredPersonList(...)` to display only matching entries, then prompts the user to edit by index instead.
+
+5. **Tag handling**: The edit command supports three tag modification modes:
+   * **Overwrite mode** (`t/`): Replaces all existing tags with the specified tags
+   * **Addition mode** (`t+/`): Adds specified tags to existing tags
+   * **Deletion mode** (`t-/`): Removes specified tags from existing tags (validates that tags exist before deletion)
+
+6. **Person creation and validation**: The command creates an edited person through `createEditedPerson()`, which applies all field updates including tag modifications. It then validates:
+   * The edited person is not a duplicate of another existing contact
+   * The edited email (if changed) is not used by another contact
+   * All tags to be deleted actually exist on the person
+
+7. **Model update and feedback**: Once validation passes, `Model#setPerson(personToEdit, editedPerson)` replaces the original person with the edited version. The filtered list is updated to show only the edited contact, and a `CommandResult` is returned with the success message displaying the updated contact details.
+
+The sequence diagram below shows how the edit operation works:
+<puml src="diagrams/EditSequenceDiagram.puml" width="100%" />
 
 ### Command Recall Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
@@ -811,6 +843,92 @@ testers are expected to do more *exploratory* testing.
        Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
 
     -  Other incorrect delete commands to try: `delete`, `delete x`, `delete Unknown Person`, `...` (where x is larger than the list size)<br>      Expected: Similar to previous.
+
+### Editing a Contact
+
+1. Editing a contact by index
+
+    -  Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+
+    -  Test case: `edit 1 p/98765432`<br>
+       Expected: Phone number of the first contact is updated to "98765432". Success message shows the edited contact details.
+
+    -  Test case: `edit 1 e/newemail@example.com c/Google`<br>
+       Expected: Email and company of the first contact are updated. Success message shows the edited contact details.
+
+    -  Test case: `edit 1 n/John Tan p/91234567 e/john@example.com c/Microsoft d/Senior Manager t/client t/vip`<br>
+       Expected: Multiple fields are updated simultaneously. All tags are replaced with "client" and "vip".
+
+    -  Test case: `edit 0 p/98765432`<br>
+       Expected: No contact is edited. Error message shows invalid index.
+
+    -  Test case: `edit 999 p/98765432` (where 999 exceeds list size)<br>
+       Expected: No contact is edited. Error message shows invalid index.
+
+2. Editing a contact by name
+
+    -  Prerequisites: At least one contact named "Alice Pauline" exists in the displayed list. No duplicates of this name exist.
+
+    -  Test case: `edit Alice Pauline p/87654321`<br>
+       Expected: Phone number of Alice Pauline is updated to "87654321". Success message shows the edited contact details.
+
+    -  Test case: `edit Alice Pauline e/alice.new@example.com d/Marketing Director`<br>
+       Expected: Email and detail of Alice Pauline are updated.
+
+    -  Test case: `edit John Doe p/91234567` when multiple "John Doe" contacts exist<br>
+       Expected: No contact is edited. The filtered list updates to show all matching "John Doe" contacts. Error message asks user to edit by index instead.
+
+    -  Test case: `edit Nonexistent Person p/91234567`<br>
+       Expected: No contact is edited. Error message shows that the person name does not match any displayed contact.
+
+3. Tag operations
+
+    -  Prerequisites: Contact at index 1 exists with tags "friend" and "colleague".
+
+    -  Test case: `edit 1 t/client t/vip`<br>
+       Expected: All existing tags are replaced with "client" and "vip". Success message shows the edited contact with new tags.
+
+    -  Test case: `edit 1 t+/important`<br>
+       Expected: Tag "important" is added to existing tags. Contact now has tags "friend", "colleague", and "important".
+
+    -  Test case: `edit 1 t-/colleague`<br>
+       Expected: Tag "colleague" is removed. Contact now has only "friend" tag remaining.
+
+    -  Test case: `edit 1 t+/client t-/friend`<br>
+       Expected: Tag "client" is added and "friend" is removed. Contact has "colleague" and "client" tags.
+
+    -  Test case: `edit 1 t/`<br>
+       Expected: All tags are removed from the contact. Success message shows contact with no tags.
+
+4. Invalid edit commands
+
+    -  Test case: `edit 1`<br>
+       Expected: No contact is edited. Error message shows that at least one field to edit must be provided.
+
+    -  Test case: `edit`<br>
+       Expected: No contact is edited. Error message shows invalid command format with usage instructions.
+
+    -  Test case: `edit 1 e/invalidemail`<br>
+       Expected: No contact is edited. Error message shows invalid email format.
+
+    -  Test case: `edit 1 t/client t+/vip`<br>
+       Expected: No contact is edited. Error message shows that `t/` cannot be used together with `t+/` or `t-/`.
+
+    -  Test case: `edit 1 t-/nonexistent`<br>
+       Expected: No contact is edited. Error message shows that the tag "nonexistent" does not exist on this person and cannot be deleted.
+
+    -  Test case: `edit 1 t+/`<br>
+       Expected: No contact is edited. Error message shows that tags to add cannot be empty.
+
+5. Duplicate detection
+
+    -  Prerequisites: A contact "Alice Pauline" with phone "91234567" exists. Another contact "Bob" with email "bob@example.com" exists.
+
+    -  Test case: `edit 2 n/Alice Pauline p/91234567`<br>
+       Expected: No contact is edited. Error message shows that this person already exists in the contact book.
+
+    -  Test case: `edit 1 e/bob@example.com`<br>
+       Expected: No contact is edited. Error message shows that this email already exists in the contact book.
 
 ### Sorting Contacts
 
