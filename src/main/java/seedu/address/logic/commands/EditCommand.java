@@ -61,7 +61,17 @@ public class EditCommand extends Command {
             + PREFIX_TAG_ADD + "client " + PREFIX_TAG_DELETE + "friend";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Contact: \n%1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_NOT_EDITED =
+            "At least one valid field to edit must be provided.\n"
+            + "Valid prefixes for edit command are:\n"
+            + PREFIX_NAME + " (name), "
+            + PREFIX_PHONE + " (phone), "
+            + PREFIX_EMAIL + " (email), "
+            + PREFIX_COMPANY + " (company), "
+            + PREFIX_DETAIL + " (detail), "
+            + PREFIX_TAG + " (overwrite tags), "
+            + PREFIX_TAG_ADD + " (add tags), "
+            + PREFIX_TAG_DELETE + " (delete tags)";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the contact book.";
     public static final String MESSAGE_DUPLICATE_EMAIL = "This email already exists in the contact book.";
     public static final String MESSAGE_CONFLICTING_TAG_PREFIXES =
