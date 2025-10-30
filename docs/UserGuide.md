@@ -236,7 +236,7 @@ list
 ```
 **You'll see:**
 ```
-Listed all persons
+Listed all contacts
 ```
 **In the contact list:**
   * All contacts reappear (any previous filters are removed)
@@ -365,7 +365,7 @@ add n/Sarah Chen p/98765432 e/sarahchen@example.com c/Shopee t/client t/priority
 ```
 **You'll see:**
 ```
-New person added:
+New contact added:
 Name: Sarah Chen
 Phone: 98765432
 Email: sarahchen@example.com
@@ -487,7 +487,7 @@ edit Alice Tan e/alice@example.com c/Shopee d/Prefers morning meetings t/client
 ```
 **You'll see:**
 ```
-Edited Person:
+Edited Contact:
 Name: Alice Tan
 Phone: 91234567
 Email: alice@example.com
@@ -523,7 +523,7 @@ edit 1 t+/priority t+/vip
 ```
 **You'll see:**
 ```
-Edited Person:
+Edited Contact:
 Name: Sarah Chen
 Phone: 98765432
 Email: sarahchen@example.com
@@ -542,7 +542,7 @@ edit 2 d/Key decision maker for Q4 procurement. Prefers email communication.
 ```
 **You'll see:**
 ```
-Edited Person:
+Edited Contact:
 Name: John Doe
 Phone: 98765432
 Email: johndoe@example.com
@@ -617,13 +617,13 @@ You can search by name, company, or both at the same time.
 
 **Examples:**
 
-**Example 1: Finding a specific person**
+**Example 1: Finding a specific contact**
 ```
 find n/Sarah
 ```
 **You'll see (depending on the number of contacts containing Sarah in their full name):**
 ```
-2 persons listed!
+2 contact(s) listed!
 ```
 **In the contact list:**
   * Only contacts with "Sarah" in their name are displayed.
@@ -697,7 +697,7 @@ filter t/client
 ```
 **You'll see (depending on the number of contacts with the client tag):**
 ```
-3 persons listed!
+3 contact(s) listed!
 ```
 **In the contact list:**
   * Only contacts tagged with "client" are displayed
@@ -771,7 +771,7 @@ sort f/name o/asc
 ```
 **You'll see:**
 ```
-Sorted all persons by name in ascending order
+Sorted all contact(s) by name in ascending order
 ```
 **In the contact list:**
   * Contacts are now alphabetically ordered A&rarr;Z by name
@@ -807,7 +807,7 @@ Permanently removes a contact from FastCard - use with caution as this cannot be
 
 **⚠️ WARNING: Permanent Deletion**
 
-Deleted contacts are **permanently removed** and cannot be recovered. Double-check you're deleting the correct person before pressing Enter.
+Deleted contacts are **permanently removed** and cannot be recovered. Double-check you're deleting the correct contact before pressing Enter.
 
 **Best practice:** Use [`find`](#searching-for-contacts-by-name-find) first to verify contact details before deleting.
 
@@ -839,7 +839,7 @@ delete Alice Tan
 ```
 **You'll see:**
 ```
-Deleted Person: 
+Deleted Contact: 
 Name: Alice Tan
 Phone: 91234567
 Email: alice@example.com
@@ -855,8 +855,8 @@ delete John Doe
 ```
 **If multiple John Doe exist, you'll see (depending on the number of John Doe contacts):**
 ```
-Multiple persons named John Doe found. Please specify the index to delete.
-2 persons listed!
+Multiple contacts named John Doe found. Please specify the index to delete.
+2 contact(s) listed!
 ```
 **In the contact list:**
   * Will only show contacts with the name `John Doe`
@@ -895,7 +895,7 @@ view 1
 **You'll see:**
   * The full information about the user (if it's too long to be shown on the main card)
   * Any notes or details added using the `d/` field in the edit command
-  * (If Focus Person has not been selected yet) -> Shows a guiding message.
+  * (If Focus Contact has not been selected yet) -> Shows a guiding message.
   * Detail Pane toggle to view (if not already visible)
 
 **When should you use this?**
@@ -1034,7 +1034,7 @@ Permanently deletes every contact from FastCard - use only when starting complet
 **⚠️ WARNING: This permanently deletes ALL contacts from FastCard. This cannot be undone.**
 
 Before using `clear`:
-  * **Backup your data** - Copy the `addressbook.json` file from your FastCard data folder
+  * **Backup your data** - Copy the `fastcard.json` file from your FastCard data folder
   * **Triple-check** - Make absolutely sure you want to erase everything
 
 **Use this command ONLY when:** You're certain you want to start with a completely empty contact list.
@@ -1120,11 +1120,11 @@ FastCard saves your contacts automatically every time you make a change.
 
 </box>
 
-### Editing the data file
+### Editing the Data File
 
 <box type="info" seamless>
 
-Your contact data is stored in a file called `addressbook.json` located in `[JAR file location]/data/`.
+Your contact data is stored in a file called `fastcard.json` located in `[JAR file location]/data/`.
 Advanced users are welcome to update data directly by editing that data file.
 
 **⚠️ WARNING: Manual editing is risky**
@@ -1149,10 +1149,10 @@ Advanced users are welcome to update data directly by editing that data file.
 
 **Q: How do I transfer my client contacts to another Computer?** <br>
 **A**:
-  1. On your old computer, locate the `addressbook.json` file in `[JAR file location]/data/`.
+  1. On your old computer, locate the `fastcard.json` file in `[JAR file location]/data/`.
   2. Copy this file to the other computer.
   3. Install FastCard on your other computer.
-  4. Replace the new `addressbook.json` file with your copied file.
+  4. Replace the new `fastcard.json` file with your copied file.
   5. Restart FastCard. All your contacts should appear.
 
 **Q: Can I undo a command I just entered?** <br>
@@ -1162,7 +1162,7 @@ Advanced users are welcome to update data directly by editing that data file.
 **A:** Your data is safe. Since FastCard saves automatically after every change, you'll only lose any command you were typing when it crashed (not the data itself).
 
 **Q: I accidentally deleted a client contact. Can I recover it?** <br>
-**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your `addressbook.json` file regularly.
+**A:** Unfortunately, no. FastCard doesn't have a recycle bin or recovery feature. The contact is permanently deleted. Consider backing up your `fastcard.json` file regularly.
 
 **Q: Why isn't my command working?** <br>
 **A:** Common reasons include:
@@ -1199,6 +1199,12 @@ Advanced users are welcome to update data directly by editing that data file.
 <u><u><u><u><u><u><u><u><u>**Ability to pull out detail pane without content**</u>
 
 **Solution** Please use the `view` command to toggle the pane instead before adjusting its width.
+
+<u>**Placeholder values hide email or company fields**</u>
+
+**Problem:** When a user enters `unknown@example.com` for the email or `N/A` for the company, FastCard treats them as internal placeholders and hides those fields in the UI, making it look as though the details were lost.
+
+**Solution:** Avoid `unknown@example.com` in email and `N/A` in company. You are expected to put in meaningful values.
 
 --------------------------------------------------------------------------------------------------------------------
 

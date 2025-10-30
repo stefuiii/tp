@@ -69,7 +69,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a person to the contact book.
+     * Adds a contact to the contact book.
      * The person must not already exist in the contact book.
      */
     public void addPerson(Person p) {
@@ -96,7 +96,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts the contacts in the contact book based on the given comparator.
+     * Sorts the contact(s) in the contact book based on the given comparator.
      * @param comparator Comparator to sort the contact book.
      */
     public void sort(Comparator<Person> comparator) {
