@@ -112,4 +112,13 @@ public class JsonAdaptedPersonTest {
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 
+    @Test
+    public void toModelType_invalidDetail_throwsIllegalValueException() {
+        // Create a detail that exceeds the maximum length (301 characters)
+        String invalidDetail = "a".repeat(301);
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_COMPANY, invalidDetail, VALID_TAGS);
+        assertThrows(IllegalValueException.class, person::toModelType);
+    }
+
 }
