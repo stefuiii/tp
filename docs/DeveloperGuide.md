@@ -388,7 +388,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 
-**Use case: UC02 - Add a contact**
+**Use case: UC02 - Add a contact with basic information**
 
 **MSS**
 
@@ -617,6 +617,48 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4a1. System shows an error message with failure details.
     
       Use case ends.
+
+**Use case: UC10 - Add a contact with full information**
+
+**MSS**
+
+1.  User requests to add a contact with name, phone number, email, company  and optionally tag.
+2.  System creates an entry of the above contact
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given number is invalid.
+
+    * 1a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+
+* 1b. The given number and given name combination already exists.
+
+    *  1b1. System shows an error message.
+
+       Use case resumes at step 1.
+  
+* 1c. The given email is invalid
+
+    *  1c1. System shows an error message
+  
+       Use case resumes at step 1.
+
+* 1d. The given email already exists.
+
+    *  1d1. System shows an error message
+
+       Use case resumes at step 1.
+
+* 1e. The given tag is invalid
+
+    *  1c1. System shows an error message
+
+       Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
