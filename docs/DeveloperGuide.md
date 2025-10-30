@@ -21,7 +21,10 @@
 - [Implementation](#implementation)
     - [Sort Feature](#sort-feature)
     - [Filter Feature](#filter-feature)
+    - [Delete Feature](#delete-feature)
+    - [Repeat Command Feature](#repeat-command-feature)
     - [Add Feature (with Basic Information)](#add-contact-with-basic-information)
+    - [Add Feature (with Detailed Information)](#add-contact-with-full-information)
 - [Documentation, Logging, Testing, Configuration, Devops](#documentation-logging-testing-configuration-dev-ops)
 - [Appendix: Requirements](#appendix-requirements)
     - [Product Scope](#product-scope)
@@ -233,7 +236,8 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/FilterActivityDiagram.puml" width="100%" />
 
-#### Delete Feature
+
+### Delete Feature
 Deleting contacts is facilitated by `DeleteCommand` and `DeleteCommandParser`, following these steps:
 
 1. **User input parsing**: `DeleteCommandParser#parse()` trims the user input and first attempts to interpret it as an index
@@ -260,7 +264,8 @@ The sequence diagram below shows how the filter operation works:
 The activity diagram below depicts the execution flow of the filter command:
 <puml src="diagrams/DeleteActivityDiagram.puml" width="100%" />
 
-#### Repeat Command Feature
+
+### Repeat Command Feature
 The repeat mechanism is facilitated by `CommandHistory` Model and `LogicManager`.
 
 The Sequence diagram for a NextCommand Operation
@@ -296,6 +301,52 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
    The `MainWindow` then updates the UI to display the success message in the `CommandBox`.
 
 <puml src="diagrams/AddCommandBasicDiagram.puml" width="100%" />
+<puml src="diagrams/AddCommandBasicActivityDiagram.puml" width="100%" />
+
+
+### Add Contact with Full Information
+
+The **add** operation is facilitated by the `AddCommand` class within the **Logic** and **Model** components.
+
+1. **User Input**
+   The user enters the command:
+
+   ```
+   add n/NAME p/PHONE e/EMAIL c/COMPANY [t/TAG]...
+   ```
+
+   Example:
+
+   ```
+   add n/Alice p/88889999 e/alice@example.com c/NUS t/friend
+   ```
+
+2. **Command Parsing and Execution**
+   The command string is passed from the `CommandBox` to the `MainWindow`, which forwards it to the `LogicManager` for execution.
+   The `LogicManager` then constructs an `AddCommand` object with a `Person` instance containing the specified details (`name`, `phone`, `email`, `company`, and optional `tags`).
+
+3. **Validation and Model Update**
+   The `AddCommand` performs a comprehensive validation process:
+
+    * Checks whether the **command format** is valid and any **required fields** (`n/`, `p/`, `e/`, `c/`) are missing.
+    * Checks whether **field values** are valid (e.g., name and company character rules, valid email syntax, phone number format, valid tags).
+    * Checks whether a **duplicate person** (same name and phone) already exists.
+    * Checks whether the **email** already exists in another contact.
+
+   If a validation error or duplicate is detected, the corresponding error message is returned to the UI.
+   Otherwise, the new person is added to the `ModelManager`, updating the in-memory address book.
+
+4. **Storage Update**
+   The `LogicManager` calls `saveAddressBook(addressBook)` in the **Storage** component, which serializes and writes the updated address book data to the local storage file.
+
+5. **Result Display**
+   Upon successful addition, a `CommandResult` is created with a formatted success message (via `Messages.format()`),
+   and returned through the `LogicManager` back to the `MainWindow`, which updates the UI to display the message.
+   
+<puml src="diagrams/AddCommandSequenceDiagram.puml" width="100%" />
+<puml src="diagrams/AddCommandActivityDiagram.puml" width="100%" />
+
+
 
 ## **Documentation, Logging, Testing, Configuration, Dev-Ops**
 
