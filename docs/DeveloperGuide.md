@@ -318,6 +318,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | sales / procurement professional | edit a specific contact's information | keep the information in my contacts up to date |
 | `* *`    | sales / procurement professional | add or edit notes for existing contacts | keep track of important information from conversations and meetings |
 | `* *`    | sales / procurement professional | view the full details and notes of a contact | quickly recall context before calling or meeting them |
+| `* *`    | sales / procurement professional | export my contacts to a CSV file | share contact information with colleagues or import into other applications |
+| `* *`    | organized user | backup my contacts to a file | keep a local copy for safekeeping or migration purposes |
 | `* *`    | CLI-oriented user | exit the application via a command | exit the application without using my mouse |
 | `* *`    | careless user     | safeguard when clearing my contacts | prevent accidental deletion of all my contacts |
 
@@ -548,6 +550,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1c. User enters `view` without any parameters.
     * 1c1. System toggles the detail panel visibility.
+    
+      Use case ends.
+
+**Use case: UC09 - Export contacts to CSV file**
+
+**MSS**
+1. User requests to export all contacts to a CSV file by providing a filename.
+2. System validates the filename.
+3. System creates a CSV file on the user's Desktop with the specified filename.
+4. System writes all contact information (name, phone, email, company, tags) to the CSV file.
+5. System displays a success message with the filename.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. User does not provide a filename prefix.
+    * 1a1. System shows an error message indicating filename is required.
+    
+      Use case resumes at step 1.
+
+* 1b. User provides duplicate filename prefixes.
+    * 1b1. System shows an error message indicating only one filename is allowed.
+    
+      Use case resumes at step 1.
+
+* 2a. The filename is empty or contains only whitespace.
+    * 2a1. System shows an error message.
+    
+      Use case resumes at step 1.
+
+* 2b. The filename contains invalid characters (path separators, special characters).
+    * 2b1. System shows an error message listing allowed characters.
+    
+      Use case resumes at step 1.
+
+* 4a. System fails to write to the Desktop directory (e.g., permission issues).
+    * 4a1. System shows an error message with failure details.
     
       Use case ends.
 
