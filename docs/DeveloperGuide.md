@@ -325,7 +325,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use Cases
 
-(For all use cases below, the **System** is the `FastCard` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `FastCard` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: UC01 - Delete a contact**
 
@@ -591,6 +591,40 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
       Use case ends.
 
+**Use case: UC10 - Recall previous nth command but overshoots**
+
+**MSS**
+1. User starts a new session of FastCard.
+2. User enters a series of `k` valid commands (e.g. `add`).
+3. User inputs keystroke mapped to 'recall previous Command' function `n` times.
+4. System fills in the `(k - n)`th valid command stored in history.
+5. User inputs keystroke mapped to 'recall next Command' function `i` times.
+6. System fills in the `(k - n + i)`th valid command stored in history.
+7. User continue normal usage.
+
+   Use case ends.
+
+**Extensions**
+* 1a. User does not provide a valid command.
+    * 1a1. System shows an error message indicating filename is required.
+    * 1a2. System does not save that command to history
+  
+      Use case resumes at step 2.
+  
+* 2a. Number keystrokes `n` > `k` previous valid commands.
+    * 2a1. System shows an error message indicating end of command history reached.
+    * 2a2. System empties the command input field
+  
+      Use case resumes at step 5.
+
+* 5a. Number of recall forward keystrokes `i` > `n` recall previous keystrokes.
+    * 5a1. System empties the command input field
+    * 5a2. subsequent forward keystroke(s) does nothing
+  
+      Use case resumes at step 7.
+
+
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -635,7 +669,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Data file**: The JSON file at `data/addressbook.json` storing contacts and tags.
 * **Filtered list**: The subset of contacts currently matching a search or filter, shown in the UI and backed by the model's observable list.
 * **Primary identifier**: The field(s) used to check contact identity (e.g., phone number) to prevent duplicates.
-* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `t/`).
+* **Prefix**: The short marker preceding a field in a command (e.g., `n/`, `p/`, `e/`, `a/`, `/`, `t/`).
 * **Command box**: The text input field where users type commands.
 * **Result display**: The UI area showing the outcome messages of executed commands.
 * **Status bar**: The UI footer indicating summaries such as list counts and last update time.
