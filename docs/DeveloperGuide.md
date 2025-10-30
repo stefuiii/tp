@@ -226,9 +226,9 @@ The filtering mechanism is facilitated by `FilterCommand` and `FilterCommandPars
 
 3. **Model update**: `FilterCommand#execute()` invokes `Model#updateFilteredPersonList(predicate)` to apply the filtering operation.
 
-4. **Filtering execution**: The model updates its filtered person list by applying the `TagsContainTagPredicate`, which matches any person whose tags contain at least one of the specified tags (case-insensitive matching).
+4. **Filtering execution**: The model updates its filtered contact list by applying the `TagsContainTagPredicate`, which matches any contact whose tags contain at least one of the specified tags (case-insensitive matching).
 
-5. **Result**: A `CommandResult` is returned displaying the number of persons found matching the filter criteria.
+5. **Result**: A `CommandResult` is returned displaying the number of contact found matching the filter criteria.
 
 The sequence diagram below shows how the filter operation works:
 <puml src="diagrams/FilterSequenceDiagram.puml" width="100%" />
@@ -293,8 +293,8 @@ The Sequence diagram for an **Add Basic Command** operation is shown below.
    `LogicManager` constructs an `AddCommandBasic` object with a `Person` instance containing the specified name and phone number.
 
 3. **Model Update**:  
-   The `AddCommandBasic` checks through the `ModelManager` to verify if the person already exists.  
-   If not found, the new person is added to the model and stored in memory.
+   The `AddCommandBasic` checks through the `ModelManager` to verify if the contact already exists.  
+   If not found, the new contact is added to the model and stored in memory.
 
 4. **Success Message**:  
    Upon successful addition, `Messages.format()` is called to format the result, and a `CommandResult` is returned to `LogicManager`.  
@@ -439,7 +439,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 
 
-**Use case: UC02 - Add a contact**
+**Use case: UC02 - Add a contact with basic information**
 
 **MSS**
 
@@ -587,7 +587,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
       Use case resumes at step 1.
 
   * 3a. No contacts match the specified tags.
-    * 3a1. System displays an empty list with a count of 0 persons.
+    * 3a1. System displays an empty list with a count of 0 contact.
     Use case ends.
 
 **Use case: UC06 - List contacts**
@@ -669,10 +669,52 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
       Use case ends.
 
+**Use case: UC10 - Add a contact with full information**
+
+**MSS**
+
+1.  User requests to add a contact with name, phone number, email, company  and optionally tag.
+2.  System creates an entry of the above contact
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given number is invalid.
+
+    * 1a1. System shows an error message.
+
+      Use case resumes at step 1.
+
+
+* 1b. The given number and given name combination already exists.
+
+    *  1b1. System shows an error message.
+
+       Use case resumes at step 1.
+  
+* 1c. The given email is invalid
+
+    *  1c1. System shows an error message
+  
+       Use case resumes at step 1.
+
+* 1d. The given email already exists.
+
+    *  1d1. System shows an error message
+
+       Use case resumes at step 1.
+
+* 1e. The given tag is invalid
+
+    *  1c1. System shows an error message
+
+       Use case resumes at step 1.
+
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+2.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 4.  Should work offline without a need for an external database server.
 5.  Data should be stored in a human editable text file to allow advanced users to manipulate the data directly through the data file.
@@ -771,7 +813,7 @@ testers are expected to do more *exploratory* testing.
        Expected: First contact in the currently displayed list is deleted. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
     -  Test case: `delete 0`<br>
-       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+       Expected: No contact is deleted. Error details shown in the status message. Status bar remains the same.
 
     -  Test case: `delete Jadon Ye` when multiple Jadons exist<br>
        Expected: No contact is deleted. FastCard lists the matching contacts so that the user can delete the intended one by index.
@@ -787,10 +829,10 @@ testers are expected to do more *exploratory* testing.
     -  Prerequisites: Multiple contacts in the company book with different names.
 
     -  Test case: `sort f/name o/asc`<br>
-       Expected: Contacts are sorted alphabetically by name in ascending order. Success message shows "Sorted all persons by name in ascending order".
+       Expected: Contacts are sorted alphabetically by name in ascending order. Success message shows "Sorted all contact(s) by name in ascending order".
 
     -  Test case: `sort f/name o/desc`<br>
-       Expected: Contacts are sorted alphabetically by name in descending order. Success message shows "Sorted all persons by name in descending order".
+       Expected: Contacts are sorted alphabetically by name in descending order. Success message shows "Sorted all contact(s) by name in descending order".
 
     -  Test case: `sort f/name o/ascending`<br>
        Expected: Same as `sort f/name o/asc`.
@@ -831,7 +873,7 @@ testers are expected to do more *exploratory* testing.
     -  Prerequisites: Multiple contacts in the company book, some with the tag "friends", some without.
 
     -  Test case: `filter t/friends`<br>
-       Expected: Only contacts with the "friends" tag are displayed. Status message shows the number of persons listed (e.g., "3 persons listed!").
+       Expected: Only contacts with the "friends" tag are displayed. Status message shows the number of contact(s) listed (e.g., "3 contact(s) listed!").
 
     -  Test case: `filter t/FRIENDS`<br>
        Expected: Same as above. Tag matching is case-insensitive.
@@ -854,7 +896,7 @@ testers are expected to do more *exploratory* testing.
     -  Prerequisites: No contacts have the tag "nonexistent".
 
     -  Test case: `filter t/nonexistent`<br>
-       Expected: Empty list is displayed. Status message shows "0 persons listed!".
+       Expected: Empty list is displayed. Status message shows "0 contact(s) listed!".
 
 4. Invalid filter commands
 
